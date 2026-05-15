@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.streamlit/secrets.toml
+data/
+backups/
+reporte_conciliacion.csv
+reporte_conciliacion.xlsx

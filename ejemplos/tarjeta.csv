@@ -1,0 +1,5 @@
+fecha,tipo,importe,referencia,descripcion
+2026-05-01,pago,12500,TH-1001,Compra cliente A
+2026-05-02,pago,8300,TH-1002,Compra cliente B
+2026-05-03,deposito,20000,DEP-77,Deposito liquidacion
+2026-05-04,pago,4100,TH-1003,Compra cliente C no registrada

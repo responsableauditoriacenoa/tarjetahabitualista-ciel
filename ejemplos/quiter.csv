@@ -1,0 +1,5 @@
+fecha,debe,haber,referencia,descripcion
+2026-05-01,,12500,TH-1001,Pago tarjeta cliente A
+2026-05-02,,8300,,Pago tarjeta cliente B
+2026-05-03,20000,,DEP-77,Deposito liquidacion
+2026-05-05,7000,,DEP-88,Deposito registrado solo en Quiter
