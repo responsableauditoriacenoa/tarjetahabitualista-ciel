@@ -237,15 +237,16 @@ def aplicar_estilos() -> None:
             color: var(--accent-dark) !important;
         }
 
-        [data-testid="stFileUploader"] button div {
+        [data-testid="stFileUploader"] button {
             font-size: 0 !important;
         }
 
-        [data-testid="stFileUploader"] button div::after {
+        [data-testid="stFileUploader"] button::after {
             content: "Subir archivo";
             font-size: 1rem;
             color: var(--accent-dark);
             font-weight: 700;
+            margin-left: 0.45rem;
         }
 
         [data-testid="stFileUploaderDropzoneInstructions"] span,
