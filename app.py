@@ -117,6 +117,9 @@ def aplicar_estilos() -> None:
             font-size: 1rem;
             font-weight: 650;
             margin-bottom: 0.55rem;
+            white-space: normal;
+            text-align: left;
+            line-height: 1.2;
         }
 
         [data-testid="stSidebar"] .stButton > button:hover {
@@ -139,6 +142,7 @@ def aplicar_estilos() -> None:
             font-weight: 750;
             border: 1px solid #1667d9;
             box-shadow: 0 6px 14px rgba(22, 103, 217, 0.18);
+            line-height: 1.2;
         }
 
         .app-hero {
@@ -231,6 +235,35 @@ def aplicar_estilos() -> None:
             background: #ffffff !important;
             border: 1px solid var(--border) !important;
             color: var(--accent-dark) !important;
+        }
+
+        [data-testid="stFileUploader"] button div {
+            font-size: 0 !important;
+        }
+
+        [data-testid="stFileUploader"] button div::after {
+            content: "Subir archivo";
+            font-size: 1rem;
+            color: var(--accent-dark);
+            font-weight: 700;
+        }
+
+        [data-testid="stFileUploaderDropzoneInstructions"] span,
+        [data-testid="stFileUploaderDropzoneInstructions"] small {
+            font-size: 0 !important;
+        }
+
+        [data-testid="stFileUploaderDropzoneInstructions"] span::after {
+            content: "Arrastrar y soltar archivos";
+            font-size: 1rem;
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
+        [data-testid="stFileUploaderDropzoneInstructions"] small::after {
+            content: "Maximo 200MB por archivo";
+            font-size: 0.92rem;
+            color: var(--text-muted);
         }
 
         [data-testid="stDataFrame"] {
@@ -781,7 +814,7 @@ def pantalla_pagos_ventas() -> None:
 
 
 def pantalla_base_consolidada() -> None:
-    st.subheader("Base consolidada de ventas y pagos")
+    st.subheader("Conciliacion de Pagos y Ventas")
 
     with st.form("form_base_consolidada"):
         col1, col2 = st.columns(2)
@@ -859,7 +892,7 @@ def pantalla_base_consolidada() -> None:
 
 
 def pantalla_base_contable() -> None:
-    st.subheader("Base contable consolidada")
+    st.subheader("Conciliacion Contable de Tarjeta Habitualista S/ Contabilidad")
 
     with st.form("form_base_contable"):
         col1, col2, col3 = st.columns(3)
@@ -1020,8 +1053,8 @@ def main() -> None:
 
     st.sidebar.markdown("### Menu")
     boton_navegacion("Importar y conciliar", "Importar y conciliar")
-    boton_navegacion("Base consolidada", "Base consolidada")
-    boton_navegacion("Base contable", "Base contable")
+    boton_navegacion("Conciliacion de Pagos y Ventas", "Conciliacion de Pagos y Ventas")
+    boton_navegacion("Conciliacion Contable de Tarjeta Habitualista S/ Contabilidad", "Conciliacion Contable de Tarjeta Habitualista S/ Contabilidad")
     boton_navegacion("Pagos vs ventas", "Pagos vs ventas")
     boton_navegacion("Historial", "Historial")
     boton_navegacion("Backups", "Backups")
@@ -1032,9 +1065,9 @@ def main() -> None:
     pantalla = st.session_state["pantalla"]
     if pantalla == "Importar y conciliar":
         pantalla_importacion()
-    elif pantalla == "Base consolidada":
+    elif pantalla in ("Base consolidada", "Conciliacion de Pagos y Ventas"):
         pantalla_base_consolidada()
-    elif pantalla == "Base contable":
+    elif pantalla in ("Base contable", "Conciliacion Contable de Tarjeta Habitualista S/ Contabilidad"):
         pantalla_base_contable()
     elif pantalla == "Pagos vs ventas":
         pantalla_pagos_ventas()
