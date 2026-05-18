@@ -11,13 +11,18 @@ import consolidado
 import consolidado_contable
 import pagos_ventas
 from conciliacion import (
-    ImportacionError,
     conciliados_dataframe,
     ejecutar_conciliacion,
     excel_bytes,
     pendientes_dataframe,
     resumen_dataframe,
 )
+
+try:
+    from conciliacion import ImportacionError
+except ImportError:
+    ImportacionError = ValueError
+
 from storage import (
     UPLOADS_DIR,
     actualizar_conciliacion_pagos_ventas,
