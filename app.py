@@ -11,6 +11,7 @@ import consolidado
 import consolidado_contable
 import pagos_ventas
 from conciliacion import (
+    ImportacionError,
     conciliados_dataframe,
     ejecutar_conciliacion,
     excel_bytes,
@@ -514,30 +515,34 @@ def pantalla_importacion() -> None:
         return
 
     with st.spinner("Procesando conciliacion..."):
-        corrida_id = nueva_corrida_id()
-        movimientos_path, pagos_path, quiter_path = guardar_uploads_corrida(
-            corrida_id, movimientos, pagos, quiter
-        )
-        resultado = ejecutar_conciliacion(
-            movimientos_path,
-            pagos_path,
-            quiter_path,
-            desde=desde,
-            hasta=hasta,
-            tolerancia_dias=int(tolerancia),
-        )
-        reporte_bytes = excel_bytes(resultado)
-        guardada = guardar_conciliacion(
-            nombre=nombre,
-            desde=desde,
-            hasta=hasta,
-            tolerancia_dias=int(tolerancia),
-            movimientos_path=movimientos_path,
-            pagos_path=pagos_path,
-            quiter_path=quiter_path,
-            resultado=resultado,
-            reporte_bytes=reporte_bytes,
-        )
+        try:
+            corrida_id = nueva_corrida_id()
+            movimientos_path, pagos_path, quiter_path = guardar_uploads_corrida(
+                corrida_id, movimientos, pagos, quiter
+            )
+            resultado = ejecutar_conciliacion(
+                movimientos_path,
+                pagos_path,
+                quiter_path,
+                desde=desde,
+                hasta=hasta,
+                tolerancia_dias=int(tolerancia),
+            )
+            reporte_bytes = excel_bytes(resultado)
+            guardada = guardar_conciliacion(
+                nombre=nombre,
+                desde=desde,
+                hasta=hasta,
+                tolerancia_dias=int(tolerancia),
+                movimientos_path=movimientos_path,
+                pagos_path=pagos_path,
+                quiter_path=quiter_path,
+                resultado=resultado,
+                reporte_bytes=reporte_bytes,
+            )
+        except ImportacionError as exc:
+            st.error(str(exc))
+            return
 
     st.session_state["conciliacion_actual"] = guardada.id
     st.success("Conciliacion generada y guardada.")
@@ -948,15 +953,19 @@ def pantalla_base_contable() -> None:
             st.error("Cargue al menos un reporte para actualizar la base contable.")
             return
         with st.spinner("Importando, actualizando duplicados y recalculando conciliacion contable..."):
-            stats = consolidado_contable.importar_a_base(
-                pagos_files or [],
-                movimientos_files or [],
-                quiter_files or [],
-                desde=desde,
-                hasta=hasta,
-                tolerancia_dias=int(tolerancia),
-                sincronizar_quiter_periodo=sincronizar_quiter,
-            )
+            try:
+                stats = consolidado_contable.importar_a_base(
+                    pagos_files or [],
+                    movimientos_files or [],
+                    quiter_files or [],
+                    desde=desde,
+                    hasta=hasta,
+                    tolerancia_dias=int(tolerancia),
+                    sincronizar_quiter_periodo=sincronizar_quiter,
+                )
+            except ImportacionError as exc:
+                st.error(str(exc))
+                return
         st.success(
             "Base contable actualizada: "
             f"portal nuevos {stats['portal_insertados']}, portal actualizados {stats['portal_actualizados']}, "

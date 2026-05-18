@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 from io import BytesIO
 import re
+import unicodedata
 from dataclasses import dataclass
 from datetime import date, datetime
 from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
@@ -13,6 +14,10 @@ import pandas as pd
 
 
 CENTAVOS = Decimal("0.01")
+
+
+class ImportacionError(ValueError):
+    pass
 
 
 @dataclass(frozen=True)
@@ -117,6 +122,45 @@ def texto_combinado(*valores: object) -> str:
     return " ".join(str(v).strip() for v in valores if not pd.isna(v) and str(v).strip())
 
 
+def normalizar_nombre_columna(nombre: object) -> str:
+    texto = unicodedata.normalize("NFKD", str(nombre or ""))
+    texto = "".join(ch for ch in texto if not unicodedata.combining(ch))
+    return re.sub(r"[^a-z0-9]+", "_", texto.lower()).strip("_")
+
+
+def mapa_columnas(df: pd.DataFrame) -> dict[str, str]:
+    return {normalizar_nombre_columna(columna): columna for columna in df.columns}
+
+
+def columna_requerida(
+    df: pd.DataFrame,
+    path: Path,
+    nombre_reporte: str,
+    *opciones: str,
+) -> str:
+    columnas = mapa_columnas(df)
+    for opcion in opciones:
+        clave = normalizar_nombre_columna(opcion)
+        if clave in columnas:
+            return columnas[clave]
+    disponibles = ", ".join(str(col) for col in df.columns)
+    esperadas = ", ".join(opciones)
+    raise ImportacionError(
+        f"El archivo '{path.name}' no parece ser {nombre_reporte}. "
+        f"Falta la columna requerida: {esperadas}. "
+        f"Columnas encontradas: {disponibles}"
+    )
+
+
+def columna_opcional(df: pd.DataFrame, *opciones: str) -> str | None:
+    columnas = mapa_columnas(df)
+    for opcion in opciones:
+        clave = normalizar_nombre_columna(opcion)
+        if clave in columnas:
+            return columnas[clave]
+    return None
+
+
 def rango_desde_nombres(paths: Iterable[Path]) -> tuple[date | None, date | None]:
     texto = " ".join(path.name for path in paths)
     fechas = re.findall(r"\d{4}-\d{2}-\d{2}", texto)
@@ -127,19 +171,25 @@ def rango_desde_nombres(paths: Iterable[Path]) -> tuple[date | None, date | None
 
 def cargar_depositos_habitualista(path: Path) -> list[Movimiento]:
     df = pd.read_excel(path)
-    creditos = df[df["Tipo"].astype(str).str.upper().eq("CREDIT")]
+    col_tipo = columna_requerida(df, path, "Movimientos de cuenta", "Tipo")
+    col_descripcion = columna_requerida(df, path, "Movimientos de cuenta", "Descripcion")
+    col_fecha = columna_requerida(df, path, "Movimientos de cuenta", "Fecha acreditacion")
+    col_monto = columna_requerida(df, path, "Movimientos de cuenta", "Monto")
+    col_referencia = columna_opcional(df, "Cod referencia")
+
+    creditos = df[df[col_tipo].astype(str).str.strip().str.upper().eq("CREDIT")]
     movimientos: list[Movimiento] = []
 
     for indice, fila in creditos.iterrows():
-        descripcion = texto_combinado(fila.get("Descripcion"))
+        descripcion = texto_combinado(fila.get(col_descripcion))
         movimientos.append(
             Movimiento(
                 origen="Habitualista - movimientos de cuenta",
                 tipo="deposito",
                 fila=indice + 2,
-                fecha=normalizar_fecha(fila.get("Fecha acreditacion")),
-                fecha_referencia=normalizar_fecha(fila.get("Cod referencia")),
-                importe=normalizar_importe(fila.get("Monto")),
+                fecha=normalizar_fecha(fila.get(col_fecha)),
+                fecha_referencia=normalizar_fecha(fila.get(col_referencia)) if col_referencia else None,
+                importe=normalizar_importe(fila.get(col_monto)),
                 descripcion=descripcion,
                 documento=extraer_boleta(descripcion),
             )
@@ -154,23 +204,32 @@ def extraer_boleta(texto: object) -> str:
 
 def cargar_pagos_habitualista(path: Path) -> list[Movimiento]:
     df = pd.read_excel(path)
-    if "Estado" in df.columns:
-        df = df[df["Estado"].astype(str).str.lower().eq("liquidado")]
+    col_fecha = columna_requerida(df, path, "Operaciones de pago", "Fecha")
+    col_total = columna_requerida(df, path, "Operaciones de pago", "Total")
+    col_nro_pago = columna_requerida(df, path, "Operaciones de pago", "Nro de pago", "Nro. de pago")
+    col_motivo = columna_requerida(df, path, "Operaciones de pago", "Motivo pago")
+    col_observaciones = columna_opcional(df, "Observaciones")
+    col_estado = columna_opcional(df, "Estado")
+    if col_estado:
+        df = df[df[col_estado].astype(str).str.lower().eq("liquidado")]
 
     movimientos: list[Movimiento] = []
     for indice, fila in df.iterrows():
-        descripcion = texto_combinado(fila.get("Motivo pago"), fila.get("Observaciones"))
+        descripcion = texto_combinado(
+            fila.get(col_motivo),
+            fila.get(col_observaciones) if col_observaciones else "",
+        )
         movimientos.append(
             Movimiento(
                 origen="Habitualista - operaciones de pago",
                 tipo="pago",
                 fila=indice + 2,
-                fecha=normalizar_fecha(fila.get("Fecha")),
-                importe=normalizar_importe(fila.get("Total")),
+                fecha=normalizar_fecha(fila.get(col_fecha)),
+                importe=normalizar_importe(fila.get(col_total)),
                 descripcion=descripcion,
                 op=extraer_op(descripcion),
                 referencia=extraer_ref(descripcion),
-                documento=limpiar_documento(fila.get("Nro de pago")),
+                documento=limpiar_documento(fila.get(col_nro_pago)),
             )
         )
     return movimientos
@@ -178,28 +237,39 @@ def cargar_pagos_habitualista(path: Path) -> list[Movimiento]:
 
 def cargar_quiter(path: Path, desde: date | None, hasta: date | None) -> list[Movimiento]:
     df = pd.read_excel(path)
+    col_concepto = columna_requerida(df, path, "Contabilidad Quiter", "Concepto del apunte")
+    col_fecha = columna_requerida(df, path, "Contabilidad Quiter", "Fecha")
+    col_debe = columna_requerida(df, path, "Contabilidad Quiter", "Debe")
+    col_haber = columna_requerida(df, path, "Contabilidad Quiter", "Haber")
+    col_referencia = columna_opcional(df, "Referencia")
+    col_documento = columna_opcional(df, "Nro.docum", "Nro docum", "Nro documento")
     movimientos: list[Movimiento] = []
 
     for indice, fila in df.iterrows():
-        concepto = texto_combinado(fila.get("Concepto del apunte"))
+        concepto = texto_combinado(fila.get(col_concepto))
         if not concepto or re.search(r"\b(saldos?|total)\b", concepto, re.IGNORECASE):
             continue
 
-        fecha = normalizar_fecha(fila.get("Fecha"))
+        fecha = normalizar_fecha(fila.get(col_fecha))
         if desde and fecha and fecha < desde:
             continue
         if hasta and fecha and fecha > hasta:
             continue
 
-        debe = normalizar_importe(fila.get("Debe"))
-        haber = normalizar_importe(fila.get("Haber"))
+        debe = normalizar_importe(fila.get(col_debe))
+        haber = normalizar_importe(fila.get(col_haber))
         if debe and haber:
             continue
         if not debe and not haber:
             continue
 
         tipo = "deposito" if debe else "pago"
-        referencia = limpiar_documento(fila.get("Referencia")) or limpiar_documento(fila.get("Nro.docum"))
+        referencia = (
+            limpiar_documento(fila.get(col_referencia)) if col_referencia else ""
+        ) or (
+            limpiar_documento(fila.get(col_documento)) if col_documento else ""
+        )
+        documento = limpiar_documento(fila.get(col_documento)) if col_documento else ""
         movimientos.append(
             Movimiento(
                 origen="Quiter",
@@ -211,7 +281,7 @@ def cargar_quiter(path: Path, desde: date | None, hasta: date | None) -> list[Mo
                 descripcion=concepto,
                 op=extraer_op(concepto),
                 referencia=referencia,
-                documento=limpiar_documento(fila.get("Nro.docum")),
+                documento=documento,
             )
         )
     return movimientos
