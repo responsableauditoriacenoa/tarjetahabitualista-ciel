@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 import shutil
 import sqlite3
 from dataclasses import dataclass
@@ -9,6 +10,10 @@ from pathlib import Path
 from uuid import uuid4
 
 import pandas as pd
+try:
+    import psycopg2
+except ImportError:
+    psycopg2 = None
 
 from conciliacion import ResultadoConciliacion, conciliados_dataframe, pendientes_dataframe, resumen_dataframe
 
@@ -17,6 +22,88 @@ DATA_DIR = Path("data")
 DB_PATH = DATA_DIR / "conciliaciones.sqlite3"
 UPLOADS_DIR = DATA_DIR / "uploads"
 REPORTS_DIR = DATA_DIR / "reports"
+
+
+def database_url() -> str:
+    value = os.getenv("DATABASE_URL", "")
+    if value:
+        return value
+    try:
+        import streamlit as st
+
+        return st.secrets.get("DATABASE_URL", "")
+    except Exception:
+        return ""
+
+
+def usando_postgres() -> bool:
+    return database_url().startswith(("postgres://", "postgresql://"))
+
+
+class ResultadoSQL:
+    def __init__(self, cursor):
+        self.cursor = cursor
+
+    def fetchall(self):
+        return self.cursor.fetchall()
+
+    def fetchone(self):
+        return self.cursor.fetchone()
+
+
+class ConexionDB:
+    def __init__(self):
+        self.postgres = usando_postgres()
+        self.conn = None
+
+    def __enter__(self):
+        if self.postgres:
+            if psycopg2 is None:
+                raise RuntimeError(
+                    "DATABASE_URL esta configurado, pero falta instalar psycopg2-binary."
+                )
+            self.conn = psycopg2.connect(database_url())
+        else:
+            self.conn = sqlite3.connect(DB_PATH)
+        return self
+
+    def __exit__(self, exc_type, _exc, _tb):
+        if exc_type:
+            self.conn.rollback()
+        else:
+            self.conn.commit()
+        self.conn.close()
+
+    def execute(self, sql: str, params=()):
+        if self.postgres and sql.strip().upper().startswith("PRAGMA TABLE_INFO"):
+            return self._pragma_table_info(sql)
+
+        cursor = self.conn.cursor()
+        query = sql.replace("?", "%s") if self.postgres else sql
+        cursor.execute(query, params or ())
+        return ResultadoSQL(cursor)
+
+    def read_sql(self, sql: str) -> pd.DataFrame:
+        return pd.read_sql_query(sql, self.conn)
+
+    def _pragma_table_info(self, sql: str):
+        table_name = sql.split("PRAGMA table_info(", 1)[1].split(")", 1)[0].strip()
+        cursor = self.conn.cursor()
+        cursor.execute(
+            """
+            SELECT ordinal_position - 1 AS cid,
+                   column_name AS name,
+                   data_type AS type,
+                   CASE WHEN is_nullable = 'NO' THEN 1 ELSE 0 END AS notnull,
+                   column_default AS dflt_value,
+                   0 AS pk
+            FROM information_schema.columns
+            WHERE table_schema = 'public' AND table_name = %s
+            ORDER BY ordinal_position
+            """,
+            (table_name,),
+        )
+        return ResultadoSQL(cursor)
 
 
 @dataclass(frozen=True)
@@ -104,8 +191,8 @@ def inicializar_storage() -> None:
             )
 
 
-def conectar() -> sqlite3.Connection:
-    return sqlite3.connect(DB_PATH)
+def conectar() -> ConexionDB:
+    return ConexionDB()
 
 
 def nueva_corrida_id() -> str:

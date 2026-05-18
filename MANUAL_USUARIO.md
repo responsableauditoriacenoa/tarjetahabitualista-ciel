@@ -354,3 +354,25 @@ backups/
 
 Tambien estan ignorados por Git.
 
+## 11. Persistencia en Streamlit Cloud con Neon
+
+En Streamlit Cloud, la carpeta local `data/` puede perderse cuando la app se reinicia, hiberna o se redeploya.
+
+Para evitarlo, la app puede usar Neon/PostgreSQL como base persistente.
+
+### Configuracion
+
+1. Crear el proyecto y la base en Neon.
+2. Copiar el connection string.
+3. En Streamlit Cloud, abrir `App > Settings > Secrets`.
+4. Agregar:
+
+```toml
+DATABASE_URL = "postgresql://usuario:password@host.neon.tech/dbname?sslmode=require"
+```
+
+5. Guardar y reiniciar la app.
+
+Cuando `DATABASE_URL` existe, la aplicacion guarda las bases consolidadas en Neon.
+
+Si no existe, usa SQLite local.

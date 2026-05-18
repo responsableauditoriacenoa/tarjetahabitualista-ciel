@@ -11,6 +11,24 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
+## Persistencia en Neon
+
+Para Streamlit Cloud se recomienda usar Neon/PostgreSQL como base persistente.
+
+En Streamlit Cloud, ir a:
+
+```text
+App > Settings > Secrets
+```
+
+Y agregar:
+
+```toml
+DATABASE_URL = "postgresql://usuario:password@host.neon.tech/dbname?sslmode=require"
+```
+
+Si `DATABASE_URL` no esta configurado, la app usa SQLite local en `data/`.
+
 La app permite:
 
 - Importar los tres reportes.

@@ -259,7 +259,7 @@ def registrar_importacion(corrida_id: str, stats: dict) -> None:
 def cargar_tabla(tabla: str) -> pd.DataFrame:
     inicializar_base_consolidada()
     with conectar() as conn:
-        return pd.read_sql_query(f"SELECT * FROM {tabla}", conn)
+        return conn.read_sql(f"SELECT * FROM {tabla}")
 
 
 def referencias_pago(row: pd.Series) -> list[tuple[str, str]]:
@@ -434,9 +434,8 @@ def resumen_consolidado(
 def historial_importaciones() -> pd.DataFrame:
     inicializar_base_consolidada()
     with conectar() as conn:
-        return pd.read_sql_query(
+        return conn.read_sql(
             "SELECT * FROM base_importaciones ORDER BY fecha DESC",
-            conn,
         )
 
 

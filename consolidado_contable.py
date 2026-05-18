@@ -311,7 +311,7 @@ def sincronizar_quiter(quiter_importados: list[tuple[Path, Movimiento]], desde, 
 def cargar_tabla(tabla: str) -> pd.DataFrame:
     inicializar_base_contable()
     with conectar() as conn:
-        return pd.read_sql_query(f"SELECT * FROM {tabla}", conn)
+        return conn.read_sql(f"SELECT * FROM {tabla}")
 
 
 def fecha_desde_texto(valor: str):
@@ -445,9 +445,8 @@ def resumen_consolidado(
 def historial_importaciones() -> pd.DataFrame:
     inicializar_base_contable()
     with conectar() as conn:
-        return pd.read_sql_query(
+        return conn.read_sql(
             "SELECT * FROM contable_importaciones ORDER BY fecha DESC",
-            conn,
         )
 
 
