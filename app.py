@@ -980,6 +980,11 @@ def pantalla_base_contable() -> None:
         backup_path = backups.crear_backup("base_contable")
         st.info(f"Backup automatico generado: {backup_path.name}")
 
+    if st.button("Recalcular conciliacion contable", key="recalcular_base_contable"):
+        with st.spinner("Recalculando conciliacion contable con la base ya importada..."):
+            consolidado_contable.reconciliar_base(tolerancia_dias=int(tolerancia))
+        st.success("Conciliacion contable recalculada con la regla actual.")
+
     dfs = consolidado_contable.dataframes_consolidados()
     resumen = dfs["resumen"]
     mostrar_metricas_contable(resumen)
