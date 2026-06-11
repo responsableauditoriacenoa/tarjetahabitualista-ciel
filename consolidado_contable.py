@@ -520,7 +520,7 @@ def dataframes_consolidados(recalcular: bool = False) -> dict[str, pd.DataFrame]
         reconciliar_base()
     portal = normalizar_criterios_contables(cargar_tabla("contable_portal"))
     quiter = normalizar_criterios_contables(cargar_tabla("contable_quiter"))
-    conciliados = portal[portal["matched_quiter_key"].astype(str).ne("")].copy() if not portal.empty else pd.DataFrame()
+    conciliados = conciliados_detalle_dataframe(portal, quiter)
     portal_pendiente = portal[portal["matched_quiter_key"].astype(str).eq("")].copy() if not portal.empty else pd.DataFrame()
     quiter_pendiente = quiter[quiter["matched_portal_key"].astype(str).eq("")].copy() if not quiter.empty else pd.DataFrame()
     resumen = resumen_consolidado(portal, quiter, conciliados, portal_pendiente, quiter_pendiente)
@@ -532,6 +532,64 @@ def dataframes_consolidados(recalcular: bool = False) -> dict[str, pd.DataFrame]
         "portal_pendiente": portal_pendiente,
         "quiter_pendiente": quiter_pendiente,
     }
+
+
+def conciliados_detalle_dataframe(portal: pd.DataFrame, quiter: pd.DataFrame) -> pd.DataFrame:
+    if portal.empty or quiter.empty:
+        return pd.DataFrame()
+
+    portal_conciliado = portal[portal["matched_quiter_key"].astype(str).ne("")].copy()
+    if portal_conciliado.empty:
+        return pd.DataFrame()
+
+    detalle = portal_conciliado.merge(
+        quiter,
+        left_on="matched_quiter_key",
+        right_on="movimiento_key",
+        how="left",
+        suffixes=("_origen", "_conciliado"),
+    )
+    detalle = detalle.rename(
+        columns={
+            "tipo_origen": "tipo",
+            "importe_origen": "importe",
+            "criterio_origen": "criterio",
+            "fecha_origen": "fecha_origen",
+            "fecha_referencia_origen": "fecha_referencia_origen",
+            "origen_origen": "fuente_origen",
+            "archivo_origen_origen": "archivo_origen",
+            "fila_origen_origen": "fila_origen",
+            "descripcion_origen": "descripcion_origen",
+            "fecha_conciliado": "fecha_conciliada",
+            "fecha_referencia_conciliado": "fecha_referencia_conciliada",
+            "origen_conciliado": "fuente_conciliada",
+            "archivo_origen_conciliado": "archivo_conciliado",
+            "fila_origen_conciliado": "fila_conciliada",
+            "descripcion_conciliado": "descripcion_conciliada",
+            "movimiento_key_origen": "movimiento_key_origen",
+        }
+    )
+    columnas = [
+        "tipo",
+        "importe",
+        "criterio",
+        "fecha_origen",
+        "fecha_referencia_origen",
+        "fuente_origen",
+        "archivo_origen",
+        "fila_origen",
+        "descripcion_origen",
+        "fecha_conciliada",
+        "fecha_referencia_conciliada",
+        "fuente_conciliada",
+        "archivo_conciliado",
+        "fila_conciliada",
+        "descripcion_conciliada",
+        "movimiento_key_origen",
+        "matched_quiter_key",
+    ]
+    columnas_existentes = [col for col in columnas if col in detalle.columns]
+    return detalle[columnas_existentes].copy()
 
 
 def suma(df: pd.DataFrame, col: str) -> float:
