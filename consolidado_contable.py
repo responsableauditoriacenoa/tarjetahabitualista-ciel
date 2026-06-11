@@ -26,6 +26,17 @@ from storage import REPORTS_DIR, UPLOADS_DIR, conectar, guardar_upload, iniciali
 UPLOADS_DIR_CONTABLE = UPLOADS_DIR / "base_contable"
 REPORTS_DIR_CONTABLE = REPORTS_DIR / "base_contable"
 
+CRITERIOS_CONTABLES = {
+    "OP + importe": "Contable: tipo + importe unico",
+    "REF/Nro.docum + importe": "Contable: tipo + importe unico",
+    "importe unico": "Contable: tipo + importe unico",
+    "Contable: OP portal = OP Quiter + importe": "Contable: tipo + importe unico",
+    "Contable: referencia portal = referencia/Nro.docum Quiter + importe": "Contable: tipo + importe unico",
+    "Contable: deposito por importe unico": "Contable: tipo + importe unico",
+}
+
+CRITERIOS_OBSOLETOS = tuple(CRITERIOS_CONTABLES.keys())
+
 
 def inicializar_base_contable() -> None:
     inicializar_storage()
@@ -401,6 +412,37 @@ def cargar_tabla(tabla: str) -> pd.DataFrame:
         return conn.read_sql(f"SELECT * FROM {tabla}")
 
 
+def normalizar_criterios_contables(df: pd.DataFrame) -> pd.DataFrame:
+    if df.empty or "criterio" not in df.columns:
+        return df
+    salida = df.copy()
+    salida["criterio"] = salida["criterio"].replace(CRITERIOS_CONTABLES)
+    salida["criterio"] = salida["criterio"].astype(str).str.replace(
+        r"^importe \+ fecha \+/- (\d+) dias$",
+        r"Contable: tipo + importe + fecha +/- \1 dias",
+        regex=True,
+    )
+    salida["criterio"] = salida["criterio"].astype(str).str.replace(
+        r"^Contable: deposito por importe \+ fecha \+/- (\d+) dias$",
+        r"Contable: tipo + importe + fecha +/- \1 dias",
+        regex=True,
+    )
+    return salida
+
+
+def existen_criterios_contables_obsoletos() -> bool:
+    placeholders = ", ".join("?" for _ in CRITERIOS_OBSOLETOS)
+    with conectar() as conn:
+        for tabla in ("contable_portal", "contable_quiter"):
+            row = conn.execute(
+                f"SELECT COUNT(*) FROM {tabla} WHERE criterio IN ({placeholders})",
+                CRITERIOS_OBSOLETOS,
+            ).fetchone()
+            if row and row[0]:
+                return True
+    return False
+
+
 def fecha_desde_texto(valor: str):
     if not valor:
         return None
@@ -474,10 +516,10 @@ def signature(mov: Movimiento) -> tuple:
 
 
 def dataframes_consolidados(recalcular: bool = False) -> dict[str, pd.DataFrame]:
-    if recalcular:
+    if recalcular or existen_criterios_contables_obsoletos():
         reconciliar_base()
-    portal = cargar_tabla("contable_portal")
-    quiter = cargar_tabla("contable_quiter")
+    portal = normalizar_criterios_contables(cargar_tabla("contable_portal"))
+    quiter = normalizar_criterios_contables(cargar_tabla("contable_quiter"))
     conciliados = portal[portal["matched_quiter_key"].astype(str).ne("")].copy() if not portal.empty else pd.DataFrame()
     portal_pendiente = portal[portal["matched_quiter_key"].astype(str).eq("")].copy() if not portal.empty else pd.DataFrame()
     quiter_pendiente = quiter[quiter["matched_portal_key"].astype(str).eq("")].copy() if not quiter.empty else pd.DataFrame()

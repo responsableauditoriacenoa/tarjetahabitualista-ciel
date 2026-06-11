@@ -312,24 +312,13 @@ def buscar_match(
     candidatos: list[Movimiento],
     tolerancia_dias: int,
 ) -> tuple[int | None, str]:
-    if movimiento.tipo == "pago":
-        for indice, candidato in enumerate(candidatos):
-            if compatibles(movimiento, candidato) and movimiento.op and movimiento.op == candidato.op:
-                return indice, "OP + importe"
-
-        for indice, candidato in enumerate(candidatos):
-            if compatibles(movimiento, candidato) and movimiento.referencia and movimiento.referencia == candidato.referencia:
-                return indice, "REF/Nro.docum + importe"
-
-        return None, ""
-
     candidatos_exactos = [
         (indice, candidato)
         for indice, candidato in enumerate(candidatos)
         if compatibles(movimiento, candidato)
     ]
     if len(candidatos_exactos) == 1:
-        return candidatos_exactos[0][0], "importe unico"
+        return candidatos_exactos[0][0], "Contable: tipo + importe unico"
 
     mejor_indice: int | None = None
     mejor_distancia: int | None = None
@@ -343,7 +332,7 @@ def buscar_match(
 
     if mejor_indice is None:
         return None, ""
-    return mejor_indice, f"importe + fecha +/- {tolerancia_dias} dias"
+    return mejor_indice, f"Contable: tipo + importe + fecha +/- {tolerancia_dias} dias"
 
 
 def compatibles(a: Movimiento, b: Movimiento) -> bool:
