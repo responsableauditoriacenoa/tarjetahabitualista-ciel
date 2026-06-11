@@ -1069,10 +1069,11 @@ def main() -> None:
     aplicar_estilos()
 
     if "pantalla" not in st.session_state:
-        st.session_state["pantalla"] = "Importar y conciliar"
+        st.session_state["pantalla"] = "Conciliacion de Pagos y Ventas"
+    if st.session_state["pantalla"] == "Importar y conciliar":
+        st.session_state["pantalla"] = "Conciliacion de Pagos y Ventas"
 
     st.sidebar.markdown("### Menu")
-    boton_navegacion("Importar y conciliar", "Importar y conciliar")
     boton_navegacion("Conciliacion de Pagos y Ventas", "Conciliacion de Pagos y Ventas")
     boton_navegacion("Conciliacion Contable de Tarjeta Habitualista S/ Contabilidad", "Conciliacion Contable de Tarjeta Habitualista S/ Contabilidad")
     boton_navegacion("Pagos vs ventas", "Pagos vs ventas")
@@ -1083,9 +1084,7 @@ def main() -> None:
 
     render_header()
     pantalla = st.session_state["pantalla"]
-    if pantalla == "Importar y conciliar":
-        pantalla_importacion()
-    elif pantalla in ("Base consolidada", "Conciliacion de Pagos y Ventas"):
+    if pantalla in ("Base consolidada", "Conciliacion de Pagos y Ventas"):
         pantalla_base_consolidada()
     elif pantalla in ("Base contable", "Conciliacion Contable de Tarjeta Habitualista S/ Contabilidad"):
         pantalla_base_contable()
