@@ -83,6 +83,12 @@ class ConexionDB:
         cursor.execute(query, params or ())
         return ResultadoSQL(cursor)
 
+    def executemany(self, sql: str, params):
+        cursor = self.conn.cursor()
+        query = sql.replace("?", "%s") if self.postgres else sql
+        cursor.executemany(query, params)
+        return ResultadoSQL(cursor)
+
     def read_sql(self, sql: str) -> pd.DataFrame:
         return pd.read_sql_query(sql, self.conn)
 

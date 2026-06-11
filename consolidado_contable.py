@@ -99,6 +99,24 @@ def inicializar_base_contable() -> None:
             conn.execute(
                 "ALTER TABLE contable_importaciones ADD COLUMN quiter_eliminados INTEGER DEFAULT 0"
             )
+        conn.execute(
+            """
+            CREATE INDEX IF NOT EXISTS idx_contable_portal_match
+            ON contable_portal (tipo, importe, op, referencia, matched_quiter_key)
+            """
+        )
+        conn.execute(
+            """
+            CREATE INDEX IF NOT EXISTS idx_contable_quiter_match
+            ON contable_quiter (tipo, importe, op, referencia, matched_portal_key)
+            """
+        )
+        conn.execute(
+            """
+            CREATE INDEX IF NOT EXISTS idx_contable_quiter_fecha
+            ON contable_quiter (fecha)
+            """
+        )
 
 
 def valor_no_vacio(valor: object) -> bool:
@@ -197,6 +215,61 @@ def upsert_registro(tabla: str, key_col: str, registro: dict) -> str:
         return "insertado"
 
 
+def chunks(items: list, size: int = 500):
+    for start in range(0, len(items), size):
+        yield items[start : start + size]
+
+
+def upsert_registros(tabla: str, key_col: str, registros: list[dict]) -> dict[str, int]:
+    if not registros:
+        return {"insertado": 0, "actualizado": 0}
+
+    ahora = datetime.now().isoformat(timespec="seconds")
+    with conectar() as conn:
+        columnas = [row[1] for row in conn.execute(f"PRAGMA table_info({tabla})").fetchall()]
+        registros_filtrados = [
+            {col: registro.get(col, "") for col in columnas}
+            for registro in registros
+        ]
+        keys = [registro[key_col] for registro in registros_filtrados]
+
+        existentes: dict[str, dict] = {}
+        for grupo in chunks(keys):
+            placeholders = ", ".join("?" for _ in grupo)
+            rows = conn.execute(
+                f"SELECT * FROM {tabla} WHERE {key_col} IN ({placeholders})",
+                grupo,
+            ).fetchall()
+            existentes.update({row[columnas.index(key_col)]: dict(zip(columnas, row)) for row in rows})
+
+        inserts = []
+        updates = []
+        for registro in registros_filtrados:
+            existente = existentes.get(registro[key_col])
+            if existente:
+                combinado = merge_dict(existente, registro)
+                combinado["creado_en"] = existente["creado_en"]
+                combinado["actualizado_en"] = ahora
+                updates.append([combinado[col] for col in columnas if col != key_col] + [registro[key_col]])
+            else:
+                inserts.append([registro.get(col, "") for col in columnas])
+
+        if updates:
+            set_clause = ", ".join(f"{col} = ?" for col in columnas if col != key_col)
+            conn.executemany(
+                f"UPDATE {tabla} SET {set_clause} WHERE {key_col} = ?",
+                updates,
+            )
+        if inserts:
+            placeholders = ", ".join("?" for _ in columnas)
+            conn.executemany(
+                f"INSERT INTO {tabla} ({', '.join(columnas)}) VALUES ({placeholders})",
+                inserts,
+            )
+
+    return {"insertado": len(inserts), "actualizado": len(updates)}
+
+
 def importar_a_base(
     pagos_files,
     movimientos_files,
@@ -226,15 +299,22 @@ def importar_a_base(
         "quiter_archivos": [p.name for p in quiter_paths],
     }
 
+    portal_registros = []
     for path in pagos_paths:
-        for mov in cargar_pagos_habitualista(path):
-            estado = upsert_registro("contable_portal", "movimiento_key", movimiento_a_registro(mov, path, "portal"))
-            stats[f"portal_{estado}s"] += 1
+        portal_registros.extend(
+            movimiento_a_registro(mov, path, "portal")
+            for mov in cargar_pagos_habitualista(path)
+        )
 
     for path in movimientos_paths:
-        for mov in cargar_depositos_habitualista(path):
-            estado = upsert_registro("contable_portal", "movimiento_key", movimiento_a_registro(mov, path, "portal"))
-            stats[f"portal_{estado}s"] += 1
+        portal_registros.extend(
+            movimiento_a_registro(mov, path, "portal")
+            for mov in cargar_depositos_habitualista(path)
+        )
+
+    portal_stats = upsert_registros("contable_portal", "movimiento_key", portal_registros)
+    stats["portal_insertados"] += portal_stats["insertado"]
+    stats["portal_actualizados"] += portal_stats["actualizado"]
 
     quiter_importados = []
     for path in quiter_paths:
@@ -244,9 +324,16 @@ def importar_a_base(
     if sincronizar_quiter_periodo and quiter_importados:
         stats["quiter_eliminados"] = sincronizar_quiter(quiter_importados, desde, hasta)
 
-    for path, mov in quiter_importados:
-            estado = upsert_registro("contable_quiter", "movimiento_key", movimiento_a_registro(mov, path, "quiter"))
-            stats[f"quiter_{estado}s"] += 1
+    quiter_stats = upsert_registros(
+        "contable_quiter",
+        "movimiento_key",
+        [
+            movimiento_a_registro(mov, path, "quiter")
+            for path, mov in quiter_importados
+        ],
+    )
+    stats["quiter_insertados"] += quiter_stats["insertado"]
+    stats["quiter_actualizados"] += quiter_stats["actualizado"]
 
     reconciliar_base(tolerancia_dias=tolerancia_dias)
     registrar_importacion(corrida_id, stats)
@@ -342,14 +429,16 @@ def reconciliar_base(tolerancia_dias: int = 3) -> None:
     if portal.empty and quiter.empty:
         return
 
-    portal_movs = [row_a_movimiento(row, "portal") for _, row in portal.iterrows()]
-    quiter_movs = [row_a_movimiento(row, "quiter") for _, row in quiter.iterrows()]
+    portal_rows = list(portal.iterrows())
+    quiter_rows = list(quiter.iterrows())
+    portal_movs = [row_a_movimiento(row, "portal") for _, row in portal_rows]
+    quiter_movs = [row_a_movimiento(row, "quiter") for _, row in quiter_rows]
     resultado = conciliar(portal_movs, quiter_movs, tolerancia_dias=tolerancia_dias)
 
     portal_keys = list(portal["movimiento_key"]) if not portal.empty else []
     quiter_keys = list(quiter["movimiento_key"]) if not quiter.empty else []
-    portal_by_signature = {signature(row_a_movimiento(row, "portal")): key for key, (_, row) in zip(portal_keys, portal.iterrows())}
-    quiter_by_signature = {signature(row_a_movimiento(row, "quiter")): key for key, (_, row) in zip(quiter_keys, quiter.iterrows())}
+    portal_by_signature = {signature(mov): key for key, mov in zip(portal_keys, portal_movs)}
+    quiter_by_signature = {signature(mov): key for key, mov in zip(quiter_keys, quiter_movs)}
 
     portal_updates = {key: ("", "") for key in portal_keys}
     quiter_updates = {key: ("", "") for key in quiter_keys}
@@ -361,16 +450,14 @@ def reconciliar_base(tolerancia_dias: int = 3) -> None:
             quiter_updates[qkey] = (pkey, match.criterio)
 
     with conectar() as conn:
-        for key, (matched, criterio) in portal_updates.items():
-            conn.execute(
-                "UPDATE contable_portal SET matched_quiter_key = ?, criterio = ? WHERE movimiento_key = ?",
-                (matched, criterio, key),
-            )
-        for key, (matched, criterio) in quiter_updates.items():
-            conn.execute(
-                "UPDATE contable_quiter SET matched_portal_key = ?, criterio = ? WHERE movimiento_key = ?",
-                (matched, criterio, key),
-            )
+        conn.executemany(
+            "UPDATE contable_portal SET matched_quiter_key = ?, criterio = ? WHERE movimiento_key = ?",
+            [(matched, criterio, key) for key, (matched, criterio) in portal_updates.items()],
+        )
+        conn.executemany(
+            "UPDATE contable_quiter SET matched_portal_key = ?, criterio = ? WHERE movimiento_key = ?",
+            [(matched, criterio, key) for key, (matched, criterio) in quiter_updates.items()],
+        )
 
 
 def signature(mov: Movimiento) -> tuple:
@@ -386,8 +473,9 @@ def signature(mov: Movimiento) -> tuple:
     )
 
 
-def dataframes_consolidados() -> dict[str, pd.DataFrame]:
-    reconciliar_base()
+def dataframes_consolidados(recalcular: bool = False) -> dict[str, pd.DataFrame]:
+    if recalcular:
+        reconciliar_base()
     portal = cargar_tabla("contable_portal")
     quiter = cargar_tabla("contable_quiter")
     conciliados = portal[portal["matched_quiter_key"].astype(str).ne("")].copy() if not portal.empty else pd.DataFrame()
@@ -450,8 +538,8 @@ def historial_importaciones() -> pd.DataFrame:
         )
 
 
-def excel_bytes_consolidado() -> bytes:
-    dfs = dataframes_consolidados()
+def excel_bytes_consolidado(recalcular: bool = False) -> bytes:
+    dfs = dataframes_consolidados(recalcular=recalcular)
     buffer = BytesIO()
     with pd.ExcelWriter(buffer, engine="openpyxl") as writer:
         dfs["resumen"].to_excel(writer, sheet_name="Resumen", index=False)
