@@ -325,7 +325,7 @@ def render_header() -> None:
 
 
 def boton_navegacion(label: str, value: str) -> None:
-    activo = st.session_state.get("pantalla", "Importar y conciliar") == value
+    activo = st.session_state.get("pantalla", "Conciliacion de Pagos y Ventas") == value
     if activo:
         st.sidebar.markdown(f'<div class="nav-active">{label}</div>', unsafe_allow_html=True)
         return
@@ -621,7 +621,6 @@ def pantalla_historial() -> None:
         [
             "Importaciones pagos y ventas",
             "Importaciones contables",
-            "Conciliaciones anteriores",
         ]
     )
 
@@ -630,30 +629,6 @@ def pantalla_historial() -> None:
 
     with tabs[1]:
         mostrar_tabla(consolidado_contable.historial_importaciones(), "historial_importaciones_contable")
-
-    with tabs[2]:
-        conciliaciones = listar_conciliaciones()
-        if not conciliaciones:
-            st.info("No hay conciliaciones anteriores del modulo historico.")
-        else:
-            opciones = {f"{c.creada} | {c.nombre} | {c.id}": c for c in conciliaciones}
-            seleccion = st.selectbox(
-                "Seleccionar conciliacion anterior",
-                list(opciones.keys()),
-                key="historial_select_legacy",
-            )
-            guardada = opciones[seleccion]
-            resumen = pd.DataFrame(guardada.resumen)
-            conciliados = cargar_dataframe(guardada.conciliados_path)
-            pendientes = cargar_dataframe(guardada.pendientes_path)
-            reporte_bytes = guardada.reporte_path.read_bytes() if guardada.reporte_path.exists() else b""
-            mostrar_resultado_actual(
-                resumen,
-                conciliados,
-                pendientes,
-                reporte_bytes,
-                f"reporte_conciliacion_{guardada.id}.xlsx",
-            )
 
 
 def mostrar_resultado_pagos_ventas(
