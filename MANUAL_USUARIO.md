@@ -143,9 +143,9 @@ Esto permite importar reportes con periodos superpuestos.
 
 ### 4.6 Criterios de cruce entre pagos y ventas
 
-La app busca relacionar pagos con ventas usando referencias presentes en los reportes.
+La app busca relacionar cada pago con una venta usando datos que aparecen en la descripcion del pago y en el reporte de ventas.
 
-Los criterios son:
+La busqueda se hace en este orden:
 
 1. **OP del pago contra referencia de venta**
 2. **REF del pago contra referencia de venta**
@@ -153,6 +153,123 @@ Los criterios son:
 4. **Cliente de la venta encontrado en la descripcion del pago**
 
 El criterio utilizado queda informado en la tabla de pagos conciliados.
+
+#### Ejemplo 1: OP del pago = referencia de venta
+
+En el reporte de **Operaciones de pago**, puede aparecer una descripcion como esta:
+
+```text
+OP 4282962 TRANSFERENCIA POBLETE JORGE REF.4287418
+```
+
+La app lee esa descripcion y extrae:
+
+```text
+OP del pago = 4282962
+REF del pago = 4287418
+```
+
+Luego busca en el reporte de ventas una venta cuya referencia sea `4282962`.
+
+Ejemplo de venta:
+
+| Referencia venta | Cliente |
+| --- | --- |
+| 4282962 | POBLETE CIRIANNI JORGE AGUSTIN |
+
+Como la OP del pago coincide con la referencia de la venta, el sistema concilia el pago con esa venta.
+
+En la tabla **Pagos conciliados**, el criterio se vera como:
+
+```text
+OP del pago = Refer. venta
+```
+
+Lectura practica:
+
+- El pago decia `OP 4282962`.
+- La venta tenia referencia `4282962`.
+- Por eso el sistema entiende que corresponden a la misma operacion.
+
+#### Ejemplo 2: REF del pago = referencia de venta
+
+Si no se encuentra venta por OP, el sistema intenta usar la referencia indicada como `REF`.
+
+Descripcion del pago:
+
+```text
+TRANSFERENCIA CLIENTE GOMEZ REF.5012345
+```
+
+La app extrae:
+
+```text
+REF del pago = 5012345
+```
+
+Si en ventas existe:
+
+| Referencia venta | Cliente |
+| --- | --- |
+| 5012345 | GOMEZ MARIA |
+
+El pago se concilia con esa venta.
+
+En la tabla **Pagos conciliados**, el criterio se vera como:
+
+```text
+REF del pago = Refer. venta
+```
+
+#### Ejemplo 3: numero en descripcion = referencia de venta
+
+A veces el texto del pago no dice claramente `OP` o `REF`, pero contiene un numero que puede ser una referencia de venta.
+
+Descripcion del pago:
+
+```text
+TRANSFERENCIA UNIDAD 4282962 POBLETE
+```
+
+La app detecta el numero `4282962` dentro de la descripcion.
+
+Si en ventas existe una referencia `4282962`, el sistema puede conciliarlo.
+
+En la tabla **Pagos conciliados**, el criterio se vera como:
+
+```text
+Numero en descripcion del pago = Refer. venta
+```
+
+#### Ejemplo 4: cliente de venta encontrado en descripcion del pago
+
+Como ultimo recurso, si no hay referencia clara, la app intenta buscar el nombre del cliente de la venta dentro de la descripcion del pago.
+
+Descripcion del pago:
+
+```text
+TRANSFERENCIA POBLETE CIRIANNI JORGE AGUSTIN
+```
+
+Venta:
+
+| Referencia venta | Cliente |
+| --- | --- |
+| 4282962 | POBLETE CIRIANNI JORGE AGUSTIN |
+
+Si el cliente aparece en la descripcion y la app encuentra una unica venta posible, puede conciliar el pago.
+
+En la tabla **Pagos conciliados**, el criterio se vera como:
+
+```text
+Cliente de venta encontrado en descripcion del pago
+```
+
+#### Importante
+
+En este modulo, la OP del pago se usa porque puede coincidir con la referencia de la venta.
+
+Esto es distinto al modulo contable. En la conciliacion contable la OP no se usa, porque la OP de Quiter y la OP de Tarjeta Habitualista pueden ser distintas.
 
 ### 4.7 Metricas principales
 
