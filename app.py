@@ -589,46 +589,94 @@ def mostrar_resultado_actual(
 
 
 def pantalla_historial() -> None:
-    st.subheader("Conciliaciones guardadas")
-    conciliaciones = listar_conciliaciones()
-    if not conciliaciones:
-        st.info("Todavia no hay conciliaciones guardadas.")
-        return
-
-    opciones = {
-        f"{c.creada} | {c.nombre} | {c.id}": c
-        for c in conciliaciones
-    }
-    seleccion = st.selectbox("Seleccionar conciliacion", list(opciones.keys()))
-    guardada = opciones[seleccion]
-
-    resumen = pd.DataFrame(guardada.resumen)
-    conciliados = cargar_dataframe(guardada.conciliados_path)
-    pendientes = cargar_dataframe(guardada.pendientes_path)
-    reporte_bytes = guardada.reporte_path.read_bytes() if guardada.reporte_path.exists() else b""
-
-    mostrar_metricas(resumen)
+    st.subheader("Historial y descargas")
     st.caption(
-        f"Periodo: {guardada.desde or '-'} a {guardada.hasta or '-'} | "
-        f"Tolerancia: {guardada.tolerancia_dias} dias | ID: {guardada.id}"
+        "El historial registra las importaciones realizadas y permite descargar los reportes "
+        "consolidados vigentes de cada conciliacion."
     )
-    if reporte_bytes:
+
+    col_ventas, col_contable = st.columns(2)
+    with col_ventas:
+        st.markdown("### Conciliacion de Pagos y Ventas")
         st.download_button(
-            "Descargar reporte Excel",
-            data=reporte_bytes,
-            file_name=f"reporte_conciliacion_{guardada.id}.xlsx",
+            "Descargar consolidado pagos y ventas",
+            data=consolidado.excel_bytes_consolidado(),
+            file_name="reporte_consolidado_ventas_pagos.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            key="historial_download_consolidado_ventas",
+            use_container_width=True,
+        )
+    with col_contable:
+        st.markdown("### Conciliacion Contable")
+        st.download_button(
+            "Descargar consolidado contable",
+            data=consolidado_contable.excel_bytes_consolidado(),
+            file_name="reporte_contable_consolidado.xlsx",
+            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            key="historial_download_consolidado_contable",
+            use_container_width=True,
         )
 
-    tab_resumen, tab_conciliados, tab_pendientes = st.tabs(
-        ["Resumen", "Conciliados", "No conciliados"]
+    tabs = st.tabs(
+        [
+            "Importaciones pagos y ventas",
+            "Importaciones contables",
+            "Controles pagos vs ventas",
+            "Conciliaciones anteriores",
+        ]
     )
-    with tab_resumen:
-        st.dataframe(dataframe_para_pantalla(resumen), use_container_width=True, hide_index=True)
-    with tab_conciliados:
-        mostrar_tabla(conciliados, f"{guardada.id}_conciliados")
-    with tab_pendientes:
-        mostrar_tabla(pendientes, f"{guardada.id}_pendientes")
+
+    with tabs[0]:
+        mostrar_tabla(consolidado.historial_importaciones(), "historial_importaciones_consolidado")
+
+    with tabs[1]:
+        mostrar_tabla(consolidado_contable.historial_importaciones(), "historial_importaciones_contable")
+
+    with tabs[2]:
+        historial_pagos_ventas = listar_conciliaciones_pagos_ventas()
+        if not historial_pagos_ventas:
+            st.info("Todavia no hay controles de pagos vs ventas guardados.")
+        else:
+            opciones = {f"{c.creada} | {c.nombre} | {c.id}": c for c in historial_pagos_ventas}
+            seleccion = st.selectbox(
+                "Seleccionar control de pagos vs ventas",
+                list(opciones.keys()),
+                key="historial_select_pagos_ventas",
+            )
+            guardada = opciones[seleccion]
+            mostrar_resultado_pagos_ventas(
+                pd.DataFrame(guardada.resumen),
+                cargar_dataframe(guardada.detectados_path),
+                cargar_dataframe(guardada.no_detectados_path),
+                cargar_dataframe(guardada.ventas_sin_pago_path),
+                guardada.reporte_path.read_bytes() if guardada.reporte_path.exists() else b"",
+                f"reporte_pagos_ventas_{guardada.id}.xlsx",
+                f"historial_pagos_ventas_{guardada.id}",
+            )
+
+    with tabs[3]:
+        conciliaciones = listar_conciliaciones()
+        if not conciliaciones:
+            st.info("No hay conciliaciones anteriores del modulo historico.")
+        else:
+            opciones = {f"{c.creada} | {c.nombre} | {c.id}": c for c in conciliaciones}
+            seleccion = st.selectbox(
+                "Seleccionar conciliacion anterior",
+                list(opciones.keys()),
+                key="historial_select_legacy",
+            )
+            guardada = opciones[seleccion]
+            resumen = pd.DataFrame(guardada.resumen)
+            conciliados = cargar_dataframe(guardada.conciliados_path)
+            pendientes = cargar_dataframe(guardada.pendientes_path)
+            reporte_bytes = guardada.reporte_path.read_bytes() if guardada.reporte_path.exists() else b""
+            mostrar_resultado_actual(
+                resumen,
+                conciliados,
+                pendientes,
+                reporte_bytes,
+                f"reporte_conciliacion_{guardada.id}.xlsx",
+            )
 
 
 def mostrar_resultado_pagos_ventas(
