@@ -621,7 +621,6 @@ def pantalla_historial() -> None:
         [
             "Importaciones pagos y ventas",
             "Importaciones contables",
-            "Controles pagos vs ventas",
             "Conciliaciones anteriores",
         ]
     )
@@ -633,28 +632,6 @@ def pantalla_historial() -> None:
         mostrar_tabla(consolidado_contable.historial_importaciones(), "historial_importaciones_contable")
 
     with tabs[2]:
-        historial_pagos_ventas = listar_conciliaciones_pagos_ventas()
-        if not historial_pagos_ventas:
-            st.info("Todavia no hay controles de pagos vs ventas guardados.")
-        else:
-            opciones = {f"{c.creada} | {c.nombre} | {c.id}": c for c in historial_pagos_ventas}
-            seleccion = st.selectbox(
-                "Seleccionar control de pagos vs ventas",
-                list(opciones.keys()),
-                key="historial_select_pagos_ventas",
-            )
-            guardada = opciones[seleccion]
-            mostrar_resultado_pagos_ventas(
-                pd.DataFrame(guardada.resumen),
-                cargar_dataframe(guardada.detectados_path),
-                cargar_dataframe(guardada.no_detectados_path),
-                cargar_dataframe(guardada.ventas_sin_pago_path),
-                guardada.reporte_path.read_bytes() if guardada.reporte_path.exists() else b"",
-                f"reporte_pagos_ventas_{guardada.id}.xlsx",
-                f"historial_pagos_ventas_{guardada.id}",
-            )
-
-    with tabs[3]:
         conciliaciones = listar_conciliaciones()
         if not conciliaciones:
             st.info("No hay conciliaciones anteriores del modulo historico.")
@@ -1118,13 +1095,12 @@ def main() -> None:
 
     if "pantalla" not in st.session_state:
         st.session_state["pantalla"] = "Conciliacion de Pagos y Ventas"
-    if st.session_state["pantalla"] == "Importar y conciliar":
+    if st.session_state["pantalla"] in ("Importar y conciliar", "Pagos vs ventas"):
         st.session_state["pantalla"] = "Conciliacion de Pagos y Ventas"
 
     st.sidebar.markdown("### Menu")
     boton_navegacion("Conciliacion de Pagos y Ventas", "Conciliacion de Pagos y Ventas")
     boton_navegacion("Conciliacion Contable de Tarjeta Habitualista S/ Contabilidad", "Conciliacion Contable de Tarjeta Habitualista S/ Contabilidad")
-    boton_navegacion("Pagos vs ventas", "Pagos vs ventas")
     boton_navegacion("Historial", "Historial")
     boton_navegacion("Backups", "Backups")
     st.sidebar.markdown("---")
@@ -1136,8 +1112,6 @@ def main() -> None:
         pantalla_base_consolidada()
     elif pantalla in ("Base contable", "Conciliacion Contable de Tarjeta Habitualista S/ Contabilidad"):
         pantalla_base_contable()
-    elif pantalla == "Pagos vs ventas":
-        pantalla_pagos_ventas()
     elif pantalla == "Backups":
         pantalla_backups()
     else:
