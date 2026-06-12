@@ -2,200 +2,237 @@
 
 ## Sistema de Conciliacion Tarjeta Habitualista CIEL
 
-Este manual corresponde a la version actual de la aplicacion. Describe unicamente los modulos visibles y vigentes:
+Este manual explica la version actual de la aplicacion, con ejemplos practicos de como la app interpreta los datos y como debe leerlos el usuario.
+
+Modulos vigentes:
 
 - Conciliacion de Pagos y Ventas
 - Conciliacion Contable de Tarjeta Habitualista S/ Contabilidad
 - Historial
 - Backups
 
-El objetivo es que un usuario pueda comenzar desde cero, entender que archivos debe importar, como funciona cada conciliacion, que significan los resultados y como descargar la informacion para revision.
-
 ---
 
-## 1. Que hace la aplicacion
+## 1. Idea general de la aplicacion
 
-La aplicacion permite mantener bases consolidadas de conciliacion. Esto significa que la informacion se va acumulando con cada importacion y no se reinicia cada vez que se cargan reportes nuevos.
+La app sirve para cargar reportes, mantener bases consolidadas y detectar coincidencias entre archivos.
 
-El sistema permite:
+Una **base consolidada** significa que la app no trabaja solo con el archivo del dia. La app guarda lo que ya se importo, agrega lo nuevo, actualiza repetidos y recalcula la conciliacion total.
 
-- Importar reportes de Tarjeta Habitualista.
-- Importar reportes de ventas.
-- Importar mayor contable de Quiter.
-- Detectar movimientos conciliados.
-- Detectar movimientos pendientes de revision.
-- Descargar reportes consolidados en Excel.
-- Consultar historial de importaciones.
-- Crear y restaurar backups.
+### Ejemplo practico
 
----
+El lunes se cargan pagos y ventas de enero a abril.
 
-## 2. Conceptos basicos
+El viernes se carga otro reporte que contiene abril y mayo.
 
-### 2.1 Base consolidada
+La app:
 
-Es la base acumulada de datos que guarda la app.
-
-Cuando se cargan nuevos archivos, la app:
-
-- agrega registros nuevos;
-- actualiza registros repetidos si traen informacion nueva;
-- evita duplicar datos;
-- recalcula la conciliacion con toda la informacion disponible.
-
-### 2.2 Movimiento conciliado
-
-Es un movimiento que la app pudo relacionar con otro movimiento del reporte correspondiente.
-
-Ejemplos:
-
-- un pago de Habitualista asociado a una venta;
-- un pago de Habitualista asociado a un asiento de Quiter;
-- un deposito de Habitualista asociado a un movimiento al Debe de Quiter.
-
-### 2.3 Movimiento pendiente
-
-Es un movimiento que no encontro coincidencia.
-
-No siempre significa error. Significa que debe revisarse.
-
-### 2.4 Registro insertado
-
-Es un registro nuevo que no existia en la base.
-
-### 2.5 Registro actualizado
-
-Es un registro que ya existia y fue actualizado por una nueva importacion.
-
----
-
-## 3. Menu principal
-
-El menu lateral de la aplicacion contiene:
-
-1. **Conciliacion de Pagos y Ventas**
-2. **Conciliacion Contable de Tarjeta Habitualista S/ Contabilidad**
-3. **Historial**
-4. **Backups**
-
-Estos son los unicos modulos que debe usar el usuario.
-
----
-
-## 4. Conciliacion de Pagos y Ventas
-
-### 4.1 Objetivo del modulo
-
-Este modulo cruza los pagos realizados mediante Tarjeta Habitualista contra las operaciones de venta.
-
-Permite saber:
-
-- que pagos ya fueron relacionados con ventas;
-- que pagos no tienen venta detectada;
-- que ventas no tienen pago detectado;
-- que archivos fueron importados;
-- cual es la base total acumulada de pagos y ventas.
-
-### 4.2 Archivos que se importan
-
-El modulo tiene dos cargas:
-
-1. **Operaciones de pago**
-   - Reporte descargado desde Tarjeta Habitualista.
-   - Contiene pagos realizados por gestores.
-
-2. **Reportes de ventas**
-   - Reportes descargados desde Quiter u origen operativo de ventas.
-   - Se pueden subir varios archivos a la vez.
-   - Ejemplos: ventas 0 km y ventas usados.
-
-### 4.3 Como hacer la primera carga
-
-1. Entrar a **Conciliacion de Pagos y Ventas**.
-2. En **Operaciones de pago**, cargar el archivo de pagos.
-3. En **Reportes de ventas**, cargar uno o mas archivos de ventas.
-4. Presionar **Importar y recalcular base**.
-5. Esperar el mensaje de confirmacion.
-6. Revisar las metricas superiores.
-7. Revisar las solapas de detalle.
-8. Descargar el Excel si se necesita respaldar la revision.
-
-### 4.4 Como hacer cargas posteriores
-
-Cuando se obtienen nuevos reportes:
-
-1. Entrar al mismo modulo.
-2. Subir los nuevos archivos de pagos y/o ventas.
-3. Presionar **Importar y recalcular base**.
-
-La app no borra la base. Agrega lo nuevo y actualiza lo existente.
-
-### 4.5 Que pasa si se importa un periodo repetido
-
-Si se importa un archivo que contiene registros ya cargados:
-
-- la app reconoce los duplicados;
-- no los duplica;
-- actualiza datos si corresponde;
+- no duplica abril;
+- actualiza abril si encuentra datos mas completos;
+- agrega mayo;
 - recalcula la conciliacion total.
 
-Esto permite importar reportes con periodos superpuestos.
+### Como debe leerlo el usuario
 
-### 4.6 Criterios de cruce entre pagos y ventas
+El usuario no debe pensar cada carga como un archivo aislado. Debe pensar que la app va construyendo una base historica y que cada importacion mejora o completa esa base.
 
-La app busca relacionar cada pago con una venta usando datos que aparecen en la descripcion del pago y en el reporte de ventas.
+---
 
-La busqueda se hace en este orden:
+## 2. Menu principal
 
-1. **OP del pago contra referencia de venta**
-2. **REF del pago contra referencia de venta**
-3. **Numeros encontrados en la descripcion del pago**
-4. **Cliente de la venta encontrado en la descripcion del pago**
+El menu lateral muestra cuatro modulos.
 
-El criterio utilizado queda informado en la tabla de pagos conciliados.
+### Conciliacion de Pagos y Ventas
 
-#### Ejemplo 1: OP del pago = referencia de venta
+Sirve para controlar si los pagos realizados con Tarjeta Habitualista corresponden a ventas.
 
-En el reporte de **Operaciones de pago**, puede aparecer una descripcion como esta:
+### Conciliacion Contable de Tarjeta Habitualista S/ Contabilidad
+
+Sirve para controlar si los pagos y depositos informados por Tarjeta Habitualista estan registrados en la contabilidad de Quiter.
+
+### Historial
+
+Sirve para consultar importaciones y descargar los reportes consolidados actuales.
+
+### Backups
+
+Sirve para crear o restaurar copias de seguridad.
+
+---
+
+## 3. Conciliacion de Pagos y Ventas
+
+## 3.1 Para que sirve
+
+Este modulo cruza:
+
+- Operaciones de pago de Tarjeta Habitualista.
+- Reportes de ventas.
+
+El objetivo es saber que pagos se relacionan con ventas y cuales quedan pendientes de revision.
+
+### Ejemplo practico
+
+Un gestor paga una operacion por Tarjeta Habitualista. En el reporte de pagos aparece:
 
 ```text
 OP 4282962 TRANSFERENCIA POBLETE JORGE REF.4287418
 ```
 
-La app lee esa descripcion y extrae:
+En el reporte de ventas aparece:
+
+| Referencia venta | Cliente |
+| --- | --- |
+| 4282962 | POBLETE CIRIANNI JORGE AGUSTIN |
+
+La app detecta que la OP del pago coincide con la referencia de venta. Entonces marca el pago como conciliado.
+
+### Como debe leerlo el usuario
+
+El usuario debe revisar si el pago que aparece como conciliado corresponde realmente a la venta que muestra el sistema.
+
+La tabla de conciliados muestra el pago y la venta encontrada.
+
+---
+
+## 3.2 Archivos que se cargan
+
+El modulo tiene dos cargas.
+
+### Operaciones de pago
+
+Es el archivo descargado desde Tarjeta Habitualista. Contiene los pagos realizados por gestores.
+
+La app toma datos como:
+
+- fecha del pago;
+- numero de pago;
+- importe;
+- descripcion;
+- OP detectada en el texto;
+- REF detectada en el texto.
+
+### Reportes de ventas
+
+Son los archivos de ventas. Se puede subir mas de un archivo en la misma importacion.
+
+Ejemplo:
+
+- ventas 0 km;
+- ventas usados.
+
+La app toma datos como:
+
+- referencia de venta;
+- cliente;
+- vendedor;
+- modelo;
+- saldo;
+- fechas de venta o entrega;
+- IDV;
+- matricula.
+
+---
+
+## 3.3 Como hacer una carga
+
+1. Entrar a **Conciliacion de Pagos y Ventas**.
+2. Subir el archivo de **Operaciones de pago**.
+3. Subir uno o varios **Reportes de ventas**.
+4. Presionar **Importar y recalcular base**.
+5. Esperar el mensaje de confirmacion.
+6. Revisar las metricas.
+7. Revisar las solapas.
+8. Descargar el Excel si se necesita respaldar la revision.
+
+### Ejemplo practico
+
+Se cargan:
+
+- `Operaciones de pago enero a mayo.xlsx`
+- `Ventas 0km enero a mayo.xls`
+- `Ventas usados enero a mayo.xls`
+
+La app importa los tres archivos, une ventas 0 km y usados en una sola base y cruza todos los pagos contra todas las ventas.
+
+### Como debe leerlo el usuario
+
+Si despues se carga otro archivo de ventas, la app no reinicia todo. Lo suma a la base y vuelve a recalcular.
+
+---
+
+## 3.4 Que pasa si cargo datos repetidos
+
+Si se carga un reporte con un periodo que ya estaba importado, la app no duplica registros.
+
+### Ejemplo practico
+
+Ya estaba cargado abril.
+
+Luego se importa un reporte de pagos desde el 15/04 al 15/05.
+
+La app:
+
+- reconoce pagos de abril ya cargados;
+- actualiza esos pagos si corresponde;
+- agrega los pagos nuevos de mayo;
+- recalcula el cruce total.
+
+### Como debe leerlo el usuario
+
+No hay problema en importar periodos superpuestos. Es preferible eso antes que dejar informacion incompleta.
+
+---
+
+## 3.5 Como hace el cruce de pagos con ventas
+
+La app intenta encontrar una venta para cada pago. Lo hace en este orden:
+
+1. OP del pago = referencia de venta.
+2. REF del pago = referencia de venta.
+3. Numero dentro de la descripcion del pago = referencia de venta.
+4. Cliente de la venta encontrado en la descripcion del pago.
+
+---
+
+## 3.5.1 Ejemplo: OP del pago = referencia de venta
+
+Pago:
+
+```text
+OP 4282962 TRANSFERENCIA POBLETE JORGE REF.4287418
+```
+
+La app extrae:
 
 ```text
 OP del pago = 4282962
 REF del pago = 4287418
 ```
 
-Luego busca en el reporte de ventas una venta cuya referencia sea `4282962`.
-
-Ejemplo de venta:
+Venta:
 
 | Referencia venta | Cliente |
 | --- | --- |
 | 4282962 | POBLETE CIRIANNI JORGE AGUSTIN |
 
-Como la OP del pago coincide con la referencia de la venta, el sistema concilia el pago con esa venta.
-
-En la tabla **Pagos conciliados**, el criterio se vera como:
+Resultado:
 
 ```text
 OP del pago = Refer. venta
 ```
 
-Lectura practica:
+### Como debe leerlo el usuario
 
-- El pago decia `OP 4282962`.
-- La venta tenia referencia `4282962`.
-- Por eso el sistema entiende que corresponden a la misma operacion.
+El pago se concilio porque la OP `4282962` coincide con la referencia de venta `4282962`.
 
-#### Ejemplo 2: REF del pago = referencia de venta
+Aunque el pago tenga tambien `REF.4287418`, la app primero prueba con la OP.
 
-Si no se encuentra venta por OP, el sistema intenta usar la referencia indicada como `REF`.
+---
 
-Descripcion del pago:
+## 3.5.2 Ejemplo: REF del pago = referencia de venta
+
+Pago:
 
 ```text
 TRANSFERENCIA CLIENTE GOMEZ REF.5012345
@@ -207,45 +244,59 @@ La app extrae:
 REF del pago = 5012345
 ```
 
-Si en ventas existe:
+Venta:
 
 | Referencia venta | Cliente |
 | --- | --- |
 | 5012345 | GOMEZ MARIA |
 
-El pago se concilia con esa venta.
-
-En la tabla **Pagos conciliados**, el criterio se vera como:
+Resultado:
 
 ```text
 REF del pago = Refer. venta
 ```
 
-#### Ejemplo 3: numero en descripcion = referencia de venta
+### Como debe leerlo el usuario
 
-A veces el texto del pago no dice claramente `OP` o `REF`, pero contiene un numero que puede ser una referencia de venta.
+El pago no se pudo conciliar por OP, pero si por REF. La referencia del pago coincide con la referencia de la venta.
 
-Descripcion del pago:
+---
+
+## 3.5.3 Ejemplo: numero en descripcion = referencia de venta
+
+Pago:
 
 ```text
 TRANSFERENCIA UNIDAD 4282962 POBLETE
 ```
 
-La app detecta el numero `4282962` dentro de la descripcion.
+La app detecta el numero:
 
-Si en ventas existe una referencia `4282962`, el sistema puede conciliarlo.
+```text
+4282962
+```
 
-En la tabla **Pagos conciliados**, el criterio se vera como:
+Venta:
+
+| Referencia venta | Cliente |
+| --- | --- |
+| 4282962 | POBLETE CIRIANNI JORGE AGUSTIN |
+
+Resultado:
 
 ```text
 Numero en descripcion del pago = Refer. venta
 ```
 
-#### Ejemplo 4: cliente de venta encontrado en descripcion del pago
+### Como debe leerlo el usuario
 
-Como ultimo recurso, si no hay referencia clara, la app intenta buscar el nombre del cliente de la venta dentro de la descripcion del pago.
+El texto no tenia OP ni REF formal, pero tenia un numero que coincide con una referencia de venta.
 
-Descripcion del pago:
+---
+
+## 3.5.4 Ejemplo: cliente encontrado en descripcion
+
+Pago:
 
 ```text
 TRANSFERENCIA POBLETE CIRIANNI JORGE AGUSTIN
@@ -257,542 +308,542 @@ Venta:
 | --- | --- |
 | 4282962 | POBLETE CIRIANNI JORGE AGUSTIN |
 
-Si el cliente aparece en la descripcion y la app encuentra una unica venta posible, puede conciliar el pago.
-
-En la tabla **Pagos conciliados**, el criterio se vera como:
+Resultado:
 
 ```text
 Cliente de venta encontrado en descripcion del pago
 ```
 
-#### Importante
+### Como debe leerlo el usuario
 
-En este modulo, la OP del pago se usa porque puede coincidir con la referencia de la venta.
-
-Esto es distinto al modulo contable. En la conciliacion contable la OP no se usa, porque la OP de Quiter y la OP de Tarjeta Habitualista pueden ser distintas.
-
-### 4.7 Metricas principales
-
-El modulo muestra tarjetas resumen con informacion clave:
-
-- **Pagos conciliados**
-  - cantidad de pagos que encontraron venta.
-
-- **Total conciliado**
-  - importe total de pagos conciliados.
-
-- **Pagos no conciliados**
-  - pagos que no encontraron venta.
-
-- **Ventas sin pago**
-  - ventas cargadas que no tienen pago detectado.
-
-### 4.8 Solapas de resultado
-
-#### Resumen
-
-Muestra cantidades e importes generales:
-
-- pagos en base;
-- pagos conciliados con ventas;
-- pagos no conciliados;
-- ventas en base;
-- ventas sin pago detectado.
-
-#### Pagos conciliados
-
-Muestra los pagos que fueron asociados a ventas.
-
-Campos utiles:
-
-- fecha del pago;
-- numero de pago;
-- importe del pago;
-- OP del pago;
-- referencia del pago;
-- descripcion del pago;
-- referencia de venta;
-- cliente;
-- vendedor;
-- modelo;
-- saldo de venta;
-- criterio de conciliacion.
-
-#### Pagos no conciliados
-
-Muestra pagos que no encontraron venta.
-
-Se deben revisar para detectar:
-
-- ventas aun no importadas;
-- referencias mal informadas;
-- pagos que no corresponden a ventas;
-- descripciones incompletas.
-
-#### Ventas sin pago
-
-Muestra ventas sin pago detectado.
-
-Se deben revisar para detectar:
-
-- pagos aun no importados;
-- pagos realizados por otro medio;
-- referencias incorrectas;
-- ventas que no deberian tener pago por Habitualista.
-
-#### Base pagos
-
-Muestra todos los pagos cargados en la base.
-
-Sirve para verificar origen, archivo, datos del pago y estado de conciliacion.
-
-#### Base ventas
-
-Muestra todas las ventas cargadas en la base.
-
-Sirve para verificar ventas importadas y si tienen pago detectado.
-
-#### Importaciones
-
-Muestra el historial de cargas de este modulo.
-
-Incluye:
-
-- fecha de importacion;
-- archivos cargados;
-- pagos insertados;
-- pagos actualizados;
-- ventas insertadas;
-- ventas actualizadas.
-
-### 4.9 Descarga Excel
-
-El boton **Descargar reporte consolidado Excel** genera el reporte total vigente.
-
-Incluye:
-
-- Resumen
-- Pagos conciliados
-- Pagos no conciliados
-- Ventas sin pago
-- Base pagos
-- Base ventas
-- Importaciones
+La app no encontro una referencia clara, pero encontro el nombre del cliente. Este criterio debe revisarse con mas cuidado porque es menos exacto que una referencia numerica.
 
 ---
 
-## 5. Conciliacion Contable de Tarjeta Habitualista S/ Contabilidad
+## 3.6 Metricas de Pagos y Ventas
 
-### 5.1 Objetivo del modulo
+### Pagos conciliados
 
-Este modulo cruza Tarjeta Habitualista contra la contabilidad de Quiter.
-
-Permite saber:
-
-- que pagos de Habitualista estan registrados en Quiter;
-- que depositos estan registrados en Quiter;
-- que movimientos estan en Habitualista y no en Quiter;
-- que movimientos estan en Quiter y no en Habitualista;
-- que asiento o descripcion contable fue usada para conciliar cada movimiento.
-
-### 5.2 Logica contable
-
-En Quiter:
-
-- **Debe**: depositos realizados a la cuenta.
-- **Haber**: pagos realizados con Tarjeta Habitualista.
-
-En Habitualista:
-
-- **Movimientos de cuenta tipo CREDIT**: depositos.
-- **Operaciones de pago**: pagos realizados por gestores.
-
-### 5.3 Archivos que se importan
-
-El modulo tiene tres cargas:
-
-1. **Operaciones de pago**
-   - Reporte de pagos de Tarjeta Habitualista.
-
-2. **Movimientos de cuenta**
-   - Reporte de cuenta corriente de Tarjeta Habitualista.
-   - La app considera solamente movimientos tipo `CREDIT`.
-
-3. **Contabilidad Quiter**
-   - Mayor contable de la cuenta.
-   - Debe contener Debe y Haber.
-
-Se pueden cargar varios archivos en cada bloque.
-
-### 5.4 Primera carga
-
-1. Entrar a **Conciliacion Contable de Tarjeta Habitualista S/ Contabilidad**.
-2. Cargar **Operaciones de pago**.
-3. Cargar **Movimientos de cuenta**.
-4. Cargar **Contabilidad Quiter**.
-5. Seleccionar **Desde Quiter**.
-6. Seleccionar **Hasta Quiter**.
-7. Definir **Tolerancia dias depositos**.
-8. Revisar la opcion **Sincronizar periodo de Quiter**.
-9. Presionar **Importar y recalcular contabilidad**.
-10. Revisar metricas y solapas.
-11. Descargar el Excel contable si corresponde.
-
-### 5.5 Cargas posteriores
-
-Para agregar informacion nueva:
-
-1. Subir los reportes nuevos o corregidos.
-2. Seleccionar el periodo correcto de Quiter.
-3. Presionar **Importar y recalcular contabilidad**.
-
-La base queda acumulada. No se reinicia con cada carga.
-
-### 5.6 Criterio actual de conciliacion contable
-
-La conciliacion contable **no usa OP ni referencia**.
-
-Motivo:
-
-- la OP de Quiter puede ser distinta a la OP de Habitualista;
-- la referencia de Quiter puede ser solo un codigo de asiento;
-- usar esos datos puede generar cruces incorrectos.
-
-La regla actual es:
-
-1. Coincidir por **tipo + importe**.
-   - pago con pago;
-   - deposito con deposito.
-
-2. Si hay un unico candidato con el mismo tipo e importe, se concilia.
-
-3. Si hay varios candidatos con el mismo importe, se usa cercania de fecha.
-
-4. Si no hay candidato dentro de la tolerancia de fechas, queda pendiente.
-
-### 5.7 Tolerancia de dias
-
-La tolerancia permite aceptar diferencias razonables de fecha entre Habitualista y Quiter.
+Cantidad de pagos que encontraron una venta.
 
 Ejemplo:
 
-- Habitualista: 10/05/2026
-- Quiter: 12/05/2026
-- Tolerancia: 3 dias
+```text
+Pagos conciliados: 40
+```
 
-El movimiento puede conciliarse porque la diferencia es de 2 dias.
+Significa que 40 pagos fueron asociados a ventas.
 
-### 5.8 Sincronizar periodo de Quiter
+### Total conciliado
 
-Esta opcion sirve cuando el archivo de Quiter representa la foto completa del periodo seleccionado.
+Suma de los importes de pagos conciliados.
 
-Si esta activa, la app:
+Ejemplo:
 
-1. toma los movimientos de Quiter del periodo seleccionado;
-2. compara la base actual contra el nuevo archivo;
-3. elimina de la base los asientos que ya no aparecen en el nuevo mayor.
+```text
+Total conciliado: $ 120.000.000,00
+```
 
-Sirve para limpiar asientos corregidos o eliminados en Quiter.
+Significa que ese es el total de dinero de pagos que la app pudo relacionar con ventas.
 
-### 5.9 Cuidado con la sincronizacion
+### Pagos no conciliados
 
-Usar sincronizacion solo cuando el archivo contiene todo el periodo seleccionado.
+Pagos que no encontraron venta.
 
-Ejemplo correcto:
+Ejemplo:
 
-- Archivo: 10/05/2026 al 14/05/2026.
-- Rango en app: 10/05/2026 al 14/05/2026.
+```text
+Pagos no conciliados: 8
+```
 
-Ejemplo riesgoso:
+El usuario debe revisar esos 8 pagos.
 
-- Archivo: 10/05/2026 al 14/05/2026.
-- Rango en app: 01/05/2026 al 14/05/2026.
+Posibles causas:
 
-En el caso riesgoso, la app podria eliminar asientos del 01/05 al 09/05 porque no aparecen en el archivo cargado.
+- la venta todavia no fue importada;
+- la referencia esta mal escrita;
+- el pago no corresponde a una venta;
+- falta informacion en la descripcion.
 
-### 5.10 Recalcular conciliacion contable
+### Ventas sin pago
 
-El boton **Recalcular conciliacion contable** recalcula la base ya cargada sin importar archivos nuevos.
+Ventas que no tienen pago detectado.
 
-Usarlo cuando:
+Posibles causas:
 
-- se quiere refrescar el resultado;
-- se importaron datos y se desea recalcular;
-- se aplico una nueva regla de conciliacion.
+- el pago todavia no fue importado;
+- la venta fue pagada por otro medio;
+- la referencia de venta no aparece en el pago;
+- no corresponde pago por Tarjeta Habitualista.
 
-### 5.11 Metricas principales
+---
 
-El modulo muestra:
+## 3.7 Solapas de Pagos y Ventas
 
-- **Conciliados**
-  - movimientos que encontraron coincidencia.
+### Resumen
 
-- **Total conciliado**
-  - importe total conciliado.
+Muestra totales agrupados.
 
-- **Pendientes portal**
-  - movimientos de Habitualista sin match en Quiter.
+Ejemplo de lectura:
 
-- **Pendientes Quiter**
-  - movimientos de Quiter sin match en Habitualista.
+Si dice:
 
-### 5.12 Solapas del modulo contable
+```text
+Pagos en base: 100
+Pagos conciliados con ventas: 80
+Pagos no conciliados: 20
+```
 
-#### Resumen
+Entonces el usuario sabe que de 100 pagos importados, 80 encontraron venta y 20 deben revisarse.
 
-Muestra por tipo de movimiento:
+### Pagos conciliados
 
-- cantidad e importe en portal;
-- cantidad e importe en Quiter;
-- cantidad e importe conciliado;
-- pendientes portal;
-- pendientes Quiter.
+Muestra el detalle de pagos que encontraron venta.
 
-#### Conciliados
+Se debe revisar:
 
-Muestra los movimientos conciliados y contra que movimiento fueron conciliados.
+- descripcion del pago;
+- referencia de venta;
+- cliente;
+- criterio de conciliacion.
+
+### Pagos no conciliados
+
+Muestra pagos sin venta encontrada.
+
+Ejemplo:
+
+```text
+Motivo revision: OP no encontrado en ventas
+Descripcion: OP 4282962 TRANSFERENCIA POBLETE
+```
+
+Lectura:
+
+La app detecto una OP, pero no encontro esa OP como referencia en ventas. Puede faltar importar el reporte de ventas correcto o puede haber diferencia en la referencia.
+
+### Ventas sin pago
+
+Muestra ventas que no fueron relacionadas con ningun pago.
+
+Lectura:
+
+Si aparece una venta en esta solapa, el usuario debe verificar si el pago existe, si fue por otro medio o si todavia no fue cargado.
+
+### Base pagos
+
+Muestra todos los pagos importados.
+
+Sirve para auditar si un pago existe en la base.
+
+### Base ventas
+
+Muestra todas las ventas importadas.
+
+Sirve para auditar si una venta existe en la base.
+
+### Importaciones
+
+Muestra cada carga realizada.
+
+Ejemplo de lectura:
+
+```text
+pagos_insertados: 20
+pagos_actualizados: 5
+ventas_insertadas: 10
+ventas_actualizadas: 2
+```
+
+Significa que la importacion agrego 20 pagos nuevos, actualizo 5 pagos existentes, agrego 10 ventas nuevas y actualizo 2 ventas ya cargadas.
+
+---
+
+## 4. Conciliacion Contable de Tarjeta Habitualista S/ Contabilidad
+
+## 4.1 Para que sirve
+
+Este modulo cruza Tarjeta Habitualista contra Quiter.
+
+Compara:
+
+- pagos de Tarjeta Habitualista contra movimientos al Haber de Quiter;
+- depositos de Tarjeta Habitualista contra movimientos al Debe de Quiter.
+
+---
+
+## 4.2 Como interpreta cada archivo
+
+### Operaciones de pago
+
+La app interpreta cada operacion de pago como un **pago**.
+
+### Movimientos de cuenta
+
+La app toma solamente movimientos tipo `CREDIT`.
+
+Cada `CREDIT` se interpreta como **deposito**.
+
+### Contabilidad Quiter
+
+La app interpreta:
+
+- Debe = deposito;
+- Haber = pago.
+
+### Ejemplo practico
+
+Habitualista movimientos de cuenta:
+
+| Tipo | Monto |
+| --- | --- |
+| CREDIT | 10.000.000 |
+
+Quiter:
+
+| Debe | Haber |
+| --- | --- |
+| 10.000.000 | 0 |
+
+La app entiende que ambos son depositos por el mismo importe y puede conciliarlos.
+
+---
+
+## 4.3 Como se carga
+
+1. Entrar a **Conciliacion Contable de Tarjeta Habitualista S/ Contabilidad**.
+2. Subir **Operaciones de pago**.
+3. Subir **Movimientos de cuenta**.
+4. Subir **Contabilidad Quiter**.
+5. Seleccionar **Desde Quiter** y **Hasta Quiter**.
+6. Definir la tolerancia de dias.
+7. Revisar si corresponde **Sincronizar periodo de Quiter**.
+8. Presionar **Importar y recalcular contabilidad**.
+
+---
+
+## 4.4 Como hace el cruce contable
+
+La conciliacion contable no usa OP ni referencia.
+
+La regla es:
+
+```text
+tipo + importe
+```
+
+Si hay mas de un candidato con el mismo importe, usa cercania de fecha.
+
+---
+
+## 4.4.1 Ejemplo: pago por importe unico
+
+Habitualista:
+
+| Tipo | Fecha | Importe | Descripcion |
+| --- | --- | --- | --- |
+| pago | 10/05/2026 | 500.000 | Pago gestor |
+
+Quiter:
+
+| Tipo | Fecha | Importe | Descripcion |
+| --- | --- | --- | --- |
+| pago | 10/05/2026 | 500.000 | Asiento contable |
+
+Resultado:
+
+```text
+Contable: tipo + importe unico
+```
+
+### Como debe leerlo el usuario
+
+La app encontro un solo pago en Quiter por el mismo importe. Por eso lo concilia.
+
+---
+
+## 4.4.2 Ejemplo: varios importes iguales y fecha cercana
+
+Habitualista:
+
+| Tipo | Fecha | Importe |
+| --- | --- | --- |
+| pago | 10/05/2026 | 500.000 |
+
+Quiter:
+
+| Tipo | Fecha | Importe |
+| --- | --- | --- |
+| pago | 02/05/2026 | 500.000 |
+| pago | 11/05/2026 | 500.000 |
+
+Tolerancia:
+
+```text
+3 dias
+```
+
+Resultado:
+
+La app elige el movimiento del 11/05/2026 porque esta a 1 dia de diferencia.
+
+Criterio:
+
+```text
+Contable: tipo + importe + fecha +/- 3 dias
+```
+
+### Como debe leerlo el usuario
+
+Cuando hay importes repetidos, la fecha ayuda a elegir el candidato mas razonable.
+
+---
+
+## 4.4.3 Ejemplo: queda pendiente por fecha fuera de tolerancia
+
+Habitualista:
+
+| Tipo | Fecha | Importe |
+| --- | --- | --- |
+| pago | 10/05/2026 | 500.000 |
+
+Quiter:
+
+| Tipo | Fecha | Importe |
+| --- | --- | --- |
+| pago | 20/05/2026 | 500.000 |
+
+Tolerancia:
+
+```text
+3 dias
+```
+
+Resultado:
+
+El movimiento queda pendiente porque la diferencia es de 10 dias.
+
+### Como debe leerlo el usuario
+
+Debe revisarse si la fecha contable esta mal, si el movimiento corresponde a otro pago o si falta cargar un archivo.
+
+---
+
+## 4.5 Por que no usa OP ni referencia en contabilidad
+
+En pagos y ventas, la OP puede coincidir con la referencia de venta.
+
+En contabilidad eso no aplica.
+
+La OP o referencia de Quiter puede ser:
+
+- un numero interno;
+- un codigo de asiento;
+- un dato distinto al de Habitualista.
+
+Por eso, para contabilidad se cruza por importe, tipo y fecha.
+
+---
+
+## 4.6 Sincronizar periodo de Quiter
+
+Esta opcion sirve para limpiar asientos de Quiter que ya no aparecen en un nuevo mayor.
+
+### Ejemplo correcto
+
+Se importo antes un mayor del 01/05 al 14/05.
+
+Luego Quiter corrigio un asiento y se descarga nuevamente el mayor del 01/05 al 14/05.
+
+Si se activa sincronizacion y se selecciona el mismo periodo, la app elimina de la base los asientos que ya no aparecen.
+
+### Ejemplo riesgoso
+
+Se carga un archivo de Quiter del 10/05 al 14/05, pero en la app se selecciona:
+
+```text
+Desde: 01/05
+Hasta: 14/05
+```
+
+Con sincronizacion activa, la app podria eliminar asientos del 01/05 al 09/05 porque no estan en el archivo nuevo.
+
+### Como debe leerlo el usuario
+
+Usar sincronizacion solamente cuando el archivo importado contiene todo el periodo seleccionado.
+
+---
+
+## 4.7 Recalcular conciliacion contable
+
+El boton **Recalcular conciliacion contable** recalcula la base ya cargada.
+
+No importa archivos nuevos.
+
+### Ejemplo practico
+
+Se cambio una regla de conciliacion o se quiere refrescar el resultado.
+
+El usuario presiona **Recalcular conciliacion contable**.
+
+La app vuelve a cruzar la base existente y actualiza conciliados y pendientes.
+
+---
+
+## 4.8 Solapas contables
+
+### Resumen
+
+Muestra depositos y pagos separados.
+
+Ejemplo:
+
+```text
+tipo: pago
+portal_cantidad: 100
+quiter_cantidad: 98
+conciliados_cantidad: 90
+pendientes_portal_cantidad: 10
+pendientes_quiter_cantidad: 8
+```
+
+Lectura:
+
+Hay 100 pagos en Habitualista, 98 pagos en Quiter, 90 conciliados, 10 pendientes del lado Habitualista y 8 pendientes del lado Quiter.
+
+### Conciliados
+
+Muestra contra que movimiento se matcheo cada registro.
 
 Columnas clave:
 
-- `tipo`
-- `importe`
-- `criterio`
-- `fecha_origen`
-- `fuente_origen`
-- `archivo_origen`
-- `fila_origen`
 - `descripcion_origen`
-- `fecha_conciliada`
-- `fuente_conciliada`
-- `archivo_conciliado`
-- `fila_conciliada`
 - `descripcion_conciliada`
+- `fecha_origen`
+- `fecha_conciliada`
+- `archivo_origen`
+- `archivo_conciliado`
 
-La columna `descripcion_origen` muestra el movimiento de Habitualista.
+Ejemplo de lectura:
 
-La columna `descripcion_conciliada` muestra el movimiento de Quiter contra el que fue matcheado.
+```text
+descripcion_origen: OP 4282962 TRANSFERENCIA
+descripcion_conciliada: ASIENTO HABITUALISTA MAYOR QUITER
+```
 
-Esta solapa permite auditar visualmente cada cruce.
+Significa que ese pago de Habitualista fue conciliado contra ese asiento de Quiter.
 
-#### Pendientes portal
+### Pendientes portal
 
-Movimientos de Habitualista que no tienen coincidencia en Quiter.
+Movimientos que estan en Habitualista pero no tienen match en Quiter.
 
 Puede indicar:
 
-- pago sin contabilizar;
-- deposito sin registrar;
+- falta contabilizar;
 - diferencia de importe;
-- diferencia de fecha fuera de tolerancia;
-- mayor de Quiter incompleto.
+- fecha fuera de tolerancia;
+- archivo de Quiter incompleto.
 
-#### Pendientes Quiter
+### Pendientes Quiter
 
-Movimientos de Quiter que no tienen coincidencia en Habitualista.
+Movimientos que estan en Quiter pero no tienen match en Habitualista.
 
 Puede indicar:
 
 - asiento duplicado;
-- importe incorrecto;
-- movimiento sin respaldo;
-- reporte de Habitualista incompleto;
+- asiento mal cargado;
+- falta importar Habitualista;
 - periodo mal seleccionado.
 
-#### Base portal
+### Base portal
 
-Base acumulada de movimientos de Habitualista.
+Toda la base importada desde Habitualista.
 
-Incluye:
+### Base Quiter
 
-- operaciones de pago;
-- depositos CREDIT;
-- archivo de origen;
-- fila de origen;
-- match encontrado.
+Toda la base importada desde Quiter.
 
-#### Base Quiter
-
-Base acumulada del mayor contable de Quiter.
-
-Incluye:
-
-- fecha;
-- debe/haber interpretado como deposito o pago;
-- importe;
-- descripcion;
-- archivo de origen;
-- fila de origen;
-- match encontrado.
-
-#### Importaciones
+### Importaciones
 
 Historial de cargas contables.
 
-Incluye:
+---
 
-- fecha;
-- archivos importados;
-- portal insertados;
-- portal actualizados;
-- Quiter insertados;
-- Quiter actualizados;
-- Quiter eliminados por sincronizacion.
+## 5. Historial
 
-### 5.13 Descarga Excel contable
+El modulo **Historial** no importa archivos. Sirve para consultar y descargar.
 
-El boton **Descargar reporte contable consolidado Excel** genera un archivo con:
+### Descargas superiores
 
-- Resumen
-- Conciliados
-- Pendientes portal
-- Pendientes Quiter
-- Base portal
-- Base Quiter
-- Importaciones
+Tiene dos botones:
+
+- Descargar consolidado pagos y ventas.
+- Descargar consolidado contable.
+
+### Ejemplo practico
+
+Despues de cerrar una revision mensual, el usuario entra a Historial y descarga ambos consolidados para guardar respaldo.
+
+### Solapa Importaciones pagos y ventas
+
+Muestra que archivos se cargaron y cuantos registros se insertaron o actualizaron.
+
+### Solapa Importaciones contables
+
+Muestra que archivos contables se cargaron y cuantos registros se insertaron, actualizaron o eliminaron por sincronizacion.
 
 ---
 
-## 6. Historial
+## 6. Backups
 
-### 6.1 Objetivo
+El modulo **Backups** permite guardar o restaurar copias.
 
-El modulo **Historial** concentra descargas y registros de importacion.
-
-No se usa para importar archivos. Se usa para consultar y descargar.
-
-### 6.2 Descargas superiores
-
-El modulo muestra dos descargas:
-
-1. **Descargar consolidado pagos y ventas**
-   - Exporta el estado vigente de la conciliacion de pagos y ventas.
-
-2. **Descargar consolidado contable**
-   - Exporta el estado vigente de la conciliacion contable.
-
-### 6.3 Solapas visibles
-
-#### Importaciones pagos y ventas
-
-Muestra el historial de importaciones de pagos y ventas:
-
-- fecha;
-- archivos de pagos;
-- archivos de ventas;
-- registros insertados;
-- registros actualizados.
-
-#### Importaciones contables
-
-Muestra el historial de importaciones contables:
-
-- fecha;
-- archivos de pagos;
-- archivos de movimientos de cuenta;
-- archivos de Quiter;
-- registros insertados;
-- registros actualizados;
-- registros eliminados por sincronizacion.
-
----
-
-## 7. Backups
-
-### 7.1 Objetivo
-
-El modulo **Backups** permite crear y restaurar copias de seguridad.
-
-### 7.2 Crear backup
+### Crear backup
 
 1. Entrar a **Backups**.
 2. Presionar **Crear backup ahora**.
-3. Descargar el ZIP generado si se quiere conservar una copia externa.
+3. Descargar el ZIP si se quiere guardar una copia externa.
 
-### 7.3 Restaurar backup
+### Restaurar backup
 
 1. Entrar a **Backups**.
-2. Subir el ZIP de backup.
+2. Subir el ZIP.
 3. Marcar la confirmacion.
 4. Presionar **Restaurar backup**.
-5. Recargar la aplicacion.
+5. Recargar la app.
 
-### 7.4 Importante
+### Ejemplo practico
 
-En Streamlit Cloud se recomienda usar Neon para que la base sea persistente.
-
-Los backups locales sirven principalmente cuando se usa almacenamiento local.
+Antes de hacer una carga grande, el usuario genera un backup. Si algo sale mal, puede restaurar la copia anterior.
 
 ---
 
-## 8. Persistencia de datos
+## 7. Persistencia de datos
 
-### 8.1 En Streamlit Cloud
+En Streamlit Cloud se recomienda usar Neon.
 
-Para persistencia real se recomienda usar Neon/PostgreSQL.
+Si la app tiene configurado `DATABASE_URL`, guarda los datos en Neon.
 
-En Streamlit Cloud configurar:
+Si no tiene `DATABASE_URL`, usa una base local en `data/`.
 
-```toml
-DATABASE_URL = "postgresql://usuario:password@host.neon.tech/dbname?sslmode=require"
-```
+### Ejemplo practico
 
-Luego reiniciar la app.
+Si Streamlit se reinicia y no se usa Neon, los datos locales pueden perderse.
 
-### 8.2 En uso local
-
-Si no hay `DATABASE_URL`, la app usa SQLite local en la carpeta:
-
-```text
-data/
-```
+Con Neon, la base permanece aunque la app se reinicie.
 
 ---
 
-## 9. Formato de importes
+## 8. Recomendacion de cierre
 
-Los importes se muestran en formato pesos:
+Para cerrar una revision:
 
-```text
-$ 1.234.567,89
-```
-
-Los numeros que no representan dinero se muestran en formato general.
-
----
-
-## 10. Recomendaciones de uso
-
-### 10.1 Pagos y ventas
-
-- Cargar pagos y ventas de un periodo amplio al iniciar.
-- Importar ventas 0 km y usados si estan en archivos separados.
-- Revisar pagos no conciliados.
-- Revisar ventas sin pago.
-- Descargar el consolidado luego de cada cierre.
-
-### 10.2 Contabilidad
-
-- Cargar operaciones de pago, movimientos de cuenta y mayor de Quiter.
-- Controlar bien el rango Desde/Hasta de Quiter.
-- Usar sincronizacion solo si el archivo de Quiter cubre todo el periodo seleccionado.
-- Revisar pendientes portal y pendientes Quiter.
-- Usar la solapa Conciliados para ver descripcion origen contra descripcion conciliada.
-- Descargar el consolidado contable luego de cada revision.
-
-### 10.3 Seguridad de datos
-
-- Usar Neon en Streamlit Cloud.
-- Descargar reportes consolidados periodicamente.
-- Crear backups antes de cambios importantes si se trabaja localmente.
-
----
-
-## 11. Cierre recomendado de una revision
-
-1. Importar los archivos correspondientes.
+1. Importar archivos.
 2. Revisar metricas.
 3. Revisar pendientes.
-4. Corregir reportes o datos si corresponde.
-5. Reimportar archivos corregidos.
-6. Descargar el reporte consolidado.
-7. Guardar el Excel como respaldo.
+4. Corregir o completar reportes si corresponde.
+5. Reimportar.
+6. Descargar consolidado.
+7. Guardar Excel como respaldo.
+8. Generar backup si corresponde.
+
