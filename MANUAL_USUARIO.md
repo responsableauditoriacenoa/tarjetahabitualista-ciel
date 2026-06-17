@@ -15,13 +15,15 @@ Modulos vigentes:
 
 ## 1. Idea general de la aplicacion
 
-La app sirve para cargar reportes, mantener bases consolidadas y detectar coincidencias entre archivos.
+La app sirve para cargar reportes, detectar coincidencias entre archivos y guardar reportes de conciliacion.
 
-Una **base consolidada** significa que la app no trabaja solo con el archivo del dia. La app guarda lo que ya se importo, agrega lo nuevo, actualiza repetidos y recalcula la conciliacion total.
+En **Conciliacion de Pagos y Ventas**, la app mantiene una base consolidada acumulativa.
+
+En **Conciliacion Contable**, la app trabaja por corrida: concilia solamente los archivos subidos en ese momento y guarda el resultado en historial.
 
 ### Ejemplo practico
 
-El lunes se cargan pagos y ventas de enero a abril.
+En Pagos y Ventas, el lunes se cargan pagos y ventas de enero a abril.
 
 El viernes se carga otro reporte que contiene abril y mayo.
 
@@ -34,7 +36,9 @@ La app:
 
 ### Como debe leerlo el usuario
 
-El usuario no debe pensar cada carga como un archivo aislado. Debe pensar que la app va construyendo una base historica y que cada importacion mejora o completa esa base.
+En Pagos y Ventas, el usuario debe pensar que la app construye una base historica.
+
+En Contabilidad, el usuario debe pensar que cada importacion genera una conciliacion nueva e independiente, guardada en historial.
 
 ---
 
@@ -470,6 +474,20 @@ Compara:
 - pagos de Tarjeta Habitualista contra movimientos al Haber de Quiter;
 - depositos de Tarjeta Habitualista contra movimientos al Debe de Quiter.
 
+La conciliacion contable trabaja **por corrida**. Esto quiere decir que cada vez que se suben archivos, la app concilia solamente esos archivos.
+
+El resultado se guarda en historial para poder descargarlo luego.
+
+### Ejemplo practico
+
+Se cargan archivos de mayo y se ejecuta la conciliacion.
+
+La app muestra mayo y guarda el reporte de mayo en historial.
+
+Luego se cargan archivos de junio y se ejecuta otra conciliacion.
+
+La pantalla pasa a mostrar junio, pero mayo sigue disponible para descargar desde historial.
+
 ---
 
 ## 4.2 Como interpreta cada archivo
@@ -517,8 +535,13 @@ La app entiende que ambos son depositos por el mismo importe y puede conciliarlo
 4. Subir **Contabilidad Quiter**.
 5. Seleccionar **Desde Quiter** y **Hasta Quiter**.
 6. Definir la tolerancia de dias.
-7. Revisar si corresponde **Sincronizar periodo de Quiter**.
-8. Presionar **Importar y recalcular contabilidad**.
+7. Presionar **Conciliar archivos y guardar historial**.
+
+### Como debe leerlo el usuario
+
+Los archivos cargados en esa corrida son el universo completo de conciliacion.
+
+La app no busca movimientos en cargas anteriores para completar esa conciliacion.
 
 ---
 
@@ -645,52 +668,31 @@ Por eso, para contabilidad se cruza por importe, tipo y fecha.
 
 ---
 
-## 4.6 Sincronizar periodo de Quiter
+## 4.6 Historial de conciliaciones contables
 
-Esta opcion sirve para limpiar asientos de Quiter que ya no aparecen en un nuevo mayor.
+Cada vez que se presiona **Conciliar archivos y guardar historial**, la app guarda un reporte historico.
 
-### Ejemplo correcto
-
-Se importo antes un mayor del 01/05 al 14/05.
-
-Luego Quiter corrigio un asiento y se descarga nuevamente el mayor del 01/05 al 14/05.
-
-Si se activa sincronizacion y se selecciona el mismo periodo, la app elimina de la base los asientos que ya no aparecen.
-
-### Ejemplo riesgoso
-
-Se carga un archivo de Quiter del 10/05 al 14/05, pero en la app se selecciona:
-
-```text
-Desde: 01/05
-Hasta: 14/05
-```
-
-Con sincronizacion activa, la app podria eliminar asientos del 01/05 al 09/05 porque no estan en el archivo nuevo.
-
-### Como debe leerlo el usuario
-
-Usar sincronizacion solamente cuando el archivo importado contiene todo el periodo seleccionado.
-
----
-
-## 4.7 Recalcular conciliacion contable
-
-El boton **Recalcular conciliacion contable** recalcula la base ya cargada.
-
-No importa archivos nuevos.
+Ese historial conserva el Excel de la corrida.
 
 ### Ejemplo practico
 
-Se cambio una regla de conciliacion o se quiere refrescar el resultado.
+El usuario ejecuta tres conciliaciones:
 
-El usuario presiona **Recalcular conciliacion contable**.
+- mayo;
+- junio;
+- julio.
 
-La app vuelve a cruzar la base existente y actualiza conciliados y pendientes.
+La pantalla principal muestra la ultima conciliacion ejecutada.
+
+Pero desde **Historial guardado** se puede descargar nuevamente mayo, junio o julio.
+
+### Como debe leerlo el usuario
+
+La app ya no acumula indefinidamente una base contable. Cada cierre queda como una conciliacion independiente guardada.
 
 ---
 
-## 4.8 Solapas contables
+## 4.7 Solapas contables
 
 ### Resumen
 
@@ -757,15 +759,17 @@ Puede indicar:
 
 ### Base portal
 
-Toda la base importada desde Habitualista.
+Movimientos de Habitualista importados en la conciliacion actual.
 
 ### Base Quiter
 
-Toda la base importada desde Quiter.
+Movimientos de Quiter importados en la conciliacion actual.
 
-### Importaciones
+### Historial guardado
 
-Historial de cargas contables.
+Listado de conciliaciones contables guardadas.
+
+Desde esta solapa se puede seleccionar una conciliacion anterior y descargar su Excel.
 
 ---
 
@@ -778,11 +782,11 @@ El modulo **Historial** no importa archivos. Sirve para consultar y descargar.
 Tiene dos botones:
 
 - Descargar consolidado pagos y ventas.
-- Descargar consolidado contable.
+- Descargar ultima conciliacion contable visible.
 
 ### Ejemplo practico
 
-Despues de cerrar una revision mensual, el usuario entra a Historial y descarga ambos consolidados para guardar respaldo.
+Despues de cerrar una revision mensual, el usuario entra a Historial y descarga el consolidado de pagos y ventas o la conciliacion contable guardada que corresponda.
 
 ### Solapa Importaciones pagos y ventas
 
@@ -790,7 +794,11 @@ Muestra que archivos se cargaron y cuantos registros se insertaron o actualizaro
 
 ### Solapa Importaciones contables
 
-Muestra que archivos contables se cargaron y cuantos registros se insertaron, actualizaron o eliminaron por sincronizacion.
+Muestra que archivos contables se cargaron en cada corrida.
+
+### Solapa Conciliaciones contables guardadas
+
+Permite seleccionar una conciliacion contable historica y descargar su Excel.
 
 ---
 
@@ -846,4 +854,3 @@ Para cerrar una revision:
 6. Descargar consolidado.
 7. Guardar Excel como respaldo.
 8. Generar backup si corresponde.
-

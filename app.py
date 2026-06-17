@@ -652,7 +652,7 @@ def pantalla_historial() -> None:
     with col_contable:
         st.markdown("### Conciliacion Contable")
         st.download_button(
-            "Descargar consolidado contable",
+            "Descargar ultima conciliacion contable visible",
             data=consolidado_contable.excel_bytes_consolidado(),
             file_name="reporte_contable_consolidado.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
@@ -663,6 +663,7 @@ def pantalla_historial() -> None:
     tabs = st.tabs(
         [
             "Importaciones pagos y ventas",
+            "Conciliaciones contables guardadas",
             "Importaciones contables",
         ]
     )
@@ -671,6 +672,30 @@ def pantalla_historial() -> None:
         mostrar_tabla(consolidado.historial_importaciones(), "historial_importaciones_consolidado")
 
     with tabs[1]:
+        historial_contable = consolidado_contable.historial_conciliaciones()
+        if historial_contable.empty:
+            st.info("Todavia no hay conciliaciones contables guardadas.")
+        else:
+            opciones = {
+                f"{row.creada} | {row.id}": row.id
+                for row in historial_contable.itertuples(index=False)
+            }
+            seleccion = st.selectbox(
+                "Seleccionar conciliacion contable",
+                list(opciones.keys()),
+                key="historial_contable_select",
+            )
+            conciliacion_id = opciones[seleccion]
+            st.download_button(
+                "Descargar conciliacion contable seleccionada",
+                data=consolidado_contable.reporte_conciliacion_bytes(conciliacion_id),
+                file_name=f"reporte_contable_{conciliacion_id}.xlsx",
+                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                key=f"historial_download_contable_{conciliacion_id}",
+            )
+            mostrar_tabla(historial_contable, "historial_conciliaciones_contables")
+
+    with tabs[2]:
         mostrar_tabla(consolidado_contable.historial_importaciones(), "historial_importaciones_contable")
 
 
@@ -947,6 +972,10 @@ def pantalla_base_consolidada() -> None:
 
 def pantalla_base_contable() -> None:
     st.subheader("Conciliacion Contable de Tarjeta Habitualista S/ Contabilidad")
+    st.caption(
+        "Este modulo concilia solo los archivos cargados en cada corrida. "
+        "La conciliacion actual se reemplaza con cada nueva importacion y el resultado queda guardado en Historial."
+    )
 
     with st.form("form_base_contable"):
         col1, col2, col3 = st.columns(3)
@@ -979,28 +1008,23 @@ def pantalla_base_contable() -> None:
             hasta = st.date_input("Hasta Quiter", value=date.today(), key="contable_hasta")
         with col_tol:
             tolerancia = st.number_input(
-                "Tolerancia dias depositos",
+                "Tolerancia dias",
                 min_value=0,
                 max_value=30,
                 value=3,
                 key="contable_tolerancia",
             )
-        sincronizar_quiter = st.checkbox(
-            "Sincronizar periodo de Quiter",
-            value=True,
-            help=(
-                "Si esta activo, al importar un nuevo mayor de Quiter elimina de la base "
-                "los asientos del periodo seleccionado que ya no aparecen en el archivo nuevo."
-            ),
-        )
 
-        ejecutar = st.form_submit_button("Importar y recalcular contabilidad", type="primary")
+        ejecutar = st.form_submit_button("Conciliar archivos y guardar historial", type="primary")
 
     if ejecutar:
-        if not pagos_files and not movimientos_files and not quiter_files:
-            st.error("Cargue al menos un reporte para actualizar la base contable.")
+        if not quiter_files:
+            st.error("Cargue el mayor de Contabilidad Quiter para ejecutar la conciliacion.")
             return
-        with st.spinner("Importando, actualizando duplicados y recalculando conciliacion contable..."):
+        if not pagos_files and not movimientos_files:
+            st.error("Cargue al menos Operaciones de pago o Movimientos de cuenta.")
+            return
+        with st.spinner("Conciliando solo los archivos cargados y guardando el resultado en historial..."):
             try:
                 stats = consolidado_contable.importar_a_base(
                     pagos_files or [],
@@ -1009,31 +1033,24 @@ def pantalla_base_contable() -> None:
                     desde=desde,
                     hasta=hasta,
                     tolerancia_dias=int(tolerancia),
-                    sincronizar_quiter_periodo=sincronizar_quiter,
                 )
             except ImportacionError as exc:
                 st.error(str(exc))
                 return
         st.success(
-            "Base contable actualizada: "
-            f"portal nuevos {stats['portal_insertados']}, portal actualizados {stats['portal_actualizados']}, "
-            f"Quiter nuevos {stats['quiter_insertados']}, Quiter actualizados {stats['quiter_actualizados']}, "
-            f"Quiter eliminados {stats.get('quiter_eliminados', 0)}."
+            "Conciliacion contable guardada: "
+            f"movimientos portal {stats['portal_insertados']}, "
+            f"movimientos Quiter {stats['quiter_insertados']}."
         )
         backup_path = backups.crear_backup("base_contable")
         st.info(f"Backup automatico generado: {backup_path.name}")
-
-    if st.button("Recalcular conciliacion contable", key="recalcular_base_contable"):
-        with st.spinner("Recalculando conciliacion contable con la base ya importada..."):
-            consolidado_contable.reconciliar_base(tolerancia_dias=int(tolerancia))
-        st.success("Conciliacion contable recalculada con la regla actual.")
 
     dfs = consolidado_contable.dataframes_consolidados()
     resumen = dfs["resumen"]
     mostrar_metricas_contable(resumen)
     reporte_bytes = consolidado_contable.excel_bytes_consolidado()
     st.download_button(
-        "Descargar reporte contable consolidado Excel",
+        "Descargar conciliacion contable actual Excel",
         data=reporte_bytes,
         file_name="reporte_contable_consolidado.xlsx",
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
@@ -1048,7 +1065,7 @@ def pantalla_base_contable() -> None:
             "Pendientes Quiter",
             "Base portal",
             "Base Quiter",
-            "Importaciones",
+            "Historial guardado",
         ]
     )
     with tabs[0]:
@@ -1064,7 +1081,28 @@ def pantalla_base_contable() -> None:
     with tabs[5]:
         mostrar_tabla(dfs["quiter"], "contable_base_quiter")
     with tabs[6]:
-        mostrar_tabla(consolidado_contable.historial_importaciones(), "contable_importaciones")
+        historial = consolidado_contable.historial_conciliaciones()
+        if historial.empty:
+            st.info("Todavia no hay conciliaciones contables guardadas.")
+        else:
+            opciones = {
+                f"{row.creada} | {row.id}": row.id
+                for row in historial.itertuples(index=False)
+            }
+            seleccion = st.selectbox(
+                "Seleccionar conciliacion guardada",
+                list(opciones.keys()),
+                key="contable_historial_select",
+            )
+            conciliacion_id = opciones[seleccion]
+            st.download_button(
+                "Descargar conciliacion guardada",
+                data=consolidado_contable.reporte_conciliacion_bytes(conciliacion_id),
+                file_name=f"reporte_contable_{conciliacion_id}.xlsx",
+                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                key=f"download_contable_historial_{conciliacion_id}",
+            )
+            mostrar_tabla(historial, "contable_importaciones")
 
 
 def pantalla_backups() -> None:

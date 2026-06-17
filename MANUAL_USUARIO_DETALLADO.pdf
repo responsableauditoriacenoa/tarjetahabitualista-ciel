@@ -15,7 +15,7 @@ endobj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 6 0 R >>
 endobj
 6 0 obj
-<< /Length 2418 >>
+<< /Length 2461 >>
 stream
 BT
 /F2 20 Tf
@@ -50,67 +50,67 @@ BT
 (1. Idea general de la aplicacion) Tj
 /F1 10 Tf
 1 0 0 1 54 525 Tm
-(La app sirve para cargar reportes, mantener bases consolidadas y detectar coincidencias entre) Tj
+(La app sirve para cargar reportes, detectar coincidencias entre archivos y guardar reportes) Tj
 /F1 10 Tf
 1 0 0 1 54 511 Tm
-(  archivos.) Tj
+(  de conciliacion.) Tj
 /F1 10 Tf
 1 0 0 1 54 489 Tm
-(Una base consolidada significa que la app no trabaja solo con el archivo del dia. La app) Tj
+(En Conciliacion de Pagos y Ventas, la app mantiene una base consolidada acumulativa.) Tj
 /F1 10 Tf
-1 0 0 1 54 475 Tm
-(  guarda lo que ya se importo, agrega lo nuevo, actualiza repetidos y recalcula la conciliacion) Tj
+1 0 0 1 54 467 Tm
+(En Conciliacion Contable, la app trabaja por corrida: concilia solamente los archivos subidos) Tj
 /F1 10 Tf
-1 0 0 1 54 461 Tm
-(  total.) Tj
+1 0 0 1 54 453 Tm
+(  en ese momento y guarda el resultado en historial.) Tj
 /F2 12 Tf
-1 0 0 1 54 433 Tm
+1 0 0 1 54 425 Tm
 (Ejemplo practico) Tj
 /F1 10 Tf
-1 0 0 1 54 409 Tm
-(El lunes se cargan pagos y ventas de enero a abril.) Tj
+1 0 0 1 54 401 Tm
+(En Pagos y Ventas, el lunes se cargan pagos y ventas de enero a abril.) Tj
 /F1 10 Tf
-1 0 0 1 54 387 Tm
+1 0 0 1 54 379 Tm
 (El viernes se carga otro reporte que contiene abril y mayo.) Tj
 /F1 10 Tf
-1 0 0 1 54 365 Tm
+1 0 0 1 54 357 Tm
 (La app:) Tj
 /F1 10 Tf
-1 0 0 1 54 343 Tm
+1 0 0 1 54 335 Tm
 (- no duplica abril;) Tj
 /F1 10 Tf
-1 0 0 1 54 329 Tm
+1 0 0 1 54 321 Tm
 (- actualiza abril si encuentra datos mas completos;) Tj
 /F1 10 Tf
-1 0 0 1 54 315 Tm
+1 0 0 1 54 307 Tm
 (- agrega mayo;) Tj
 /F1 10 Tf
-1 0 0 1 54 301 Tm
+1 0 0 1 54 293 Tm
 (- recalcula la conciliacion total.) Tj
 /F2 12 Tf
-1 0 0 1 54 273 Tm
+1 0 0 1 54 265 Tm
 (Como debe leerlo el usuario) Tj
 /F1 10 Tf
-1 0 0 1 54 249 Tm
-(El usuario no debe pensar cada carga como un archivo aislado. Debe pensar que la app va) Tj
+1 0 0 1 54 241 Tm
+(En Pagos y Ventas, el usuario debe pensar que la app construye una base historica.) Tj
 /F1 10 Tf
-1 0 0 1 54 235 Tm
-(  construyendo una base historica y que cada importacion mejora o completa esa base.) Tj
+1 0 0 1 54 219 Tm
+(En Contabilidad, el usuario debe pensar que cada importacion genera una conciliacion nueva e) Tj
+/F1 10 Tf
+1 0 0 1 54 205 Tm
+(  independiente, guardada en historial.) Tj
 /F2 15 Tf
-1 0 0 1 54 189 Tm
+1 0 0 1 54 159 Tm
 (2. Menu principal) Tj
 /F1 10 Tf
-1 0 0 1 54 158 Tm
+1 0 0 1 54 128 Tm
 (El menu lateral muestra cuatro modulos.) Tj
 /F2 12 Tf
-1 0 0 1 54 130 Tm
+1 0 0 1 54 100 Tm
 (Conciliacion de Pagos y Ventas) Tj
 /F1 10 Tf
-1 0 0 1 54 106 Tm
+1 0 0 1 54 76 Tm
 (Sirve para controlar si los pagos realizados con Tarjeta Habitualista corresponden a ventas.) Tj
-/F2 12 Tf
-1 0 0 1 54 78 Tm
-(Conciliacion Contable de Tarjeta Habitualista S/ Contabilidad) Tj
 ET
 endstream
 endobj
@@ -118,102 +118,102 @@ endobj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 8 0 R >>
 endobj
 8 0 obj
-<< /Length 2224 >>
+<< /Length 2266 >>
 stream
 BT
-/F1 10 Tf
+/F2 12 Tf
 1 0 0 1 54 788 Tm
+(Conciliacion Contable de Tarjeta Habitualista S/ Contabilidad) Tj
+/F1 10 Tf
+1 0 0 1 54 764 Tm
 (Sirve para controlar si los pagos y depositos informados por Tarjeta Habitualista estan) Tj
 /F1 10 Tf
-1 0 0 1 54 774 Tm
+1 0 0 1 54 750 Tm
 (  registrados en la contabilidad de Quiter.) Tj
 /F2 12 Tf
-1 0 0 1 54 746 Tm
+1 0 0 1 54 722 Tm
 (Historial) Tj
 /F1 10 Tf
-1 0 0 1 54 722 Tm
+1 0 0 1 54 698 Tm
 (Sirve para consultar importaciones y descargar los reportes consolidados actuales.) Tj
 /F2 12 Tf
-1 0 0 1 54 694 Tm
+1 0 0 1 54 670 Tm
 (Backups) Tj
 /F1 10 Tf
-1 0 0 1 54 670 Tm
+1 0 0 1 54 646 Tm
 (Sirve para crear o restaurar copias de seguridad.) Tj
 /F2 15 Tf
-1 0 0 1 54 624 Tm
+1 0 0 1 54 600 Tm
 (3. Conciliacion de Pagos y Ventas) Tj
 /F2 15 Tf
-1 0 0 1 54 585 Tm
+1 0 0 1 54 561 Tm
 (3.1 Para que sirve) Tj
 /F1 10 Tf
-1 0 0 1 54 554 Tm
+1 0 0 1 54 530 Tm
 (Este modulo cruza:) Tj
 /F1 10 Tf
-1 0 0 1 54 532 Tm
+1 0 0 1 54 508 Tm
 (- Operaciones de pago de Tarjeta Habitualista.) Tj
 /F1 10 Tf
-1 0 0 1 54 518 Tm
+1 0 0 1 54 494 Tm
 (- Reportes de ventas.) Tj
 /F1 10 Tf
-1 0 0 1 54 496 Tm
+1 0 0 1 54 472 Tm
 (El objetivo es saber que pagos se relacionan con ventas y cuales quedan pendientes de) Tj
 /F1 10 Tf
-1 0 0 1 54 482 Tm
+1 0 0 1 54 458 Tm
 (  revision.) Tj
 /F2 12 Tf
-1 0 0 1 54 454 Tm
+1 0 0 1 54 430 Tm
 (Ejemplo practico) Tj
 /F1 10 Tf
-1 0 0 1 54 430 Tm
+1 0 0 1 54 406 Tm
 (Un gestor paga una operacion por Tarjeta Habitualista. En el reporte de pagos aparece:) Tj
 /F1 10 Tf
-1 0 0 1 54 408 Tm
+1 0 0 1 54 384 Tm
 (`text) Tj
 /F1 10 Tf
-1 0 0 1 54 394 Tm
+1 0 0 1 54 370 Tm
 (OP 4282962 TRANSFERENCIA POBLETE JORGE REF.4287418) Tj
 /F1 10 Tf
-1 0 0 1 54 380 Tm
+1 0 0 1 54 356 Tm
 (`) Tj
 /F1 10 Tf
-1 0 0 1 54 358 Tm
+1 0 0 1 54 334 Tm
 (En el reporte de ventas aparece:) Tj
 /F1 10 Tf
-1 0 0 1 54 336 Tm
+1 0 0 1 54 312 Tm
 (Referencia venta | Cliente) Tj
 /F1 10 Tf
-1 0 0 1 54 322 Tm
+1 0 0 1 54 298 Tm
 (--- | ---) Tj
 /F1 10 Tf
-1 0 0 1 54 308 Tm
+1 0 0 1 54 284 Tm
 (4282962 | POBLETE CIRIANNI JORGE AGUSTIN) Tj
 /F1 10 Tf
-1 0 0 1 54 286 Tm
+1 0 0 1 54 262 Tm
 (La app detecta que la OP del pago coincide con la referencia de venta. Entonces marca el pago) Tj
 /F1 10 Tf
-1 0 0 1 54 272 Tm
+1 0 0 1 54 248 Tm
 (  como conciliado.) Tj
 /F2 12 Tf
-1 0 0 1 54 244 Tm
+1 0 0 1 54 220 Tm
 (Como debe leerlo el usuario) Tj
 /F1 10 Tf
-1 0 0 1 54 220 Tm
+1 0 0 1 54 196 Tm
 (El usuario debe revisar si el pago que aparece como conciliado corresponde realmente a la) Tj
 /F1 10 Tf
-1 0 0 1 54 206 Tm
+1 0 0 1 54 182 Tm
 (  venta que muestra el sistema.) Tj
 /F1 10 Tf
-1 0 0 1 54 184 Tm
+1 0 0 1 54 160 Tm
 (La tabla de conciliados muestra el pago y la venta encontrada.) Tj
 /F2 15 Tf
-1 0 0 1 54 138 Tm
+1 0 0 1 54 114 Tm
 (3.2 Archivos que se cargan) Tj
 /F1 10 Tf
-1 0 0 1 54 107 Tm
+1 0 0 1 54 83 Tm
 (El modulo tiene dos cargas.) Tj
-/F2 12 Tf
-1 0 0 1 54 79 Tm
-(Operaciones de pago) Tj
 ET
 endstream
 endobj
@@ -221,129 +221,129 @@ endobj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 10 0 R >>
 endobj
 10 0 obj
-<< /Length 2479 >>
+<< /Length 2471 >>
 stream
 BT
-/F1 10 Tf
+/F2 12 Tf
 1 0 0 1 54 788 Tm
+(Operaciones de pago) Tj
+/F1 10 Tf
+1 0 0 1 54 764 Tm
 (Es el archivo descargado desde Tarjeta Habitualista. Contiene los pagos realizados por) Tj
 /F1 10 Tf
-1 0 0 1 54 774 Tm
+1 0 0 1 54 750 Tm
 (  gestores.) Tj
 /F1 10 Tf
-1 0 0 1 54 752 Tm
+1 0 0 1 54 728 Tm
 (La app toma datos como:) Tj
 /F1 10 Tf
-1 0 0 1 54 730 Tm
+1 0 0 1 54 706 Tm
 (- fecha del pago;) Tj
 /F1 10 Tf
-1 0 0 1 54 716 Tm
+1 0 0 1 54 692 Tm
 (- numero de pago;) Tj
 /F1 10 Tf
-1 0 0 1 54 702 Tm
+1 0 0 1 54 678 Tm
 (- importe;) Tj
 /F1 10 Tf
-1 0 0 1 54 688 Tm
+1 0 0 1 54 664 Tm
 (- descripcion;) Tj
 /F1 10 Tf
-1 0 0 1 54 674 Tm
+1 0 0 1 54 650 Tm
 (- OP detectada en el texto;) Tj
 /F1 10 Tf
-1 0 0 1 54 660 Tm
+1 0 0 1 54 636 Tm
 (- REF detectada en el texto.) Tj
 /F2 12 Tf
-1 0 0 1 54 632 Tm
+1 0 0 1 54 608 Tm
 (Reportes de ventas) Tj
 /F1 10 Tf
-1 0 0 1 54 608 Tm
+1 0 0 1 54 584 Tm
 (Son los archivos de ventas. Se puede subir mas de un archivo en la misma importacion.) Tj
 /F1 10 Tf
-1 0 0 1 54 586 Tm
+1 0 0 1 54 562 Tm
 (Ejemplo:) Tj
 /F1 10 Tf
-1 0 0 1 54 564 Tm
+1 0 0 1 54 540 Tm
 (- ventas 0 km;) Tj
 /F1 10 Tf
-1 0 0 1 54 550 Tm
+1 0 0 1 54 526 Tm
 (- ventas usados.) Tj
 /F1 10 Tf
-1 0 0 1 54 528 Tm
+1 0 0 1 54 504 Tm
 (La app toma datos como:) Tj
 /F1 10 Tf
-1 0 0 1 54 506 Tm
+1 0 0 1 54 482 Tm
 (- referencia de venta;) Tj
 /F1 10 Tf
-1 0 0 1 54 492 Tm
+1 0 0 1 54 468 Tm
 (- cliente;) Tj
 /F1 10 Tf
-1 0 0 1 54 478 Tm
+1 0 0 1 54 454 Tm
 (- vendedor;) Tj
 /F1 10 Tf
-1 0 0 1 54 464 Tm
+1 0 0 1 54 440 Tm
 (- modelo;) Tj
 /F1 10 Tf
-1 0 0 1 54 450 Tm
+1 0 0 1 54 426 Tm
 (- saldo;) Tj
 /F1 10 Tf
-1 0 0 1 54 436 Tm
+1 0 0 1 54 412 Tm
 (- fechas de venta o entrega;) Tj
 /F1 10 Tf
-1 0 0 1 54 422 Tm
+1 0 0 1 54 398 Tm
 (- IDV;) Tj
 /F1 10 Tf
-1 0 0 1 54 408 Tm
+1 0 0 1 54 384 Tm
 (- matricula.) Tj
 /F2 15 Tf
-1 0 0 1 54 362 Tm
+1 0 0 1 54 338 Tm
 (3.3 Como hacer una carga) Tj
 /F1 10 Tf
-1 0 0 1 54 331 Tm
+1 0 0 1 54 307 Tm
 (1. Entrar a Conciliacion de Pagos y Ventas.) Tj
 /F1 10 Tf
-1 0 0 1 54 317 Tm
+1 0 0 1 54 293 Tm
 (2. Subir el archivo de Operaciones de pago.) Tj
 /F1 10 Tf
-1 0 0 1 54 303 Tm
+1 0 0 1 54 279 Tm
 (3. Subir uno o varios Reportes de ventas.) Tj
 /F1 10 Tf
-1 0 0 1 54 289 Tm
+1 0 0 1 54 265 Tm
 (4. Presionar Importar y recalcular base.) Tj
 /F1 10 Tf
-1 0 0 1 54 275 Tm
+1 0 0 1 54 251 Tm
 (5. Esperar el mensaje de confirmacion.) Tj
 /F1 10 Tf
-1 0 0 1 54 261 Tm
+1 0 0 1 54 237 Tm
 (6. Revisar las metricas.) Tj
 /F1 10 Tf
-1 0 0 1 54 247 Tm
+1 0 0 1 54 223 Tm
 (7. Revisar las solapas.) Tj
 /F1 10 Tf
-1 0 0 1 54 233 Tm
+1 0 0 1 54 209 Tm
 (8. Descargar el Excel si se necesita respaldar la revision.) Tj
 /F2 12 Tf
-1 0 0 1 54 205 Tm
+1 0 0 1 54 181 Tm
 (Ejemplo practico) Tj
 /F1 10 Tf
-1 0 0 1 54 181 Tm
+1 0 0 1 54 157 Tm
 (Se cargan:) Tj
 /F1 10 Tf
-1 0 0 1 54 159 Tm
+1 0 0 1 54 135 Tm
 (- Operaciones de pago enero a mayo.xlsx) Tj
 /F1 10 Tf
-1 0 0 1 54 145 Tm
+1 0 0 1 54 121 Tm
 (- Ventas 0km enero a mayo.xls) Tj
 /F1 10 Tf
-1 0 0 1 54 131 Tm
+1 0 0 1 54 107 Tm
 (- Ventas usados enero a mayo.xls) Tj
 /F1 10 Tf
-1 0 0 1 54 109 Tm
+1 0 0 1 54 85 Tm
 (La app importa los tres archivos, une ventas 0 km y usados en una sola base y cruza todos los) Tj
 /F1 10 Tf
-1 0 0 1 54 95 Tm
+1 0 0 1 54 71 Tm
 (  pagos contra todas las ventas.) Tj
-/F2 12 Tf
-1 0 0 1 54 67 Tm
-(Como debe leerlo el usuario) Tj
 ET
 endstream
 endobj
@@ -351,108 +351,108 @@ endobj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 12 0 R >>
 endobj
 12 0 obj
-<< /Length 2265 >>
+<< /Length 2266 >>
 stream
 BT
-/F1 10 Tf
+/F2 12 Tf
 1 0 0 1 54 788 Tm
-(Si despues se carga otro archivo de ventas, la app no reinicia todo. Lo suma a la base y) Tj
-/F1 10 Tf
-1 0 0 1 54 774 Tm
-(  vuelve a recalcular.) Tj
-/F2 15 Tf
-1 0 0 1 54 728 Tm
-(3.4 Que pasa si cargo datos repetidos) Tj
-/F1 10 Tf
-1 0 0 1 54 697 Tm
-(Si se carga un reporte con un periodo que ya estaba importado, la app no duplica registros.) Tj
-/F2 12 Tf
-1 0 0 1 54 669 Tm
-(Ejemplo practico) Tj
-/F1 10 Tf
-1 0 0 1 54 645 Tm
-(Ya estaba cargado abril.) Tj
-/F1 10 Tf
-1 0 0 1 54 623 Tm
-(Luego se importa un reporte de pagos desde el 15/04 al 15/05.) Tj
-/F1 10 Tf
-1 0 0 1 54 601 Tm
-(La app:) Tj
-/F1 10 Tf
-1 0 0 1 54 579 Tm
-(- reconoce pagos de abril ya cargados;) Tj
-/F1 10 Tf
-1 0 0 1 54 565 Tm
-(- actualiza esos pagos si corresponde;) Tj
-/F1 10 Tf
-1 0 0 1 54 551 Tm
-(- agrega los pagos nuevos de mayo;) Tj
-/F1 10 Tf
-1 0 0 1 54 537 Tm
-(- recalcula el cruce total.) Tj
-/F2 12 Tf
-1 0 0 1 54 509 Tm
 (Como debe leerlo el usuario) Tj
 /F1 10 Tf
+1 0 0 1 54 764 Tm
+(Si despues se carga otro archivo de ventas, la app no reinicia todo. Lo suma a la base y) Tj
+/F1 10 Tf
+1 0 0 1 54 750 Tm
+(  vuelve a recalcular.) Tj
+/F2 15 Tf
+1 0 0 1 54 704 Tm
+(3.4 Que pasa si cargo datos repetidos) Tj
+/F1 10 Tf
+1 0 0 1 54 673 Tm
+(Si se carga un reporte con un periodo que ya estaba importado, la app no duplica registros.) Tj
+/F2 12 Tf
+1 0 0 1 54 645 Tm
+(Ejemplo practico) Tj
+/F1 10 Tf
+1 0 0 1 54 621 Tm
+(Ya estaba cargado abril.) Tj
+/F1 10 Tf
+1 0 0 1 54 599 Tm
+(Luego se importa un reporte de pagos desde el 15/04 al 15/05.) Tj
+/F1 10 Tf
+1 0 0 1 54 577 Tm
+(La app:) Tj
+/F1 10 Tf
+1 0 0 1 54 555 Tm
+(- reconoce pagos de abril ya cargados;) Tj
+/F1 10 Tf
+1 0 0 1 54 541 Tm
+(- actualiza esos pagos si corresponde;) Tj
+/F1 10 Tf
+1 0 0 1 54 527 Tm
+(- agrega los pagos nuevos de mayo;) Tj
+/F1 10 Tf
+1 0 0 1 54 513 Tm
+(- recalcula el cruce total.) Tj
+/F2 12 Tf
 1 0 0 1 54 485 Tm
+(Como debe leerlo el usuario) Tj
+/F1 10 Tf
+1 0 0 1 54 461 Tm
 (No hay problema en importar periodos superpuestos. Es preferible eso antes que dejar) Tj
 /F1 10 Tf
-1 0 0 1 54 471 Tm
+1 0 0 1 54 447 Tm
 (  informacion incompleta.) Tj
 /F2 15 Tf
-1 0 0 1 54 425 Tm
+1 0 0 1 54 401 Tm
 (3.5 Como hace el cruce de pagos con ventas) Tj
 /F1 10 Tf
-1 0 0 1 54 394 Tm
+1 0 0 1 54 370 Tm
 (La app intenta encontrar una venta para cada pago. Lo hace en este orden:) Tj
 /F1 10 Tf
-1 0 0 1 54 372 Tm
+1 0 0 1 54 348 Tm
 (1. OP del pago = referencia de venta.) Tj
 /F1 10 Tf
-1 0 0 1 54 358 Tm
+1 0 0 1 54 334 Tm
 (2. REF del pago = referencia de venta.) Tj
 /F1 10 Tf
-1 0 0 1 54 344 Tm
+1 0 0 1 54 320 Tm
 (3. Numero dentro de la descripcion del pago = referencia de venta.) Tj
 /F1 10 Tf
-1 0 0 1 54 330 Tm
+1 0 0 1 54 306 Tm
 (4. Cliente de la venta encontrado en la descripcion del pago.) Tj
 /F2 15 Tf
-1 0 0 1 54 284 Tm
+1 0 0 1 54 260 Tm
 (3.5.1 Ejemplo: OP del pago = referencia de venta) Tj
 /F1 10 Tf
-1 0 0 1 54 253 Tm
+1 0 0 1 54 229 Tm
 (Pago:) Tj
 /F1 10 Tf
-1 0 0 1 54 231 Tm
+1 0 0 1 54 207 Tm
 (`text) Tj
 /F1 10 Tf
-1 0 0 1 54 217 Tm
+1 0 0 1 54 193 Tm
 (OP 4282962 TRANSFERENCIA POBLETE JORGE REF.4287418) Tj
 /F1 10 Tf
-1 0 0 1 54 203 Tm
+1 0 0 1 54 179 Tm
 (`) Tj
 /F1 10 Tf
-1 0 0 1 54 181 Tm
+1 0 0 1 54 157 Tm
 (La app extrae:) Tj
 /F1 10 Tf
-1 0 0 1 54 159 Tm
+1 0 0 1 54 135 Tm
 (`text) Tj
 /F1 10 Tf
-1 0 0 1 54 145 Tm
+1 0 0 1 54 121 Tm
 (OP del pago = 4282962) Tj
 /F1 10 Tf
-1 0 0 1 54 131 Tm
+1 0 0 1 54 107 Tm
 (REF del pago = 4287418) Tj
 /F1 10 Tf
-1 0 0 1 54 117 Tm
+1 0 0 1 54 93 Tm
 (`) Tj
 /F1 10 Tf
-1 0 0 1 54 95 Tm
+1 0 0 1 54 71 Tm
 (Venta:) Tj
-/F1 10 Tf
-1 0 0 1 54 73 Tm
-(Referencia venta | Cliente) Tj
 ET
 endstream
 endobj
@@ -460,114 +460,114 @@ endobj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 14 0 R >>
 endobj
 14 0 obj
-<< /Length 1990 >>
+<< /Length 1991 >>
 stream
 BT
 /F1 10 Tf
 1 0 0 1 54 788 Tm
-(--- | ---) Tj
-/F1 10 Tf
-1 0 0 1 54 774 Tm
-(4282962 | POBLETE CIRIANNI JORGE AGUSTIN) Tj
-/F1 10 Tf
-1 0 0 1 54 752 Tm
-(Resultado:) Tj
-/F1 10 Tf
-1 0 0 1 54 730 Tm
-(`text) Tj
-/F1 10 Tf
-1 0 0 1 54 716 Tm
-(OP del pago = Refer. venta) Tj
-/F1 10 Tf
-1 0 0 1 54 702 Tm
-(`) Tj
-/F2 12 Tf
-1 0 0 1 54 674 Tm
-(Como debe leerlo el usuario) Tj
-/F1 10 Tf
-1 0 0 1 54 650 Tm
-(El pago se concilio porque la OP 4282962 coincide con la referencia de venta 4282962.) Tj
-/F1 10 Tf
-1 0 0 1 54 628 Tm
-(Aunque el pago tenga tambien REF.4287418, la app primero prueba con la OP.) Tj
-/F2 15 Tf
-1 0 0 1 54 582 Tm
-(3.5.2 Ejemplo: REF del pago = referencia de venta) Tj
-/F1 10 Tf
-1 0 0 1 54 551 Tm
-(Pago:) Tj
-/F1 10 Tf
-1 0 0 1 54 529 Tm
-(`text) Tj
-/F1 10 Tf
-1 0 0 1 54 515 Tm
-(TRANSFERENCIA CLIENTE GOMEZ REF.5012345) Tj
-/F1 10 Tf
-1 0 0 1 54 501 Tm
-(`) Tj
-/F1 10 Tf
-1 0 0 1 54 479 Tm
-(La app extrae:) Tj
-/F1 10 Tf
-1 0 0 1 54 457 Tm
-(`text) Tj
-/F1 10 Tf
-1 0 0 1 54 443 Tm
-(REF del pago = 5012345) Tj
-/F1 10 Tf
-1 0 0 1 54 429 Tm
-(`) Tj
-/F1 10 Tf
-1 0 0 1 54 407 Tm
-(Venta:) Tj
-/F1 10 Tf
-1 0 0 1 54 385 Tm
 (Referencia venta | Cliente) Tj
 /F1 10 Tf
-1 0 0 1 54 371 Tm
+1 0 0 1 54 774 Tm
 (--- | ---) Tj
 /F1 10 Tf
-1 0 0 1 54 357 Tm
-(5012345 | GOMEZ MARIA) Tj
+1 0 0 1 54 760 Tm
+(4282962 | POBLETE CIRIANNI JORGE AGUSTIN) Tj
 /F1 10 Tf
-1 0 0 1 54 335 Tm
+1 0 0 1 54 738 Tm
 (Resultado:) Tj
 /F1 10 Tf
-1 0 0 1 54 313 Tm
+1 0 0 1 54 716 Tm
 (`text) Tj
 /F1 10 Tf
-1 0 0 1 54 299 Tm
-(REF del pago = Refer. venta) Tj
+1 0 0 1 54 702 Tm
+(OP del pago = Refer. venta) Tj
 /F1 10 Tf
-1 0 0 1 54 285 Tm
+1 0 0 1 54 688 Tm
 (`) Tj
 /F2 12 Tf
-1 0 0 1 54 257 Tm
+1 0 0 1 54 660 Tm
 (Como debe leerlo el usuario) Tj
 /F1 10 Tf
-1 0 0 1 54 233 Tm
-(El pago no se pudo conciliar por OP, pero si por REF. La referencia del pago coincide con la) Tj
+1 0 0 1 54 636 Tm
+(El pago se concilio porque la OP 4282962 coincide con la referencia de venta 4282962.) Tj
 /F1 10 Tf
-1 0 0 1 54 219 Tm
-(  referencia de la venta.) Tj
+1 0 0 1 54 614 Tm
+(Aunque el pago tenga tambien REF.4287418, la app primero prueba con la OP.) Tj
 /F2 15 Tf
-1 0 0 1 54 173 Tm
-(3.5.3 Ejemplo: numero en descripcion = referencia de venta) Tj
+1 0 0 1 54 568 Tm
+(3.5.2 Ejemplo: REF del pago = referencia de venta) Tj
 /F1 10 Tf
-1 0 0 1 54 142 Tm
+1 0 0 1 54 537 Tm
 (Pago:) Tj
 /F1 10 Tf
-1 0 0 1 54 120 Tm
+1 0 0 1 54 515 Tm
 (`text) Tj
 /F1 10 Tf
-1 0 0 1 54 106 Tm
-(TRANSFERENCIA UNIDAD 4282962 POBLETE) Tj
+1 0 0 1 54 501 Tm
+(TRANSFERENCIA CLIENTE GOMEZ REF.5012345) Tj
 /F1 10 Tf
-1 0 0 1 54 92 Tm
+1 0 0 1 54 487 Tm
 (`) Tj
 /F1 10 Tf
-1 0 0 1 54 70 Tm
-(La app detecta el numero:) Tj
+1 0 0 1 54 465 Tm
+(La app extrae:) Tj
+/F1 10 Tf
+1 0 0 1 54 443 Tm
+(`text) Tj
+/F1 10 Tf
+1 0 0 1 54 429 Tm
+(REF del pago = 5012345) Tj
+/F1 10 Tf
+1 0 0 1 54 415 Tm
+(`) Tj
+/F1 10 Tf
+1 0 0 1 54 393 Tm
+(Venta:) Tj
+/F1 10 Tf
+1 0 0 1 54 371 Tm
+(Referencia venta | Cliente) Tj
+/F1 10 Tf
+1 0 0 1 54 357 Tm
+(--- | ---) Tj
+/F1 10 Tf
+1 0 0 1 54 343 Tm
+(5012345 | GOMEZ MARIA) Tj
+/F1 10 Tf
+1 0 0 1 54 321 Tm
+(Resultado:) Tj
+/F1 10 Tf
+1 0 0 1 54 299 Tm
+(`text) Tj
+/F1 10 Tf
+1 0 0 1 54 285 Tm
+(REF del pago = Refer. venta) Tj
+/F1 10 Tf
+1 0 0 1 54 271 Tm
+(`) Tj
+/F2 12 Tf
+1 0 0 1 54 243 Tm
+(Como debe leerlo el usuario) Tj
+/F1 10 Tf
+1 0 0 1 54 219 Tm
+(El pago no se pudo conciliar por OP, pero si por REF. La referencia del pago coincide con la) Tj
+/F1 10 Tf
+1 0 0 1 54 205 Tm
+(  referencia de la venta.) Tj
+/F2 15 Tf
+1 0 0 1 54 159 Tm
+(3.5.3 Ejemplo: numero en descripcion = referencia de venta) Tj
+/F1 10 Tf
+1 0 0 1 54 128 Tm
+(Pago:) Tj
+/F1 10 Tf
+1 0 0 1 54 106 Tm
+(`text) Tj
+/F1 10 Tf
+1 0 0 1 54 92 Tm
+(TRANSFERENCIA UNIDAD 4282962 POBLETE) Tj
+/F1 10 Tf
+1 0 0 1 54 78 Tm
+(`) Tj
 ET
 endstream
 endobj
@@ -575,114 +575,114 @@ endobj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 16 0 R >>
 endobj
 16 0 obj
-<< /Length 2031 >>
+<< /Length 2051 >>
 stream
 BT
 /F1 10 Tf
 1 0 0 1 54 788 Tm
+(La app detecta el numero:) Tj
+/F1 10 Tf
+1 0 0 1 54 766 Tm
 (`text) Tj
 /F1 10 Tf
-1 0 0 1 54 774 Tm
+1 0 0 1 54 752 Tm
 (4282962) Tj
 /F1 10 Tf
-1 0 0 1 54 760 Tm
-(`) Tj
-/F1 10 Tf
 1 0 0 1 54 738 Tm
-(Venta:) Tj
+(`) Tj
 /F1 10 Tf
 1 0 0 1 54 716 Tm
-(Referencia venta | Cliente) Tj
-/F1 10 Tf
-1 0 0 1 54 702 Tm
-(--- | ---) Tj
-/F1 10 Tf
-1 0 0 1 54 688 Tm
-(4282962 | POBLETE CIRIANNI JORGE AGUSTIN) Tj
-/F1 10 Tf
-1 0 0 1 54 666 Tm
-(Resultado:) Tj
-/F1 10 Tf
-1 0 0 1 54 644 Tm
-(`text) Tj
-/F1 10 Tf
-1 0 0 1 54 630 Tm
-(Numero en descripcion del pago = Refer. venta) Tj
-/F1 10 Tf
-1 0 0 1 54 616 Tm
-(`) Tj
-/F2 12 Tf
-1 0 0 1 54 588 Tm
-(Como debe leerlo el usuario) Tj
-/F1 10 Tf
-1 0 0 1 54 564 Tm
-(El texto no tenia OP ni REF formal, pero tenia un numero que coincide con una referencia de) Tj
-/F1 10 Tf
-1 0 0 1 54 550 Tm
-(  venta.) Tj
-/F2 15 Tf
-1 0 0 1 54 504 Tm
-(3.5.4 Ejemplo: cliente encontrado en descripcion) Tj
-/F1 10 Tf
-1 0 0 1 54 473 Tm
-(Pago:) Tj
-/F1 10 Tf
-1 0 0 1 54 451 Tm
-(`text) Tj
-/F1 10 Tf
-1 0 0 1 54 437 Tm
-(TRANSFERENCIA POBLETE CIRIANNI JORGE AGUSTIN) Tj
-/F1 10 Tf
-1 0 0 1 54 423 Tm
-(`) Tj
-/F1 10 Tf
-1 0 0 1 54 401 Tm
 (Venta:) Tj
 /F1 10 Tf
-1 0 0 1 54 379 Tm
+1 0 0 1 54 694 Tm
 (Referencia venta | Cliente) Tj
 /F1 10 Tf
-1 0 0 1 54 365 Tm
+1 0 0 1 54 680 Tm
 (--- | ---) Tj
 /F1 10 Tf
-1 0 0 1 54 351 Tm
+1 0 0 1 54 666 Tm
 (4282962 | POBLETE CIRIANNI JORGE AGUSTIN) Tj
 /F1 10 Tf
-1 0 0 1 54 329 Tm
+1 0 0 1 54 644 Tm
 (Resultado:) Tj
 /F1 10 Tf
-1 0 0 1 54 307 Tm
+1 0 0 1 54 622 Tm
 (`text) Tj
 /F1 10 Tf
-1 0 0 1 54 293 Tm
-(Cliente de venta encontrado en descripcion del pago) Tj
+1 0 0 1 54 608 Tm
+(Numero en descripcion del pago = Refer. venta) Tj
 /F1 10 Tf
-1 0 0 1 54 279 Tm
+1 0 0 1 54 594 Tm
 (`) Tj
 /F2 12 Tf
-1 0 0 1 54 251 Tm
+1 0 0 1 54 566 Tm
 (Como debe leerlo el usuario) Tj
 /F1 10 Tf
-1 0 0 1 54 227 Tm
+1 0 0 1 54 542 Tm
+(El texto no tenia OP ni REF formal, pero tenia un numero que coincide con una referencia de) Tj
+/F1 10 Tf
+1 0 0 1 54 528 Tm
+(  venta.) Tj
+/F2 15 Tf
+1 0 0 1 54 482 Tm
+(3.5.4 Ejemplo: cliente encontrado en descripcion) Tj
+/F1 10 Tf
+1 0 0 1 54 451 Tm
+(Pago:) Tj
+/F1 10 Tf
+1 0 0 1 54 429 Tm
+(`text) Tj
+/F1 10 Tf
+1 0 0 1 54 415 Tm
+(TRANSFERENCIA POBLETE CIRIANNI JORGE AGUSTIN) Tj
+/F1 10 Tf
+1 0 0 1 54 401 Tm
+(`) Tj
+/F1 10 Tf
+1 0 0 1 54 379 Tm
+(Venta:) Tj
+/F1 10 Tf
+1 0 0 1 54 357 Tm
+(Referencia venta | Cliente) Tj
+/F1 10 Tf
+1 0 0 1 54 343 Tm
+(--- | ---) Tj
+/F1 10 Tf
+1 0 0 1 54 329 Tm
+(4282962 | POBLETE CIRIANNI JORGE AGUSTIN) Tj
+/F1 10 Tf
+1 0 0 1 54 307 Tm
+(Resultado:) Tj
+/F1 10 Tf
+1 0 0 1 54 285 Tm
+(`text) Tj
+/F1 10 Tf
+1 0 0 1 54 271 Tm
+(Cliente de venta encontrado en descripcion del pago) Tj
+/F1 10 Tf
+1 0 0 1 54 257 Tm
+(`) Tj
+/F2 12 Tf
+1 0 0 1 54 229 Tm
+(Como debe leerlo el usuario) Tj
+/F1 10 Tf
+1 0 0 1 54 205 Tm
 (La app no encontro una referencia clara, pero encontro el nombre del cliente. Este criterio) Tj
 /F1 10 Tf
-1 0 0 1 54 213 Tm
+1 0 0 1 54 191 Tm
 (  debe revisarse con mas cuidado porque es menos exacto que una referencia numerica.) Tj
 /F2 15 Tf
-1 0 0 1 54 167 Tm
+1 0 0 1 54 145 Tm
 (3.6 Metricas de Pagos y Ventas) Tj
 /F2 12 Tf
-1 0 0 1 54 130 Tm
+1 0 0 1 54 108 Tm
 (Pagos conciliados) Tj
 /F1 10 Tf
-1 0 0 1 54 106 Tm
+1 0 0 1 54 84 Tm
 (Cantidad de pagos que encontraron una venta.) Tj
 /F1 10 Tf
-1 0 0 1 54 84 Tm
-(Ejemplo:) Tj
-/F1 10 Tf
 1 0 0 1 54 62 Tm
-(`text) Tj
+(Ejemplo:) Tj
 ET
 endstream
 endobj
@@ -695,109 +695,109 @@ stream
 BT
 /F1 10 Tf
 1 0 0 1 54 788 Tm
-(Pagos conciliados: 40) Tj
+(`text) Tj
 /F1 10 Tf
 1 0 0 1 54 774 Tm
+(Pagos conciliados: 40) Tj
+/F1 10 Tf
+1 0 0 1 54 760 Tm
 (`) Tj
 /F1 10 Tf
-1 0 0 1 54 752 Tm
+1 0 0 1 54 738 Tm
 (Significa que 40 pagos fueron asociados a ventas.) Tj
 /F2 12 Tf
-1 0 0 1 54 724 Tm
+1 0 0 1 54 710 Tm
 (Total conciliado) Tj
 /F1 10 Tf
-1 0 0 1 54 700 Tm
+1 0 0 1 54 686 Tm
 (Suma de los importes de pagos conciliados.) Tj
 /F1 10 Tf
-1 0 0 1 54 678 Tm
+1 0 0 1 54 664 Tm
 (Ejemplo:) Tj
-/F1 10 Tf
-1 0 0 1 54 656 Tm
-(`text) Tj
 /F1 10 Tf
 1 0 0 1 54 642 Tm
-(Total conciliado: $ 120.000.000,00) Tj
+(`text) Tj
 /F1 10 Tf
 1 0 0 1 54 628 Tm
+(Total conciliado: $ 120.000.000,00) Tj
+/F1 10 Tf
+1 0 0 1 54 614 Tm
 (`) Tj
 /F1 10 Tf
-1 0 0 1 54 606 Tm
+1 0 0 1 54 592 Tm
 (Significa que ese es el total de dinero de pagos que la app pudo relacionar con ventas.) Tj
 /F2 12 Tf
-1 0 0 1 54 578 Tm
+1 0 0 1 54 564 Tm
 (Pagos no conciliados) Tj
 /F1 10 Tf
-1 0 0 1 54 554 Tm
+1 0 0 1 54 540 Tm
 (Pagos que no encontraron venta.) Tj
 /F1 10 Tf
-1 0 0 1 54 532 Tm
+1 0 0 1 54 518 Tm
 (Ejemplo:) Tj
 /F1 10 Tf
-1 0 0 1 54 510 Tm
-(`text) Tj
-/F1 10 Tf
 1 0 0 1 54 496 Tm
-(Pagos no conciliados: 8) Tj
+(`text) Tj
 /F1 10 Tf
 1 0 0 1 54 482 Tm
+(Pagos no conciliados: 8) Tj
+/F1 10 Tf
+1 0 0 1 54 468 Tm
 (`) Tj
 /F1 10 Tf
-1 0 0 1 54 460 Tm
+1 0 0 1 54 446 Tm
 (El usuario debe revisar esos 8 pagos.) Tj
 /F1 10 Tf
-1 0 0 1 54 438 Tm
+1 0 0 1 54 424 Tm
 (Posibles causas:) Tj
-/F1 10 Tf
-1 0 0 1 54 416 Tm
-(- la venta todavia no fue importada;) Tj
 /F1 10 Tf
 1 0 0 1 54 402 Tm
-(- la referencia esta mal escrita;) Tj
+(- la venta todavia no fue importada;) Tj
 /F1 10 Tf
 1 0 0 1 54 388 Tm
-(- el pago no corresponde a una venta;) Tj
+(- la referencia esta mal escrita;) Tj
 /F1 10 Tf
 1 0 0 1 54 374 Tm
+(- el pago no corresponde a una venta;) Tj
+/F1 10 Tf
+1 0 0 1 54 360 Tm
 (- falta informacion en la descripcion.) Tj
 /F2 12 Tf
-1 0 0 1 54 346 Tm
+1 0 0 1 54 332 Tm
 (Ventas sin pago) Tj
 /F1 10 Tf
-1 0 0 1 54 322 Tm
+1 0 0 1 54 308 Tm
 (Ventas que no tienen pago detectado.) Tj
 /F1 10 Tf
-1 0 0 1 54 300 Tm
+1 0 0 1 54 286 Tm
 (Posibles causas:) Tj
 /F1 10 Tf
-1 0 0 1 54 278 Tm
+1 0 0 1 54 264 Tm
 (- el pago todavia no fue importado;) Tj
 /F1 10 Tf
-1 0 0 1 54 264 Tm
+1 0 0 1 54 250 Tm
 (- la venta fue pagada por otro medio;) Tj
 /F1 10 Tf
-1 0 0 1 54 250 Tm
+1 0 0 1 54 236 Tm
 (- la referencia de venta no aparece en el pago;) Tj
 /F1 10 Tf
-1 0 0 1 54 236 Tm
+1 0 0 1 54 222 Tm
 (- no corresponde pago por Tarjeta Habitualista.) Tj
 /F2 15 Tf
-1 0 0 1 54 190 Tm
+1 0 0 1 54 176 Tm
 (3.7 Solapas de Pagos y Ventas) Tj
 /F2 12 Tf
-1 0 0 1 54 153 Tm
+1 0 0 1 54 139 Tm
 (Resumen) Tj
 /F1 10 Tf
-1 0 0 1 54 129 Tm
+1 0 0 1 54 115 Tm
 (Muestra totales agrupados.) Tj
 /F1 10 Tf
-1 0 0 1 54 107 Tm
+1 0 0 1 54 93 Tm
 (Ejemplo de lectura:) Tj
 /F1 10 Tf
-1 0 0 1 54 85 Tm
+1 0 0 1 54 71 Tm
 (Si dice:) Tj
-/F1 10 Tf
-1 0 0 1 54 63 Tm
-(`text) Tj
 ET
 endstream
 endobj
@@ -805,117 +805,117 @@ endobj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 20 0 R >>
 endobj
 20 0 obj
-<< /Length 2344 >>
+<< /Length 2321 >>
 stream
 BT
 /F1 10 Tf
 1 0 0 1 54 788 Tm
-(Pagos en base: 100) Tj
-/F1 10 Tf
-1 0 0 1 54 774 Tm
-(Pagos conciliados con ventas: 80) Tj
-/F1 10 Tf
-1 0 0 1 54 760 Tm
-(Pagos no conciliados: 20) Tj
-/F1 10 Tf
-1 0 0 1 54 746 Tm
-(`) Tj
-/F1 10 Tf
-1 0 0 1 54 724 Tm
-(Entonces el usuario sabe que de 100 pagos importados, 80 encontraron venta y 20 deben) Tj
-/F1 10 Tf
-1 0 0 1 54 710 Tm
-(  revisarse.) Tj
-/F2 12 Tf
-1 0 0 1 54 682 Tm
-(Pagos conciliados) Tj
-/F1 10 Tf
-1 0 0 1 54 658 Tm
-(Muestra el detalle de pagos que encontraron venta.) Tj
-/F1 10 Tf
-1 0 0 1 54 636 Tm
-(Se debe revisar:) Tj
-/F1 10 Tf
-1 0 0 1 54 614 Tm
-(- descripcion del pago;) Tj
-/F1 10 Tf
-1 0 0 1 54 600 Tm
-(- referencia de venta;) Tj
-/F1 10 Tf
-1 0 0 1 54 586 Tm
-(- cliente;) Tj
-/F1 10 Tf
-1 0 0 1 54 572 Tm
-(- criterio de conciliacion.) Tj
-/F2 12 Tf
-1 0 0 1 54 544 Tm
-(Pagos no conciliados) Tj
-/F1 10 Tf
-1 0 0 1 54 520 Tm
-(Muestra pagos sin venta encontrada.) Tj
-/F1 10 Tf
-1 0 0 1 54 498 Tm
-(Ejemplo:) Tj
-/F1 10 Tf
-1 0 0 1 54 476 Tm
 (`text) Tj
 /F1 10 Tf
-1 0 0 1 54 462 Tm
-(Motivo revision: OP no encontrado en ventas) Tj
+1 0 0 1 54 774 Tm
+(Pagos en base: 100) Tj
 /F1 10 Tf
-1 0 0 1 54 448 Tm
-(Descripcion: OP 4282962 TRANSFERENCIA POBLETE) Tj
+1 0 0 1 54 760 Tm
+(Pagos conciliados con ventas: 80) Tj
 /F1 10 Tf
-1 0 0 1 54 434 Tm
+1 0 0 1 54 746 Tm
+(Pagos no conciliados: 20) Tj
+/F1 10 Tf
+1 0 0 1 54 732 Tm
 (`) Tj
 /F1 10 Tf
-1 0 0 1 54 412 Tm
-(Lectura:) Tj
+1 0 0 1 54 710 Tm
+(Entonces el usuario sabe que de 100 pagos importados, 80 encontraron venta y 20 deben) Tj
 /F1 10 Tf
-1 0 0 1 54 390 Tm
-(La app detecto una OP, pero no encontro esa OP como referencia en ventas. Puede faltar) Tj
+1 0 0 1 54 696 Tm
+(  revisarse.) Tj
+/F2 12 Tf
+1 0 0 1 54 668 Tm
+(Pagos conciliados) Tj
+/F1 10 Tf
+1 0 0 1 54 644 Tm
+(Muestra el detalle de pagos que encontraron venta.) Tj
+/F1 10 Tf
+1 0 0 1 54 622 Tm
+(Se debe revisar:) Tj
+/F1 10 Tf
+1 0 0 1 54 600 Tm
+(- descripcion del pago;) Tj
+/F1 10 Tf
+1 0 0 1 54 586 Tm
+(- referencia de venta;) Tj
+/F1 10 Tf
+1 0 0 1 54 572 Tm
+(- cliente;) Tj
+/F1 10 Tf
+1 0 0 1 54 558 Tm
+(- criterio de conciliacion.) Tj
+/F2 12 Tf
+1 0 0 1 54 530 Tm
+(Pagos no conciliados) Tj
+/F1 10 Tf
+1 0 0 1 54 506 Tm
+(Muestra pagos sin venta encontrada.) Tj
+/F1 10 Tf
+1 0 0 1 54 484 Tm
+(Ejemplo:) Tj
+/F1 10 Tf
+1 0 0 1 54 462 Tm
+(`text) Tj
+/F1 10 Tf
+1 0 0 1 54 448 Tm
+(Motivo revision: OP no encontrado en ventas) Tj
+/F1 10 Tf
+1 0 0 1 54 434 Tm
+(Descripcion: OP 4282962 TRANSFERENCIA POBLETE) Tj
+/F1 10 Tf
+1 0 0 1 54 420 Tm
+(`) Tj
+/F1 10 Tf
+1 0 0 1 54 398 Tm
+(Lectura:) Tj
 /F1 10 Tf
 1 0 0 1 54 376 Tm
+(La app detecto una OP, pero no encontro esa OP como referencia en ventas. Puede faltar) Tj
+/F1 10 Tf
+1 0 0 1 54 362 Tm
 (  importar el reporte de ventas correcto o puede haber diferencia en la referencia.) Tj
 /F2 12 Tf
-1 0 0 1 54 348 Tm
+1 0 0 1 54 334 Tm
 (Ventas sin pago) Tj
 /F1 10 Tf
-1 0 0 1 54 324 Tm
+1 0 0 1 54 310 Tm
 (Muestra ventas que no fueron relacionadas con ningun pago.) Tj
 /F1 10 Tf
-1 0 0 1 54 302 Tm
+1 0 0 1 54 288 Tm
 (Lectura:) Tj
 /F1 10 Tf
-1 0 0 1 54 280 Tm
+1 0 0 1 54 266 Tm
 (Si aparece una venta en esta solapa, el usuario debe verificar si el pago existe, si fue por) Tj
 /F1 10 Tf
-1 0 0 1 54 266 Tm
+1 0 0 1 54 252 Tm
 (  otro medio o si todavia no fue cargado.) Tj
 /F2 12 Tf
-1 0 0 1 54 238 Tm
+1 0 0 1 54 224 Tm
 (Base pagos) Tj
 /F1 10 Tf
-1 0 0 1 54 214 Tm
+1 0 0 1 54 200 Tm
 (Muestra todos los pagos importados.) Tj
 /F1 10 Tf
-1 0 0 1 54 192 Tm
+1 0 0 1 54 178 Tm
 (Sirve para auditar si un pago existe en la base.) Tj
 /F2 12 Tf
-1 0 0 1 54 164 Tm
+1 0 0 1 54 150 Tm
 (Base ventas) Tj
 /F1 10 Tf
-1 0 0 1 54 140 Tm
+1 0 0 1 54 126 Tm
 (Muestra todas las ventas importadas.) Tj
 /F1 10 Tf
-1 0 0 1 54 118 Tm
+1 0 0 1 54 104 Tm
 (Sirve para auditar si una venta existe en la base.) Tj
 /F2 12 Tf
-1 0 0 1 54 90 Tm
+1 0 0 1 54 76 Tm
 (Importaciones) Tj
-/F1 10 Tf
-1 0 0 1 54 66 Tm
-(Muestra cada carga realizada.) Tj
 ET
 endstream
 endobj
@@ -923,105 +923,102 @@ endobj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 22 0 R >>
 endobj
 22 0 obj
-<< /Length 2006 >>
+<< /Length 2330 >>
 stream
 BT
 /F1 10 Tf
 1 0 0 1 54 788 Tm
-(Ejemplo de lectura:) Tj
+(Muestra cada carga realizada.) Tj
 /F1 10 Tf
 1 0 0 1 54 766 Tm
+(Ejemplo de lectura:) Tj
+/F1 10 Tf
+1 0 0 1 54 744 Tm
 (`text) Tj
 /F1 10 Tf
-1 0 0 1 54 752 Tm
+1 0 0 1 54 730 Tm
 (pagos_insertados: 20) Tj
 /F1 10 Tf
-1 0 0 1 54 738 Tm
+1 0 0 1 54 716 Tm
 (pagos_actualizados: 5) Tj
 /F1 10 Tf
-1 0 0 1 54 724 Tm
+1 0 0 1 54 702 Tm
 (ventas_insertadas: 10) Tj
 /F1 10 Tf
-1 0 0 1 54 710 Tm
+1 0 0 1 54 688 Tm
 (ventas_actualizadas: 2) Tj
 /F1 10 Tf
-1 0 0 1 54 696 Tm
+1 0 0 1 54 674 Tm
 (`) Tj
 /F1 10 Tf
-1 0 0 1 54 674 Tm
+1 0 0 1 54 652 Tm
 (Significa que la importacion agrego 20 pagos nuevos, actualizo 5 pagos existentes, agrego 10) Tj
 /F1 10 Tf
-1 0 0 1 54 660 Tm
+1 0 0 1 54 638 Tm
 (  ventas nuevas y actualizo 2 ventas ya cargadas.) Tj
 /F2 15 Tf
-1 0 0 1 54 614 Tm
+1 0 0 1 54 592 Tm
 (4. Conciliacion Contable de Tarjeta Habitualista S/) Tj
 /F2 15 Tf
-1 0 0 1 54 594 Tm
+1 0 0 1 54 572 Tm
 (Contabilidad) Tj
 /F2 15 Tf
-1 0 0 1 54 555 Tm
+1 0 0 1 54 533 Tm
 (4.1 Para que sirve) Tj
 /F1 10 Tf
-1 0 0 1 54 524 Tm
+1 0 0 1 54 502 Tm
 (Este modulo cruza Tarjeta Habitualista contra Quiter.) Tj
 /F1 10 Tf
-1 0 0 1 54 502 Tm
+1 0 0 1 54 480 Tm
 (Compara:) Tj
 /F1 10 Tf
-1 0 0 1 54 480 Tm
+1 0 0 1 54 458 Tm
 (- pagos de Tarjeta Habitualista contra movimientos al Haber de Quiter;) Tj
 /F1 10 Tf
-1 0 0 1 54 466 Tm
+1 0 0 1 54 444 Tm
 (- depositos de Tarjeta Habitualista contra movimientos al Debe de Quiter.) Tj
-/F2 15 Tf
-1 0 0 1 54 420 Tm
-(4.2 Como interpreta cada archivo) Tj
+/F1 10 Tf
+1 0 0 1 54 422 Tm
+(La conciliacion contable trabaja por corrida. Esto quiere decir que cada vez que se suben) Tj
+/F1 10 Tf
+1 0 0 1 54 408 Tm
+(  archivos, la app concilia solamente esos archivos.) Tj
+/F1 10 Tf
+1 0 0 1 54 386 Tm
+(El resultado se guarda en historial para poder descargarlo luego.) Tj
 /F2 12 Tf
-1 0 0 1 54 383 Tm
-(Operaciones de pago) Tj
-/F1 10 Tf
-1 0 0 1 54 359 Tm
-(La app interpreta cada operacion de pago como un pago.) Tj
-/F2 12 Tf
-1 0 0 1 54 331 Tm
-(Movimientos de cuenta) Tj
-/F1 10 Tf
-1 0 0 1 54 307 Tm
-(La app toma solamente movimientos tipo CREDIT.) Tj
-/F1 10 Tf
-1 0 0 1 54 285 Tm
-(Cada CREDIT se interpreta como deposito.) Tj
-/F2 12 Tf
-1 0 0 1 54 257 Tm
-(Contabilidad Quiter) Tj
-/F1 10 Tf
-1 0 0 1 54 233 Tm
-(La app interpreta:) Tj
-/F1 10 Tf
-1 0 0 1 54 211 Tm
-(- Debe = deposito;) Tj
-/F1 10 Tf
-1 0 0 1 54 197 Tm
-(- Haber = pago.) Tj
-/F2 12 Tf
-1 0 0 1 54 169 Tm
+1 0 0 1 54 358 Tm
 (Ejemplo practico) Tj
 /F1 10 Tf
-1 0 0 1 54 145 Tm
-(Habitualista movimientos de cuenta:) Tj
+1 0 0 1 54 334 Tm
+(Se cargan archivos de mayo y se ejecuta la conciliacion.) Tj
 /F1 10 Tf
-1 0 0 1 54 123 Tm
-(Tipo | Monto) Tj
+1 0 0 1 54 312 Tm
+(La app muestra mayo y guarda el reporte de mayo en historial.) Tj
+/F1 10 Tf
+1 0 0 1 54 290 Tm
+(Luego se cargan archivos de junio y se ejecuta otra conciliacion.) Tj
+/F1 10 Tf
+1 0 0 1 54 268 Tm
+(La pantalla pasa a mostrar junio, pero mayo sigue disponible para descargar desde historial.) Tj
+/F2 15 Tf
+1 0 0 1 54 222 Tm
+(4.2 Como interpreta cada archivo) Tj
+/F2 12 Tf
+1 0 0 1 54 185 Tm
+(Operaciones de pago) Tj
+/F1 10 Tf
+1 0 0 1 54 161 Tm
+(La app interpreta cada operacion de pago como un pago.) Tj
+/F2 12 Tf
+1 0 0 1 54 133 Tm
+(Movimientos de cuenta) Tj
 /F1 10 Tf
 1 0 0 1 54 109 Tm
-(--- | ---) Tj
+(La app toma solamente movimientos tipo CREDIT.) Tj
 /F1 10 Tf
-1 0 0 1 54 95 Tm
-(CREDIT | 10.000.000) Tj
-/F1 10 Tf
-1 0 0 1 54 73 Tm
-(Quiter:) Tj
+1 0 0 1 54 87 Tm
+(Cada CREDIT se interpreta como deposito.) Tj
 ET
 endstream
 endobj
@@ -1029,114 +1026,108 @@ endobj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 24 0 R >>
 endobj
 24 0 obj
-<< /Length 2265 >>
+<< /Length 2125 >>
 stream
 BT
-/F1 10 Tf
+/F2 12 Tf
 1 0 0 1 54 788 Tm
-(Debe | Haber) Tj
+(Contabilidad Quiter) Tj
 /F1 10 Tf
-1 0 0 1 54 774 Tm
+1 0 0 1 54 764 Tm
+(La app interpreta:) Tj
+/F1 10 Tf
+1 0 0 1 54 742 Tm
+(- Debe = deposito;) Tj
+/F1 10 Tf
+1 0 0 1 54 728 Tm
+(- Haber = pago.) Tj
+/F2 12 Tf
+1 0 0 1 54 700 Tm
+(Ejemplo practico) Tj
+/F1 10 Tf
+1 0 0 1 54 676 Tm
+(Habitualista movimientos de cuenta:) Tj
+/F1 10 Tf
+1 0 0 1 54 654 Tm
+(Tipo | Monto) Tj
+/F1 10 Tf
+1 0 0 1 54 640 Tm
 (--- | ---) Tj
 /F1 10 Tf
-1 0 0 1 54 760 Tm
-(10.000.000 | 0) Tj
+1 0 0 1 54 626 Tm
+(CREDIT | 10.000.000) Tj
 /F1 10 Tf
-1 0 0 1 54 738 Tm
-(La app entiende que ambos son depositos por el mismo importe y puede conciliarlos.) Tj
-/F2 15 Tf
-1 0 0 1 54 692 Tm
-(4.3 Como se carga) Tj
-/F1 10 Tf
-1 0 0 1 54 661 Tm
-(1. Entrar a Conciliacion Contable de Tarjeta Habitualista S/ Contabilidad.) Tj
-/F1 10 Tf
-1 0 0 1 54 647 Tm
-(2. Subir Operaciones de pago.) Tj
-/F1 10 Tf
-1 0 0 1 54 633 Tm
-(3. Subir Movimientos de cuenta.) Tj
-/F1 10 Tf
-1 0 0 1 54 619 Tm
-(4. Subir Contabilidad Quiter.) Tj
-/F1 10 Tf
-1 0 0 1 54 605 Tm
-(5. Seleccionar Desde Quiter y Hasta Quiter.) Tj
-/F1 10 Tf
-1 0 0 1 54 591 Tm
-(6. Definir la tolerancia de dias.) Tj
-/F1 10 Tf
-1 0 0 1 54 577 Tm
-(7. Revisar si corresponde Sincronizar periodo de Quiter.) Tj
-/F1 10 Tf
-1 0 0 1 54 563 Tm
-(8. Presionar Importar y recalcular contabilidad.) Tj
-/F2 15 Tf
-1 0 0 1 54 517 Tm
-(4.4 Como hace el cruce contable) Tj
-/F1 10 Tf
-1 0 0 1 54 486 Tm
-(La conciliacion contable no usa OP ni referencia.) Tj
-/F1 10 Tf
-1 0 0 1 54 464 Tm
-(La regla es:) Tj
-/F1 10 Tf
-1 0 0 1 54 442 Tm
-(`text) Tj
-/F1 10 Tf
-1 0 0 1 54 428 Tm
-(tipo + importe) Tj
-/F1 10 Tf
-1 0 0 1 54 414 Tm
-(`) Tj
-/F1 10 Tf
-1 0 0 1 54 392 Tm
-(Si hay mas de un candidato con el mismo importe, usa cercania de fecha.) Tj
-/F2 15 Tf
-1 0 0 1 54 346 Tm
-(4.4.1 Ejemplo: pago por importe unico) Tj
-/F1 10 Tf
-1 0 0 1 54 315 Tm
-(Habitualista:) Tj
-/F1 10 Tf
-1 0 0 1 54 293 Tm
-(Tipo | Fecha | Importe | Descripcion) Tj
-/F1 10 Tf
-1 0 0 1 54 279 Tm
-(--- | --- | --- | ---) Tj
-/F1 10 Tf
-1 0 0 1 54 265 Tm
-(pago | 10/05/2026 | 500.000 | Pago gestor) Tj
-/F1 10 Tf
-1 0 0 1 54 243 Tm
+1 0 0 1 54 604 Tm
 (Quiter:) Tj
 /F1 10 Tf
-1 0 0 1 54 221 Tm
-(Tipo | Fecha | Importe | Descripcion) Tj
+1 0 0 1 54 582 Tm
+(Debe | Haber) Tj
 /F1 10 Tf
-1 0 0 1 54 207 Tm
-(--- | --- | --- | ---) Tj
+1 0 0 1 54 568 Tm
+(--- | ---) Tj
 /F1 10 Tf
-1 0 0 1 54 193 Tm
-(pago | 10/05/2026 | 500.000 | Asiento contable) Tj
+1 0 0 1 54 554 Tm
+(10.000.000 | 0) Tj
 /F1 10 Tf
-1 0 0 1 54 171 Tm
-(Resultado:) Tj
+1 0 0 1 54 532 Tm
+(La app entiende que ambos son depositos por el mismo importe y puede conciliarlos.) Tj
+/F2 15 Tf
+1 0 0 1 54 486 Tm
+(4.3 Como se carga) Tj
 /F1 10 Tf
-1 0 0 1 54 149 Tm
-(`text) Tj
+1 0 0 1 54 455 Tm
+(1. Entrar a Conciliacion Contable de Tarjeta Habitualista S/ Contabilidad.) Tj
 /F1 10 Tf
-1 0 0 1 54 135 Tm
-(Contable: tipo + importe unico) Tj
+1 0 0 1 54 441 Tm
+(2. Subir Operaciones de pago.) Tj
 /F1 10 Tf
-1 0 0 1 54 121 Tm
-(`) Tj
+1 0 0 1 54 427 Tm
+(3. Subir Movimientos de cuenta.) Tj
+/F1 10 Tf
+1 0 0 1 54 413 Tm
+(4. Subir Contabilidad Quiter.) Tj
+/F1 10 Tf
+1 0 0 1 54 399 Tm
+(5. Seleccionar Desde Quiter y Hasta Quiter.) Tj
+/F1 10 Tf
+1 0 0 1 54 385 Tm
+(6. Definir la tolerancia de dias.) Tj
+/F1 10 Tf
+1 0 0 1 54 371 Tm
+(7. Presionar Conciliar archivos y guardar historial.) Tj
 /F2 12 Tf
-1 0 0 1 54 93 Tm
+1 0 0 1 54 343 Tm
 (Como debe leerlo el usuario) Tj
 /F1 10 Tf
-1 0 0 1 54 69 Tm
-(La app encontro un solo pago en Quiter por el mismo importe. Por eso lo concilia.) Tj
+1 0 0 1 54 319 Tm
+(Los archivos cargados en esa corrida son el universo completo de conciliacion.) Tj
+/F1 10 Tf
+1 0 0 1 54 297 Tm
+(La app no busca movimientos en cargas anteriores para completar esa conciliacion.) Tj
+/F2 15 Tf
+1 0 0 1 54 251 Tm
+(4.4 Como hace el cruce contable) Tj
+/F1 10 Tf
+1 0 0 1 54 220 Tm
+(La conciliacion contable no usa OP ni referencia.) Tj
+/F1 10 Tf
+1 0 0 1 54 198 Tm
+(La regla es:) Tj
+/F1 10 Tf
+1 0 0 1 54 176 Tm
+(`text) Tj
+/F1 10 Tf
+1 0 0 1 54 162 Tm
+(tipo + importe) Tj
+/F1 10 Tf
+1 0 0 1 54 148 Tm
+(`) Tj
+/F1 10 Tf
+1 0 0 1 54 126 Tm
+(Si hay mas de un candidato con el mismo importe, usa cercania de fecha.) Tj
+/F2 15 Tf
+1 0 0 1 54 80 Tm
+(4.4.1 Ejemplo: pago por importe unico) Tj
 ET
 endstream
 endobj
@@ -1144,117 +1135,117 @@ endobj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 26 0 R >>
 endobj
 26 0 obj
-<< /Length 1973 >>
+<< /Length 2108 >>
 stream
 BT
-/F2 15 Tf
-1 0 0 1 54 764 Tm
-(4.4.2 Ejemplo: varios importes iguales y fecha cercana) Tj
 /F1 10 Tf
-1 0 0 1 54 733 Tm
+1 0 0 1 54 788 Tm
 (Habitualista:) Tj
 /F1 10 Tf
-1 0 0 1 54 711 Tm
-(Tipo | Fecha | Importe) Tj
+1 0 0 1 54 766 Tm
+(Tipo | Fecha | Importe | Descripcion) Tj
 /F1 10 Tf
-1 0 0 1 54 697 Tm
-(--- | --- | ---) Tj
+1 0 0 1 54 752 Tm
+(--- | --- | --- | ---) Tj
 /F1 10 Tf
-1 0 0 1 54 683 Tm
-(pago | 10/05/2026 | 500.000) Tj
+1 0 0 1 54 738 Tm
+(pago | 10/05/2026 | 500.000 | Pago gestor) Tj
 /F1 10 Tf
-1 0 0 1 54 661 Tm
+1 0 0 1 54 716 Tm
 (Quiter:) Tj
 /F1 10 Tf
-1 0 0 1 54 639 Tm
-(Tipo | Fecha | Importe) Tj
+1 0 0 1 54 694 Tm
+(Tipo | Fecha | Importe | Descripcion) Tj
 /F1 10 Tf
-1 0 0 1 54 625 Tm
-(--- | --- | ---) Tj
+1 0 0 1 54 680 Tm
+(--- | --- | --- | ---) Tj
 /F1 10 Tf
-1 0 0 1 54 611 Tm
-(pago | 02/05/2026 | 500.000) Tj
+1 0 0 1 54 666 Tm
+(pago | 10/05/2026 | 500.000 | Asiento contable) Tj
 /F1 10 Tf
-1 0 0 1 54 597 Tm
-(pago | 11/05/2026 | 500.000) Tj
-/F1 10 Tf
-1 0 0 1 54 575 Tm
-(Tolerancia:) Tj
-/F1 10 Tf
-1 0 0 1 54 553 Tm
-(`text) Tj
-/F1 10 Tf
-1 0 0 1 54 539 Tm
-(3 dias) Tj
-/F1 10 Tf
-1 0 0 1 54 525 Tm
-(`) Tj
-/F1 10 Tf
-1 0 0 1 54 503 Tm
+1 0 0 1 54 644 Tm
 (Resultado:) Tj
 /F1 10 Tf
-1 0 0 1 54 481 Tm
-(La app elige el movimiento del 11/05/2026 porque esta a 1 dia de diferencia.) Tj
-/F1 10 Tf
-1 0 0 1 54 459 Tm
-(Criterio:) Tj
-/F1 10 Tf
-1 0 0 1 54 437 Tm
+1 0 0 1 54 622 Tm
 (`text) Tj
 /F1 10 Tf
-1 0 0 1 54 423 Tm
-(Contable: tipo + importe + fecha +/- 3 dias) Tj
+1 0 0 1 54 608 Tm
+(Contable: tipo + importe unico) Tj
 /F1 10 Tf
-1 0 0 1 54 409 Tm
+1 0 0 1 54 594 Tm
 (`) Tj
 /F2 12 Tf
-1 0 0 1 54 381 Tm
+1 0 0 1 54 566 Tm
 (Como debe leerlo el usuario) Tj
 /F1 10 Tf
-1 0 0 1 54 357 Tm
-(Cuando hay importes repetidos, la fecha ayuda a elegir el candidato mas razonable.) Tj
+1 0 0 1 54 542 Tm
+(La app encontro un solo pago en Quiter por el mismo importe. Por eso lo concilia.) Tj
 /F2 15 Tf
-1 0 0 1 54 311 Tm
-(4.4.3 Ejemplo: queda pendiente por fecha fuera de tolerancia) Tj
+1 0 0 1 54 496 Tm
+(4.4.2 Ejemplo: varios importes iguales y fecha cercana) Tj
 /F1 10 Tf
-1 0 0 1 54 280 Tm
+1 0 0 1 54 465 Tm
 (Habitualista:) Tj
 /F1 10 Tf
-1 0 0 1 54 258 Tm
+1 0 0 1 54 443 Tm
 (Tipo | Fecha | Importe) Tj
 /F1 10 Tf
-1 0 0 1 54 244 Tm
+1 0 0 1 54 429 Tm
 (--- | --- | ---) Tj
 /F1 10 Tf
-1 0 0 1 54 230 Tm
+1 0 0 1 54 415 Tm
 (pago | 10/05/2026 | 500.000) Tj
 /F1 10 Tf
-1 0 0 1 54 208 Tm
+1 0 0 1 54 393 Tm
 (Quiter:) Tj
 /F1 10 Tf
-1 0 0 1 54 186 Tm
+1 0 0 1 54 371 Tm
 (Tipo | Fecha | Importe) Tj
 /F1 10 Tf
-1 0 0 1 54 172 Tm
+1 0 0 1 54 357 Tm
 (--- | --- | ---) Tj
 /F1 10 Tf
-1 0 0 1 54 158 Tm
-(pago | 20/05/2026 | 500.000) Tj
+1 0 0 1 54 343 Tm
+(pago | 02/05/2026 | 500.000) Tj
 /F1 10 Tf
-1 0 0 1 54 136 Tm
+1 0 0 1 54 329 Tm
+(pago | 11/05/2026 | 500.000) Tj
+/F1 10 Tf
+1 0 0 1 54 307 Tm
 (Tolerancia:) Tj
 /F1 10 Tf
-1 0 0 1 54 114 Tm
+1 0 0 1 54 285 Tm
 (`text) Tj
 /F1 10 Tf
-1 0 0 1 54 100 Tm
+1 0 0 1 54 271 Tm
 (3 dias) Tj
 /F1 10 Tf
-1 0 0 1 54 86 Tm
+1 0 0 1 54 257 Tm
 (`) Tj
 /F1 10 Tf
-1 0 0 1 54 64 Tm
+1 0 0 1 54 235 Tm
 (Resultado:) Tj
+/F1 10 Tf
+1 0 0 1 54 213 Tm
+(La app elige el movimiento del 11/05/2026 porque esta a 1 dia de diferencia.) Tj
+/F1 10 Tf
+1 0 0 1 54 191 Tm
+(Criterio:) Tj
+/F1 10 Tf
+1 0 0 1 54 169 Tm
+(`text) Tj
+/F1 10 Tf
+1 0 0 1 54 155 Tm
+(Contable: tipo + importe + fecha +/- 3 dias) Tj
+/F1 10 Tf
+1 0 0 1 54 141 Tm
+(`) Tj
+/F2 12 Tf
+1 0 0 1 54 113 Tm
+(Como debe leerlo el usuario) Tj
+/F1 10 Tf
+1 0 0 1 54 89 Tm
+(Cuando hay importes repetidos, la fecha ayuda a elegir el candidato mas razonable.) Tj
 ET
 endstream
 endobj
@@ -1262,102 +1253,108 @@ endobj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 28 0 R >>
 endobj
 28 0 obj
-<< /Length 2386 >>
+<< /Length 2156 >>
 stream
 BT
-/F1 10 Tf
+/F2 15 Tf
 1 0 0 1 54 788 Tm
-(El movimiento queda pendiente porque la diferencia es de 10 dias.) Tj
-/F2 12 Tf
-1 0 0 1 54 760 Tm
-(Como debe leerlo el usuario) Tj
+(4.4.3 Ejemplo: queda pendiente por fecha fuera de tolerancia) Tj
 /F1 10 Tf
-1 0 0 1 54 736 Tm
-(Debe revisarse si la fecha contable esta mal, si el movimiento corresponde a otro pago o si) Tj
+1 0 0 1 54 757 Tm
+(Habitualista:) Tj
 /F1 10 Tf
-1 0 0 1 54 722 Tm
-(  falta cargar un archivo.) Tj
-/F2 15 Tf
-1 0 0 1 54 676 Tm
-(4.5 Por que no usa OP ni referencia en contabilidad) Tj
+1 0 0 1 54 735 Tm
+(Tipo | Fecha | Importe) Tj
 /F1 10 Tf
-1 0 0 1 54 645 Tm
-(En pagos y ventas, la OP puede coincidir con la referencia de venta.) Tj
+1 0 0 1 54 721 Tm
+(--- | --- | ---) Tj
 /F1 10 Tf
-1 0 0 1 54 623 Tm
-(En contabilidad eso no aplica.) Tj
+1 0 0 1 54 707 Tm
+(pago | 10/05/2026 | 500.000) Tj
 /F1 10 Tf
-1 0 0 1 54 601 Tm
-(La OP o referencia de Quiter puede ser:) Tj
+1 0 0 1 54 685 Tm
+(Quiter:) Tj
 /F1 10 Tf
-1 0 0 1 54 579 Tm
-(- un numero interno;) Tj
+1 0 0 1 54 663 Tm
+(Tipo | Fecha | Importe) Tj
 /F1 10 Tf
-1 0 0 1 54 565 Tm
-(- un codigo de asiento;) Tj
+1 0 0 1 54 649 Tm
+(--- | --- | ---) Tj
 /F1 10 Tf
-1 0 0 1 54 551 Tm
-(- un dato distinto al de Habitualista.) Tj
+1 0 0 1 54 635 Tm
+(pago | 20/05/2026 | 500.000) Tj
 /F1 10 Tf
-1 0 0 1 54 529 Tm
-(Por eso, para contabilidad se cruza por importe, tipo y fecha.) Tj
-/F2 15 Tf
-1 0 0 1 54 483 Tm
-(4.6 Sincronizar periodo de Quiter) Tj
+1 0 0 1 54 613 Tm
+(Tolerancia:) Tj
 /F1 10 Tf
-1 0 0 1 54 452 Tm
-(Esta opcion sirve para limpiar asientos de Quiter que ya no aparecen en un nuevo mayor.) Tj
-/F2 12 Tf
-1 0 0 1 54 424 Tm
-(Ejemplo correcto) Tj
-/F1 10 Tf
-1 0 0 1 54 400 Tm
-(Se importo antes un mayor del 01/05 al 14/05.) Tj
-/F1 10 Tf
-1 0 0 1 54 378 Tm
-(Luego Quiter corrigio un asiento y se descarga nuevamente el mayor del 01/05 al 14/05.) Tj
-/F1 10 Tf
-1 0 0 1 54 356 Tm
-(Si se activa sincronizacion y se selecciona el mismo periodo, la app elimina de la base los) Tj
-/F1 10 Tf
-1 0 0 1 54 342 Tm
-(  asientos que ya no aparecen.) Tj
-/F2 12 Tf
-1 0 0 1 54 314 Tm
-(Ejemplo riesgoso) Tj
-/F1 10 Tf
-1 0 0 1 54 290 Tm
-(Se carga un archivo de Quiter del 10/05 al 14/05, pero en la app se selecciona:) Tj
-/F1 10 Tf
-1 0 0 1 54 268 Tm
+1 0 0 1 54 591 Tm
 (`text) Tj
 /F1 10 Tf
-1 0 0 1 54 254 Tm
-(Desde: 01/05) Tj
+1 0 0 1 54 577 Tm
+(3 dias) Tj
 /F1 10 Tf
-1 0 0 1 54 240 Tm
-(Hasta: 14/05) Tj
-/F1 10 Tf
-1 0 0 1 54 226 Tm
+1 0 0 1 54 563 Tm
 (`) Tj
 /F1 10 Tf
-1 0 0 1 54 204 Tm
-(Con sincronizacion activa, la app podria eliminar asientos del 01/05 al 09/05 porque no estan) Tj
+1 0 0 1 54 541 Tm
+(Resultado:) Tj
 /F1 10 Tf
-1 0 0 1 54 190 Tm
-(  en el archivo nuevo.) Tj
+1 0 0 1 54 519 Tm
+(El movimiento queda pendiente porque la diferencia es de 10 dias.) Tj
 /F2 12 Tf
-1 0 0 1 54 162 Tm
+1 0 0 1 54 491 Tm
 (Como debe leerlo el usuario) Tj
 /F1 10 Tf
-1 0 0 1 54 138 Tm
-(Usar sincronizacion solamente cuando el archivo importado contiene todo el periodo) Tj
+1 0 0 1 54 467 Tm
+(Debe revisarse si la fecha contable esta mal, si el movimiento corresponde a otro pago o si) Tj
 /F1 10 Tf
-1 0 0 1 54 124 Tm
-(  seleccionado.) Tj
+1 0 0 1 54 453 Tm
+(  falta cargar un archivo.) Tj
 /F2 15 Tf
-1 0 0 1 54 78 Tm
-(4.7 Recalcular conciliacion contable) Tj
+1 0 0 1 54 407 Tm
+(4.5 Por que no usa OP ni referencia en contabilidad) Tj
+/F1 10 Tf
+1 0 0 1 54 376 Tm
+(En pagos y ventas, la OP puede coincidir con la referencia de venta.) Tj
+/F1 10 Tf
+1 0 0 1 54 354 Tm
+(En contabilidad eso no aplica.) Tj
+/F1 10 Tf
+1 0 0 1 54 332 Tm
+(La OP o referencia de Quiter puede ser:) Tj
+/F1 10 Tf
+1 0 0 1 54 310 Tm
+(- un numero interno;) Tj
+/F1 10 Tf
+1 0 0 1 54 296 Tm
+(- un codigo de asiento;) Tj
+/F1 10 Tf
+1 0 0 1 54 282 Tm
+(- un dato distinto al de Habitualista.) Tj
+/F1 10 Tf
+1 0 0 1 54 260 Tm
+(Por eso, para contabilidad se cruza por importe, tipo y fecha.) Tj
+/F2 15 Tf
+1 0 0 1 54 214 Tm
+(4.6 Historial de conciliaciones contables) Tj
+/F1 10 Tf
+1 0 0 1 54 183 Tm
+(Cada vez que se presiona Conciliar archivos y guardar historial, la app guarda un reporte) Tj
+/F1 10 Tf
+1 0 0 1 54 169 Tm
+(  historico.) Tj
+/F1 10 Tf
+1 0 0 1 54 147 Tm
+(Ese historial conserva el Excel de la corrida.) Tj
+/F2 12 Tf
+1 0 0 1 54 119 Tm
+(Ejemplo practico) Tj
+/F1 10 Tf
+1 0 0 1 54 95 Tm
+(El usuario ejecuta tres conciliaciones:) Tj
+/F1 10 Tf
+1 0 0 1 54 73 Tm
+(- mayo;) Tj
 ET
 endstream
 endobj
@@ -1365,116 +1362,119 @@ endobj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 30 0 R >>
 endobj
 30 0 obj
-<< /Length 2299 >>
+<< /Length 2323 >>
 stream
 BT
 /F1 10 Tf
 1 0 0 1 54 788 Tm
-(El boton Recalcular conciliacion contable recalcula la base ya cargada.) Tj
+(- junio;) Tj
 /F1 10 Tf
-1 0 0 1 54 766 Tm
-(No importa archivos nuevos.) Tj
+1 0 0 1 54 774 Tm
+(- julio.) Tj
+/F1 10 Tf
+1 0 0 1 54 752 Tm
+(La pantalla principal muestra la ultima conciliacion ejecutada.) Tj
+/F1 10 Tf
+1 0 0 1 54 730 Tm
+(Pero desde Historial guardado se puede descargar nuevamente mayo, junio o julio.) Tj
 /F2 12 Tf
-1 0 0 1 54 738 Tm
-(Ejemplo practico) Tj
+1 0 0 1 54 702 Tm
+(Como debe leerlo el usuario) Tj
 /F1 10 Tf
-1 0 0 1 54 714 Tm
-(Se cambio una regla de conciliacion o se quiere refrescar el resultado.) Tj
+1 0 0 1 54 678 Tm
+(La app ya no acumula indefinidamente una base contable. Cada cierre queda como una) Tj
 /F1 10 Tf
-1 0 0 1 54 692 Tm
-(El usuario presiona Recalcular conciliacion contable.) Tj
-/F1 10 Tf
-1 0 0 1 54 670 Tm
-(La app vuelve a cruzar la base existente y actualiza conciliados y pendientes.) Tj
+1 0 0 1 54 664 Tm
+(  conciliacion independiente guardada.) Tj
 /F2 15 Tf
-1 0 0 1 54 624 Tm
-(4.8 Solapas contables) Tj
+1 0 0 1 54 618 Tm
+(4.7 Solapas contables) Tj
 /F2 12 Tf
-1 0 0 1 54 587 Tm
+1 0 0 1 54 581 Tm
 (Resumen) Tj
 /F1 10 Tf
-1 0 0 1 54 563 Tm
+1 0 0 1 54 557 Tm
 (Muestra depositos y pagos separados.) Tj
 /F1 10 Tf
-1 0 0 1 54 541 Tm
+1 0 0 1 54 535 Tm
 (Ejemplo:) Tj
 /F1 10 Tf
-1 0 0 1 54 519 Tm
+1 0 0 1 54 513 Tm
 (`text) Tj
 /F1 10 Tf
-1 0 0 1 54 505 Tm
+1 0 0 1 54 499 Tm
 (tipo: pago) Tj
 /F1 10 Tf
-1 0 0 1 54 491 Tm
+1 0 0 1 54 485 Tm
 (portal_cantidad: 100) Tj
 /F1 10 Tf
-1 0 0 1 54 477 Tm
+1 0 0 1 54 471 Tm
 (quiter_cantidad: 98) Tj
 /F1 10 Tf
-1 0 0 1 54 463 Tm
+1 0 0 1 54 457 Tm
 (conciliados_cantidad: 90) Tj
 /F1 10 Tf
-1 0 0 1 54 449 Tm
+1 0 0 1 54 443 Tm
 (pendientes_portal_cantidad: 10) Tj
 /F1 10 Tf
-1 0 0 1 54 435 Tm
+1 0 0 1 54 429 Tm
 (pendientes_quiter_cantidad: 8) Tj
 /F1 10 Tf
-1 0 0 1 54 421 Tm
+1 0 0 1 54 415 Tm
 (`) Tj
 /F1 10 Tf
-1 0 0 1 54 399 Tm
+1 0 0 1 54 393 Tm
 (Lectura:) Tj
 /F1 10 Tf
-1 0 0 1 54 377 Tm
+1 0 0 1 54 371 Tm
 (Hay 100 pagos en Habitualista, 98 pagos en Quiter, 90 conciliados, 10 pendientes del lado) Tj
 /F1 10 Tf
-1 0 0 1 54 363 Tm
+1 0 0 1 54 357 Tm
 (  Habitualista y 8 pendientes del lado Quiter.) Tj
 /F2 12 Tf
-1 0 0 1 54 335 Tm
+1 0 0 1 54 329 Tm
 (Conciliados) Tj
 /F1 10 Tf
-1 0 0 1 54 311 Tm
+1 0 0 1 54 305 Tm
 (Muestra contra que movimiento se matcheo cada registro.) Tj
 /F1 10 Tf
-1 0 0 1 54 289 Tm
+1 0 0 1 54 283 Tm
 (Columnas clave:) Tj
 /F1 10 Tf
-1 0 0 1 54 267 Tm
+1 0 0 1 54 261 Tm
 (- descripcion_origen) Tj
 /F1 10 Tf
-1 0 0 1 54 253 Tm
+1 0 0 1 54 247 Tm
 (- descripcion_conciliada) Tj
 /F1 10 Tf
-1 0 0 1 54 239 Tm
+1 0 0 1 54 233 Tm
 (- fecha_origen) Tj
 /F1 10 Tf
-1 0 0 1 54 225 Tm
+1 0 0 1 54 219 Tm
 (- fecha_conciliada) Tj
 /F1 10 Tf
-1 0 0 1 54 211 Tm
+1 0 0 1 54 205 Tm
 (- archivo_origen) Tj
 /F1 10 Tf
-1 0 0 1 54 197 Tm
+1 0 0 1 54 191 Tm
 (- archivo_conciliado) Tj
 /F1 10 Tf
-1 0 0 1 54 175 Tm
+1 0 0 1 54 169 Tm
 (Ejemplo de lectura:) Tj
 /F1 10 Tf
-1 0 0 1 54 153 Tm
+1 0 0 1 54 147 Tm
 (`text) Tj
 /F1 10 Tf
-1 0 0 1 54 139 Tm
+1 0 0 1 54 133 Tm
 (descripcion_origen: OP 4282962 TRANSFERENCIA) Tj
 /F1 10 Tf
-1 0 0 1 54 125 Tm
+1 0 0 1 54 119 Tm
 (descripcion_conciliada: ASIENTO HABITUALISTA MAYOR QUITER) Tj
 /F1 10 Tf
-1 0 0 1 54 111 Tm
+1 0 0 1 54 105 Tm
 (`) Tj
 /F1 10 Tf
-1 0 0 1 54 89 Tm
+1 0 0 1 54 83 Tm
 (Significa que ese pago de Habitualista fue conciliado contra ese asiento de Quiter.) Tj
 ET
 endstream
@@ -1483,7 +1483,7 @@ endobj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 32 0 R >>
 endobj
 32 0 obj
-<< /Length 2119 >>
+<< /Length 2302 >>
 stream
 BT
 /F2 12 Tf
@@ -1533,55 +1533,55 @@ BT
 (Base portal) Tj
 /F1 10 Tf
 1 0 0 1 54 488 Tm
-(Toda la base importada desde Habitualista.) Tj
+(Movimientos de Habitualista importados en la conciliacion actual.) Tj
 /F2 12 Tf
 1 0 0 1 54 460 Tm
 (Base Quiter) Tj
 /F1 10 Tf
 1 0 0 1 54 436 Tm
-(Toda la base importada desde Quiter.) Tj
+(Movimientos de Quiter importados en la conciliacion actual.) Tj
 /F2 12 Tf
 1 0 0 1 54 408 Tm
-(Importaciones) Tj
+(Historial guardado) Tj
 /F1 10 Tf
 1 0 0 1 54 384 Tm
-(Historial de cargas contables.) Tj
+(Listado de conciliaciones contables guardadas.) Tj
+/F1 10 Tf
+1 0 0 1 54 362 Tm
+(Desde esta solapa se puede seleccionar una conciliacion anterior y descargar su Excel.) Tj
 /F2 15 Tf
-1 0 0 1 54 338 Tm
+1 0 0 1 54 316 Tm
 (5. Historial) Tj
 /F1 10 Tf
-1 0 0 1 54 307 Tm
+1 0 0 1 54 285 Tm
 (El modulo Historial no importa archivos. Sirve para consultar y descargar.) Tj
 /F2 12 Tf
-1 0 0 1 54 279 Tm
+1 0 0 1 54 257 Tm
 (Descargas superiores) Tj
 /F1 10 Tf
-1 0 0 1 54 255 Tm
+1 0 0 1 54 233 Tm
 (Tiene dos botones:) Tj
 /F1 10 Tf
-1 0 0 1 54 233 Tm
+1 0 0 1 54 211 Tm
 (- Descargar consolidado pagos y ventas.) Tj
 /F1 10 Tf
-1 0 0 1 54 219 Tm
-(- Descargar consolidado contable.) Tj
+1 0 0 1 54 197 Tm
+(- Descargar ultima conciliacion contable visible.) Tj
 /F2 12 Tf
-1 0 0 1 54 191 Tm
+1 0 0 1 54 169 Tm
 (Ejemplo practico) Tj
 /F1 10 Tf
-1 0 0 1 54 167 Tm
-(Despues de cerrar una revision mensual, el usuario entra a Historial y descarga ambos) Tj
+1 0 0 1 54 145 Tm
+(Despues de cerrar una revision mensual, el usuario entra a Historial y descarga el) Tj
 /F1 10 Tf
-1 0 0 1 54 153 Tm
-(  consolidados para guardar respaldo.) Tj
+1 0 0 1 54 131 Tm
+(  consolidado de pagos y ventas o la conciliacion contable guardada que corresponda.) Tj
 /F2 12 Tf
-1 0 0 1 54 125 Tm
+1 0 0 1 54 103 Tm
 (Solapa Importaciones pagos y ventas) Tj
 /F1 10 Tf
-1 0 0 1 54 101 Tm
+1 0 0 1 54 79 Tm
 (Muestra que archivos se cargaron y cuantos registros se insertaron o actualizaron.) Tj
-/F2 12 Tf
-1 0 0 1 54 73 Tm
-(Solapa Importaciones contables) Tj
 ET
 endstream
 endobj
@@ -1589,108 +1589,99 @@ endobj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 34 0 R >>
 endobj
 34 0 obj
-<< /Length 2259 >>
+<< /Length 2101 >>
 stream
 BT
-/F1 10 Tf
+/F2 12 Tf
 1 0 0 1 54 788 Tm
-(Muestra que archivos contables se cargaron y cuantos registros se insertaron, actualizaron o) Tj
+(Solapa Importaciones contables) Tj
 /F1 10 Tf
-1 0 0 1 54 774 Tm
-(  eliminaron por sincronizacion.) Tj
+1 0 0 1 54 764 Tm
+(Muestra que archivos contables se cargaron en cada corrida.) Tj
+/F2 12 Tf
+1 0 0 1 54 736 Tm
+(Solapa Conciliaciones contables guardadas) Tj
+/F1 10 Tf
+1 0 0 1 54 712 Tm
+(Permite seleccionar una conciliacion contable historica y descargar su Excel.) Tj
 /F2 15 Tf
-1 0 0 1 54 728 Tm
+1 0 0 1 54 666 Tm
 (6. Backups) Tj
 /F1 10 Tf
-1 0 0 1 54 697 Tm
+1 0 0 1 54 635 Tm
 (El modulo Backups permite guardar o restaurar copias.) Tj
 /F2 12 Tf
-1 0 0 1 54 669 Tm
+1 0 0 1 54 607 Tm
 (Crear backup) Tj
 /F1 10 Tf
-1 0 0 1 54 645 Tm
+1 0 0 1 54 583 Tm
 (1. Entrar a Backups.) Tj
 /F1 10 Tf
-1 0 0 1 54 631 Tm
+1 0 0 1 54 569 Tm
 (2. Presionar Crear backup ahora.) Tj
 /F1 10 Tf
-1 0 0 1 54 617 Tm
+1 0 0 1 54 555 Tm
 (3. Descargar el ZIP si se quiere guardar una copia externa.) Tj
 /F2 12 Tf
-1 0 0 1 54 589 Tm
+1 0 0 1 54 527 Tm
 (Restaurar backup) Tj
 /F1 10 Tf
-1 0 0 1 54 565 Tm
+1 0 0 1 54 503 Tm
 (1. Entrar a Backups.) Tj
 /F1 10 Tf
-1 0 0 1 54 551 Tm
+1 0 0 1 54 489 Tm
 (2. Subir el ZIP.) Tj
 /F1 10 Tf
-1 0 0 1 54 537 Tm
+1 0 0 1 54 475 Tm
 (3. Marcar la confirmacion.) Tj
 /F1 10 Tf
-1 0 0 1 54 523 Tm
+1 0 0 1 54 461 Tm
 (4. Presionar Restaurar backup.) Tj
 /F1 10 Tf
-1 0 0 1 54 509 Tm
+1 0 0 1 54 447 Tm
 (5. Recargar la app.) Tj
 /F2 12 Tf
-1 0 0 1 54 481 Tm
+1 0 0 1 54 419 Tm
 (Ejemplo practico) Tj
 /F1 10 Tf
-1 0 0 1 54 457 Tm
+1 0 0 1 54 395 Tm
 (Antes de hacer una carga grande, el usuario genera un backup. Si algo sale mal, puede) Tj
 /F1 10 Tf
-1 0 0 1 54 443 Tm
+1 0 0 1 54 381 Tm
 (  restaurar la copia anterior.) Tj
 /F2 15 Tf
-1 0 0 1 54 397 Tm
+1 0 0 1 54 335 Tm
 (7. Persistencia de datos) Tj
 /F1 10 Tf
-1 0 0 1 54 366 Tm
+1 0 0 1 54 304 Tm
 (En Streamlit Cloud se recomienda usar Neon.) Tj
 /F1 10 Tf
-1 0 0 1 54 344 Tm
+1 0 0 1 54 282 Tm
 (Si la app tiene configurado DATABASE_URL, guarda los datos en Neon.) Tj
 /F1 10 Tf
-1 0 0 1 54 322 Tm
+1 0 0 1 54 260 Tm
 (Si no tiene DATABASE_URL, usa una base local en data/.) Tj
 /F2 12 Tf
-1 0 0 1 54 294 Tm
+1 0 0 1 54 232 Tm
 (Ejemplo practico) Tj
 /F1 10 Tf
-1 0 0 1 54 270 Tm
+1 0 0 1 54 208 Tm
 (Si Streamlit se reinicia y no se usa Neon, los datos locales pueden perderse.) Tj
 /F1 10 Tf
-1 0 0 1 54 248 Tm
+1 0 0 1 54 186 Tm
 (Con Neon, la base permanece aunque la app se reinicie.) Tj
 /F2 15 Tf
-1 0 0 1 54 202 Tm
+1 0 0 1 54 140 Tm
 (8. Recomendacion de cierre) Tj
 /F1 10 Tf
-1 0 0 1 54 171 Tm
+1 0 0 1 54 109 Tm
 (Para cerrar una revision:) Tj
 /F1 10 Tf
-1 0 0 1 54 149 Tm
+1 0 0 1 54 87 Tm
 (1. Importar archivos.) Tj
 /F1 10 Tf
-1 0 0 1 54 135 Tm
+1 0 0 1 54 73 Tm
 (2. Revisar metricas.) Tj
-/F1 10 Tf
-1 0 0 1 54 121 Tm
-(3. Revisar pendientes.) Tj
-/F1 10 Tf
-1 0 0 1 54 107 Tm
-(4. Corregir o completar reportes si corresponde.) Tj
-/F1 10 Tf
-1 0 0 1 54 93 Tm
-(5. Reimportar.) Tj
-/F1 10 Tf
-1 0 0 1 54 79 Tm
-(6. Descargar consolidado.) Tj
-/F1 10 Tf
-1 0 0 1 54 65 Tm
-(7. Guardar Excel como respaldo.) Tj
 ET
 endstream
 endobj
@@ -1698,11 +1689,26 @@ endobj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 36 0 R >>
 endobj
 36 0 obj
-<< /Length 72 >>
+<< /Length 382 >>
 stream
 BT
 /F1 10 Tf
 1 0 0 1 54 788 Tm
+(3. Revisar pendientes.) Tj
+/F1 10 Tf
+1 0 0 1 54 774 Tm
+(4. Corregir o completar reportes si corresponde.) Tj
+/F1 10 Tf
+1 0 0 1 54 760 Tm
+(5. Reimportar.) Tj
+/F1 10 Tf
+1 0 0 1 54 746 Tm
+(6. Descargar consolidado.) Tj
+/F1 10 Tf
+1 0 0 1 54 732 Tm
+(7. Guardar Excel como respaldo.) Tj
+/F1 10 Tf
+1 0 0 1 54 718 Tm
 (8. Generar backup si corresponde.) Tj
 ET
 endstream
@@ -1716,38 +1722,38 @@ xref
 0000000289 00000 n 
 0000000364 00000 n 
 0000000500 00000 n 
-0000002970 00000 n 
-0000003106 00000 n 
-0000005382 00000 n 
-0000005519 00000 n 
-0000008051 00000 n 
-0000008189 00000 n 
-0000010507 00000 n 
-0000010645 00000 n 
-0000012688 00000 n 
-0000012826 00000 n 
-0000014910 00000 n 
-0000015048 00000 n 
-0000017170 00000 n 
-0000017308 00000 n 
-0000019705 00000 n 
-0000019843 00000 n 
-0000021902 00000 n 
-0000022040 00000 n 
-0000024358 00000 n 
-0000024496 00000 n 
-0000026522 00000 n 
-0000026660 00000 n 
-0000029099 00000 n 
-0000029237 00000 n 
-0000031589 00000 n 
-0000031727 00000 n 
-0000033899 00000 n 
-0000034037 00000 n 
-0000036349 00000 n 
-0000036487 00000 n 
+0000003013 00000 n 
+0000003149 00000 n 
+0000005467 00000 n 
+0000005604 00000 n 
+0000008128 00000 n 
+0000008266 00000 n 
+0000010585 00000 n 
+0000010723 00000 n 
+0000012767 00000 n 
+0000012905 00000 n 
+0000015009 00000 n 
+0000015147 00000 n 
+0000017269 00000 n 
+0000017407 00000 n 
+0000019781 00000 n 
+0000019919 00000 n 
+0000022302 00000 n 
+0000022440 00000 n 
+0000024618 00000 n 
+0000024756 00000 n 
+0000026917 00000 n 
+0000027055 00000 n 
+0000029264 00000 n 
+0000029402 00000 n 
+0000031778 00000 n 
+0000031916 00000 n 
+0000034271 00000 n 
+0000034409 00000 n 
+0000036563 00000 n 
+0000036701 00000 n 
 trailer
 << /Size 37 /Root 1 0 R >>
 startxref
-36610
+37135
 %%EOF

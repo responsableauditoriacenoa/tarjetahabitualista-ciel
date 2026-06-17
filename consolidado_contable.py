@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import base64
 from datetime import datetime
 from decimal import Decimal
 from io import BytesIO
@@ -110,6 +111,22 @@ def inicializar_base_contable() -> None:
             conn.execute(
                 "ALTER TABLE contable_importaciones ADD COLUMN quiter_eliminados INTEGER DEFAULT 0"
             )
+        conn.execute(
+            """
+            CREATE TABLE IF NOT EXISTS contable_conciliaciones (
+                id TEXT PRIMARY KEY,
+                creada TEXT NOT NULL,
+                desde TEXT,
+                hasta TEXT,
+                tolerancia_dias INTEGER NOT NULL,
+                pagos_archivos TEXT NOT NULL,
+                movimientos_archivos TEXT NOT NULL,
+                quiter_archivos TEXT NOT NULL,
+                resumen_json TEXT NOT NULL,
+                reporte_b64 TEXT NOT NULL
+            )
+            """
+        )
         conn.execute(
             """
             CREATE INDEX IF NOT EXISTS idx_contable_portal_match
@@ -323,17 +340,16 @@ def importar_a_base(
             for mov in cargar_depositos_habitualista(path)
         )
 
-    portal_stats = upsert_registros("contable_portal", "movimiento_key", portal_registros)
-    stats["portal_insertados"] += portal_stats["insertado"]
-    stats["portal_actualizados"] += portal_stats["actualizado"]
-
     quiter_importados = []
     for path in quiter_paths:
         for mov in cargar_quiter(path, desde, hasta):
             quiter_importados.append((path, mov))
 
-    if sincronizar_quiter_periodo and quiter_importados:
-        stats["quiter_eliminados"] = sincronizar_quiter(quiter_importados, desde, hasta)
+    limpiar_base_actual()
+
+    portal_stats = upsert_registros("contable_portal", "movimiento_key", portal_registros)
+    stats["portal_insertados"] = portal_stats["insertado"]
+    stats["portal_actualizados"] = portal_stats["actualizado"]
 
     quiter_stats = upsert_registros(
         "contable_quiter",
@@ -343,12 +359,25 @@ def importar_a_base(
             for path, mov in quiter_importados
         ],
     )
-    stats["quiter_insertados"] += quiter_stats["insertado"]
-    stats["quiter_actualizados"] += quiter_stats["actualizado"]
+    stats["quiter_insertados"] = quiter_stats["insertado"]
+    stats["quiter_actualizados"] = quiter_stats["actualizado"]
 
     reconciliar_base(tolerancia_dias=tolerancia_dias)
     registrar_importacion(corrida_id, stats)
+    guardar_conciliacion_contable(
+        corrida_id=corrida_id,
+        stats=stats,
+        desde=desde,
+        hasta=hasta,
+        tolerancia_dias=tolerancia_dias,
+    )
     return stats
+
+
+def limpiar_base_actual() -> None:
+    with conectar() as conn:
+        conn.execute("DELETE FROM contable_portal")
+        conn.execute("DELETE FROM contable_quiter")
 
 
 def registrar_importacion(corrida_id: str, stats: dict) -> None:
@@ -373,6 +402,42 @@ def registrar_importacion(corrida_id: str, stats: dict) -> None:
                 stats["quiter_insertados"],
                 stats["quiter_actualizados"],
                 stats.get("quiter_eliminados", 0),
+            ),
+        )
+
+
+def guardar_conciliacion_contable(
+    *,
+    corrida_id: str,
+    stats: dict,
+    desde,
+    hasta,
+    tolerancia_dias: int,
+) -> None:
+    dfs = dataframes_consolidados(recalcular=False)
+    reporte_bytes = excel_bytes_consolidado(recalcular=False)
+    resumen_json = dfs["resumen"].to_json(orient="records", date_format="iso")
+    with conectar() as conn:
+        conn.execute(
+            """
+            INSERT INTO contable_conciliaciones (
+                id, creada, desde, hasta, tolerancia_dias,
+                pagos_archivos, movimientos_archivos, quiter_archivos,
+                resumen_json, reporte_b64
+            )
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """,
+            (
+                corrida_id,
+                datetime.now().isoformat(timespec="seconds"),
+                desde.isoformat() if desde else "",
+                hasta.isoformat() if hasta else "",
+                tolerancia_dias,
+                json.dumps(stats["pagos_archivos"], ensure_ascii=False),
+                json.dumps(stats["movimientos_archivos"], ensure_ascii=False),
+                json.dumps(stats["quiter_archivos"], ensure_ascii=False),
+                resumen_json,
+                base64.b64encode(reporte_bytes).decode("ascii"),
             ),
         )
 
@@ -636,6 +701,32 @@ def historial_importaciones() -> pd.DataFrame:
         return conn.read_sql(
             "SELECT * FROM contable_importaciones ORDER BY fecha DESC",
         )
+
+
+def historial_conciliaciones() -> pd.DataFrame:
+    inicializar_base_contable()
+    with conectar() as conn:
+        return conn.read_sql(
+            """
+            SELECT id, creada, desde, hasta, tolerancia_dias,
+                   pagos_archivos, movimientos_archivos, quiter_archivos,
+                   resumen_json
+            FROM contable_conciliaciones
+            ORDER BY creada DESC
+            """
+        )
+
+
+def reporte_conciliacion_bytes(conciliacion_id: str) -> bytes:
+    inicializar_base_contable()
+    with conectar() as conn:
+        row = conn.execute(
+            "SELECT reporte_b64 FROM contable_conciliaciones WHERE id = ?",
+            (conciliacion_id,),
+        ).fetchone()
+    if not row:
+        return b""
+    return base64.b64decode(row[0])
 
 
 def excel_bytes_consolidado(recalcular: bool = False) -> bytes:
