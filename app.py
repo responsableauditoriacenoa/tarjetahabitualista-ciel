@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import base64
 from datetime import date
 from pathlib import Path
 
@@ -38,8 +39,12 @@ from storage import (
 )
 
 
+APP_TITLE = "Sistema de Conciliacion de Tarjeta Habitualista Ciel SA"
+LOGO_PATH = Path("assets/logo_ciel.png")
+
+
 st.set_page_config(
-    page_title="Conciliacion Tarjeta Habitualista",
+    page_title=APP_TITLE,
     page_icon="",
     layout="wide",
 )
@@ -157,12 +162,38 @@ def aplicar_estilos() -> None:
             border-radius: 8px;
             padding: 1.2rem 1.35rem;
             margin-bottom: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+
+        .app-logo {
+            width: 112px;
+            max-width: 24vw;
+            height: auto;
+            object-fit: contain;
+            flex: 0 0 auto;
+        }
+
+        .app-hero-text {
+            min-width: 0;
         }
 
         .app-hero p {
             color: var(--text-muted);
             margin: 0.25rem 0 0;
             font-size: 1.08rem;
+        }
+
+        @media (max-width: 720px) {
+            .app-hero {
+                align-items: flex-start;
+                gap: 0.85rem;
+            }
+
+            .app-logo {
+                width: 76px;
+            }
         }
 
         [data-testid="stMetric"] {
@@ -312,12 +343,24 @@ def aplicar_estilos() -> None:
     )
 
 
+def logo_data_uri() -> str:
+    if not LOGO_PATH.exists():
+        return ""
+    data = base64.b64encode(LOGO_PATH.read_bytes()).decode("ascii")
+    return f"data:image/png;base64,{data}"
+
+
 def render_header() -> None:
+    logo_src = logo_data_uri()
+    logo_html = f'<img class="app-logo" src="{logo_src}" alt="Ciel SA">' if logo_src else ""
     st.markdown(
-        """
+        f"""
         <div class="app-hero">
-            <h1>Conciliacion Tarjeta Habitualista</h1>
-            <p>Importacion, conciliacion y revision de movimientos contra Quiter.</p>
+            {logo_html}
+            <div class="app-hero-text">
+                <h1>{APP_TITLE}</h1>
+                <p>Importacion, conciliacion y revision de movimientos contra Quiter.</p>
+            </div>
         </div>
         """,
         unsafe_allow_html=True,
