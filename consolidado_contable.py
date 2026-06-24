@@ -168,19 +168,12 @@ def fecha_texto(valor) -> str:
 
 
 def movimiento_key(mov: Movimiento, archivo: Path, scope: str) -> str:
-    if scope == "portal" and mov.tipo == "pago" and mov.documento:
-        return f"portal|pago|doc|{mov.documento}"
-    if scope == "portal" and mov.tipo == "deposito" and mov.documento:
-        return f"portal|deposito|boleta|{mov.documento}"
-    if scope == "quiter" and mov.documento:
-        return f"quiter|{mov.tipo}|doc|{mov.documento}|{decimal_a_float(mov.importe):.2f}"
-    if scope == "quiter" and mov.referencia:
-        return f"quiter|{mov.tipo}|ref|{mov.referencia}|{decimal_a_float(mov.importe):.2f}"
-
     fecha = fecha_texto(mov.fecha)
     return "|".join(
         [
             scope,
+            archivo.name,
+            str(mov.fila),
             mov.tipo,
             fecha,
             f"{decimal_a_float(mov.importe):.2f}",
