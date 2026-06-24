@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import base64
+from collections import defaultdict, deque
 from datetime import datetime
 from decimal import Decimal
 from io import BytesIO
@@ -561,14 +562,20 @@ def reconciliar_base(tolerancia_dias: int = 3) -> None:
 
     portal_keys = list(portal["movimiento_key"]) if not portal.empty else []
     quiter_keys = list(quiter["movimiento_key"]) if not quiter.empty else []
-    portal_by_signature = {signature(mov): key for key, mov in zip(portal_keys, portal_movs)}
-    quiter_by_signature = {signature(mov): key for key, mov in zip(quiter_keys, quiter_movs)}
+    portal_by_signature: dict[tuple, deque] = defaultdict(deque)
+    quiter_by_signature: dict[tuple, deque] = defaultdict(deque)
+    for key, mov in zip(portal_keys, portal_movs):
+        portal_by_signature[signature(mov)].append(key)
+    for key, mov in zip(quiter_keys, quiter_movs):
+        quiter_by_signature[signature(mov)].append(key)
 
     portal_updates = {key: ("", "") for key in portal_keys}
     quiter_updates = {key: ("", "") for key in quiter_keys}
     for match in resultado.conciliados:
-        pkey = portal_by_signature.get(signature(match.portal))
-        qkey = quiter_by_signature.get(signature(match.quiter))
+        portal_keys_match = portal_by_signature.get(signature(match.portal))
+        quiter_keys_match = quiter_by_signature.get(signature(match.quiter))
+        pkey = portal_keys_match.popleft() if portal_keys_match else None
+        qkey = quiter_keys_match.popleft() if quiter_keys_match else None
         if pkey and qkey:
             portal_updates[pkey] = (qkey, match.criterio)
             quiter_updates[qkey] = (pkey, match.criterio)

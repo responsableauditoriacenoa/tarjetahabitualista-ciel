@@ -4,6 +4,7 @@ import argparse
 from io import BytesIO
 import re
 import unicodedata
+from collections import defaultdict
 from dataclasses import dataclass
 from datetime import date, datetime
 from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
@@ -292,19 +293,85 @@ def conciliar(
     quiter: Iterable[Movimiento],
     tolerancia_dias: int,
 ) -> ResultadoConciliacion:
-    pendientes_quiter = list(quiter)
+    portal_lista = list(portal)
+    quiter_lista = list(quiter)
     conciliados: list[Match] = []
-    pendientes_portal: list[Movimiento] = []
+    portal_conciliados: set[int] = set()
+    quiter_conciliados: set[int] = set()
 
-    for movimiento in portal:
-        indice, criterio = buscar_match(movimiento, pendientes_quiter, tolerancia_dias)
-        if indice is None:
-            pendientes_portal.append(movimiento)
+    portal_por_importe: dict[tuple[str, Decimal], list[tuple[int, Movimiento]]] = defaultdict(list)
+    quiter_por_importe: dict[tuple[str, Decimal], list[tuple[int, Movimiento]]] = defaultdict(list)
+
+    for indice, movimiento in enumerate(portal_lista):
+        portal_por_importe[(movimiento.tipo, movimiento.importe)].append((indice, movimiento))
+
+    for indice, movimiento in enumerate(quiter_lista):
+        quiter_por_importe[(movimiento.tipo, movimiento.importe)].append((indice, movimiento))
+
+    for clave, portal_grupo in portal_por_importe.items():
+        quiter_grupo = quiter_por_importe.get(clave, [])
+        if not quiter_grupo:
             continue
 
-        conciliados.append(Match(movimiento, pendientes_quiter.pop(indice), criterio))
+        pares = ordenar_pares_por_cercania(portal_grupo, quiter_grupo)
+        for distancia, portal_indice, quiter_indice, portal_mov, quiter_mov in pares:
+            if portal_indice in portal_conciliados or quiter_indice in quiter_conciliados:
+                continue
+
+            portal_conciliados.add(portal_indice)
+            quiter_conciliados.add(quiter_indice)
+            conciliados.append(Match(portal_mov, quiter_mov, criterio_contable(distancia, tolerancia_dias)))
+
+    pendientes_portal = [
+        movimiento
+        for indice, movimiento in enumerate(portal_lista)
+        if indice not in portal_conciliados
+    ]
+    pendientes_quiter = [
+        movimiento
+        for indice, movimiento in enumerate(quiter_lista)
+        if indice not in quiter_conciliados
+    ]
 
     return ResultadoConciliacion(conciliados, pendientes_portal, pendientes_quiter)
+
+
+def ordenar_pares_por_cercania(
+    portal_grupo: list[tuple[int, Movimiento]],
+    quiter_grupo: list[tuple[int, Movimiento]],
+) -> list[tuple[int | None, int, int, Movimiento, Movimiento]]:
+    pares = []
+    for portal_indice, portal_mov in portal_grupo:
+        for quiter_indice, quiter_mov in quiter_grupo:
+            distancia = distancia_fechas(portal_mov, quiter_mov)
+            orden_distancia = distancia if distancia is not None else 999999
+            orden_fecha = portal_mov.fecha or portal_mov.fecha_referencia or date.min
+            pares.append(
+                (
+                    orden_distancia,
+                    orden_fecha,
+                    portal_indice,
+                    quiter_indice,
+                    distancia,
+                    portal_mov,
+                    quiter_mov,
+                )
+            )
+    pares.sort(key=lambda item: (item[0], item[1], item[2], item[3]))
+    return [
+        (distancia, portal_indice, quiter_indice, portal_mov, quiter_mov)
+        for _, _, portal_indice, quiter_indice, distancia, portal_mov, quiter_mov in pares
+    ]
+
+
+def criterio_contable(distancia: int | None, tolerancia_dias: int) -> str:
+    if distancia is None:
+        return "Contable: tipo + importe"
+    if distancia == 0:
+        return "Contable: tipo + importe + misma fecha"
+    if distancia <= tolerancia_dias:
+        return f"Contable: tipo + importe + fecha +/- {tolerancia_dias} dias"
+    return f"Contable: tipo + importe + fecha mas cercana ({distancia} dias)"
 
 
 def buscar_match(
