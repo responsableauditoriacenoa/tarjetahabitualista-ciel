@@ -1001,30 +1001,7 @@ def pantalla_base_contable() -> None:
                 key="contable_quiter",
             )
 
-        filtrar_quiter = st.checkbox(
-            "Filtrar Quiter por rango de fechas",
-            value=False,
-            help=(
-                "Si esta desactivado, la app toma todos los movimientos del archivo de Quiter. "
-                "Active esta opcion solo si quiere limitar el mayor por fecha."
-            ),
-        )
-
-        col_fecha1, col_fecha2, col_tol = st.columns(3)
-        with col_fecha1:
-            desde = st.date_input(
-                "Desde Quiter",
-                value=date(date.today().year, 1, 1),
-                key="contable_desde",
-                disabled=not filtrar_quiter,
-            )
-        with col_fecha2:
-            hasta = st.date_input(
-                "Hasta Quiter",
-                value=date.today(),
-                key="contable_hasta",
-                disabled=not filtrar_quiter,
-            )
+        col_tol, _, _ = st.columns(3)
         with col_tol:
             tolerancia = st.number_input(
                 "Tolerancia dias",
@@ -1049,8 +1026,8 @@ def pantalla_base_contable() -> None:
                     pagos_files or [],
                     movimientos_files or [],
                     quiter_files or [],
-                    desde=desde if filtrar_quiter else None,
-                    hasta=hasta if filtrar_quiter else None,
+                    desde=None,
+                    hasta=None,
                     tolerancia_dias=int(tolerancia),
                 )
             except ImportacionError as exc:
