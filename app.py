@@ -1059,7 +1059,8 @@ def pantalla_base_contable() -> None:
         st.success(
             "Conciliacion contable guardada: "
             f"movimientos portal {stats['portal_insertados']}, "
-            f"movimientos Quiter {stats['quiter_insertados']}."
+            f"movimientos Quiter {stats['quiter_insertados']}, "
+            f"duplicados omitidos {stats.get('portal_duplicados_lote', 0) + stats.get('quiter_duplicados_lote', 0)}."
         )
         backup_path = backups.crear_backup("base_contable")
         st.info(f"Backup automatico generado: {backup_path.name}")

@@ -241,9 +241,24 @@ def chunks(items: list, size: int = 500):
         yield items[start : start + size]
 
 
+def deduplicar_registros_lote(registros: list[dict], key_col: str) -> tuple[list[dict], int]:
+    registros_por_clave: dict[str, dict] = {}
+    duplicados = 0
+
+    for registro in registros:
+        clave = registro.get(key_col, "")
+        if clave in registros_por_clave:
+            registros_por_clave[clave] = merge_dict(registros_por_clave[clave], registro)
+            duplicados += 1
+        else:
+            registros_por_clave[clave] = registro
+
+    return list(registros_por_clave.values()), duplicados
+
+
 def upsert_registros(tabla: str, key_col: str, registros: list[dict]) -> dict[str, int]:
     if not registros:
-        return {"insertado": 0, "actualizado": 0}
+        return {"insertado": 0, "actualizado": 0, "duplicado_lote": 0}
 
     ahora = datetime.now().isoformat(timespec="seconds")
     with conectar() as conn:
@@ -252,6 +267,7 @@ def upsert_registros(tabla: str, key_col: str, registros: list[dict]) -> dict[st
             {col: registro.get(col, "") for col in columnas}
             for registro in registros
         ]
+        registros_filtrados, duplicados_lote = deduplicar_registros_lote(registros_filtrados, key_col)
         keys = [registro[key_col] for registro in registros_filtrados]
 
         existentes: dict[str, dict] = {}
@@ -288,7 +304,11 @@ def upsert_registros(tabla: str, key_col: str, registros: list[dict]) -> dict[st
                 inserts,
             )
 
-    return {"insertado": len(inserts), "actualizado": len(updates)}
+    return {
+        "insertado": len(inserts),
+        "actualizado": len(updates),
+        "duplicado_lote": duplicados_lote,
+    }
 
 
 def importar_a_base(
@@ -312,8 +332,10 @@ def importar_a_base(
     stats = {
         "portal_insertados": 0,
         "portal_actualizados": 0,
+        "portal_duplicados_lote": 0,
         "quiter_insertados": 0,
         "quiter_actualizados": 0,
+        "quiter_duplicados_lote": 0,
         "quiter_eliminados": 0,
         "pagos_archivos": [p.name for p in pagos_paths],
         "movimientos_archivos": [p.name for p in movimientos_paths],
@@ -343,6 +365,7 @@ def importar_a_base(
     portal_stats = upsert_registros("contable_portal", "movimiento_key", portal_registros)
     stats["portal_insertados"] = portal_stats["insertado"]
     stats["portal_actualizados"] = portal_stats["actualizado"]
+    stats["portal_duplicados_lote"] = portal_stats["duplicado_lote"]
 
     quiter_stats = upsert_registros(
         "contable_quiter",
@@ -354,6 +377,7 @@ def importar_a_base(
     )
     stats["quiter_insertados"] = quiter_stats["insertado"]
     stats["quiter_actualizados"] = quiter_stats["actualizado"]
+    stats["quiter_duplicados_lote"] = quiter_stats["duplicado_lote"]
 
     reconciliar_base(tolerancia_dias=tolerancia_dias)
     registrar_importacion(corrida_id, stats)
