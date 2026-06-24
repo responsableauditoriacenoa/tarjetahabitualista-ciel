@@ -1007,7 +1007,7 @@ def pantalla_base_contable() -> None:
                 "Tolerancia dias",
                 min_value=0,
                 max_value=180,
-                value=30,
+                value=70,
                 key="contable_tolerancia",
             )
 

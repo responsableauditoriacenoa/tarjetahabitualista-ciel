@@ -320,7 +320,7 @@ def importar_a_base(
     quiter_files,
     desde=None,
     hasta=None,
-    tolerancia_dias: int = 30,
+    tolerancia_dias: int = 70,
     sincronizar_quiter_periodo: bool = False,
 ) -> dict:
     inicializar_base_contable()
@@ -550,7 +550,7 @@ def row_a_movimiento(row: pd.Series, scope: str) -> Movimiento:
     )
 
 
-def reconciliar_base(tolerancia_dias: int = 30) -> None:
+def reconciliar_base(tolerancia_dias: int = 70) -> None:
     portal = cargar_tabla("contable_portal")
     quiter = cargar_tabla("contable_quiter")
     if portal.empty and quiter.empty:
