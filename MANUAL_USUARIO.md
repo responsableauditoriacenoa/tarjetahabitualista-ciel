@@ -533,15 +533,22 @@ La app entiende que ambos son depositos por el mismo importe y puede conciliarlo
 2. Subir **Operaciones de pago**.
 3. Subir **Movimientos de cuenta**.
 4. Subir **Contabilidad Quiter**.
-5. Seleccionar **Desde Quiter** y **Hasta Quiter**.
-6. Definir la tolerancia de dias.
-7. Presionar **Conciliar archivos y guardar historial**.
+5. Si hace falta limitar el mayor, activar **Filtrar Quiter por rango de fechas**.
+6. Si el filtro esta activo, seleccionar **Desde Quiter** y **Hasta Quiter**.
+7. Definir la tolerancia de dias.
+8. Presionar **Conciliar archivos y guardar historial**.
 
 ### Como debe leerlo el usuario
 
 Los archivos cargados en esa corrida son el universo completo de conciliacion.
 
-La app no busca movimientos en cargas anteriores para completar esa conciliacion.
+Si el filtro de fechas de Quiter esta desactivado, la app toma todos los movimientos del mayor importado.
+
+Si el filtro esta activado, la app toma solamente los movimientos de Quiter dentro del rango seleccionado.
+
+Ejemplo:
+
+Si se carga un mayor 2025 pero el filtro esta activo con fechas 2026, Quiter queda en cero movimientos. Para conciliar todo 2025, el filtro debe estar desactivado o configurado desde 01/01/2025 hasta 31/12/2025.
 
 ---
 
