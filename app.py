@@ -1006,8 +1006,8 @@ def pantalla_base_contable() -> None:
             tolerancia = st.number_input(
                 "Tolerancia dias",
                 min_value=0,
-                max_value=30,
-                value=3,
+                max_value=180,
+                value=30,
                 key="contable_tolerancia",
             )
 

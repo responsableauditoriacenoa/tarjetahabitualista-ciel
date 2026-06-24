@@ -37,7 +37,9 @@ CRITERIOS_CONTABLES = {
     "Contable: deposito por importe unico": "Contable: tipo + importe unico",
 }
 
-CRITERIOS_OBSOLETOS = tuple(CRITERIOS_CONTABLES.keys())
+CRITERIOS_OBSOLETOS = tuple(CRITERIOS_CONTABLES.keys()) + (
+    "Contable: tipo + importe unico",
+)
 
 
 def inicializar_base_contable() -> None:
@@ -318,7 +320,7 @@ def importar_a_base(
     quiter_files,
     desde=None,
     hasta=None,
-    tolerancia_dias: int = 3,
+    tolerancia_dias: int = 30,
     sincronizar_quiter_periodo: bool = False,
 ) -> dict:
     inicializar_base_contable()
@@ -548,7 +550,7 @@ def row_a_movimiento(row: pd.Series, scope: str) -> Movimiento:
     )
 
 
-def reconciliar_base(tolerancia_dias: int = 3) -> None:
+def reconciliar_base(tolerancia_dias: int = 30) -> None:
     portal = cargar_tabla("contable_portal")
     quiter = cargar_tabla("contable_quiter")
     if portal.empty and quiter.empty:

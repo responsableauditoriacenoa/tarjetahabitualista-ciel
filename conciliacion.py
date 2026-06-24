@@ -313,7 +313,7 @@ def conciliar(
         if not quiter_grupo:
             continue
 
-        pares = ordenar_pares_por_cercania(portal_grupo, quiter_grupo)
+        pares = ordenar_pares_por_cercania(portal_grupo, quiter_grupo, tolerancia_dias)
         for distancia, portal_indice, quiter_indice, portal_mov, quiter_mov in pares:
             if portal_indice in portal_conciliados or quiter_indice in quiter_conciliados:
                 continue
@@ -339,11 +339,16 @@ def conciliar(
 def ordenar_pares_por_cercania(
     portal_grupo: list[tuple[int, Movimiento]],
     quiter_grupo: list[tuple[int, Movimiento]],
+    tolerancia_dias: int,
 ) -> list[tuple[int | None, int, int, Movimiento, Movimiento]]:
     pares = []
     for portal_indice, portal_mov in portal_grupo:
         for quiter_indice, quiter_mov in quiter_grupo:
             distancia = distancia_fechas(portal_mov, quiter_mov)
+            if distancia is None and (len(portal_grupo) > 1 or len(quiter_grupo) > 1):
+                continue
+            if distancia is not None and distancia > tolerancia_dias:
+                continue
             orden_distancia = distancia if distancia is not None else 999999
             orden_fecha = portal_mov.fecha or portal_mov.fecha_referencia or date.min
             pares.append(
@@ -366,12 +371,10 @@ def ordenar_pares_por_cercania(
 
 def criterio_contable(distancia: int | None, tolerancia_dias: int) -> str:
     if distancia is None:
-        return "Contable: tipo + importe"
+        return "Contable: tipo + importe sin fecha disponible"
     if distancia == 0:
         return "Contable: tipo + importe + misma fecha"
-    if distancia <= tolerancia_dias:
-        return f"Contable: tipo + importe + fecha +/- {tolerancia_dias} dias"
-    return f"Contable: tipo + importe + fecha mas cercana ({distancia} dias)"
+    return f"Contable: tipo + importe + fecha +/- {tolerancia_dias} dias"
 
 
 def buscar_match(
